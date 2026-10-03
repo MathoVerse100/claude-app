@@ -6,12 +6,20 @@
       {
         "code": "en",
         "label": "EN",
-        "name": "English"
+        "name": "English",
+        "dir": "ltr"
       },
       {
         "code": "es",
         "label": "ES",
-        "name": "Español"
+        "name": "Español",
+        "dir": "ltr"
+      },
+      {
+        "code": "ar",
+        "label": "AR",
+        "name": "العربية",
+        "dir": "rtl"
       }
     ]
   },
@@ -22,7 +30,7 @@
     "max_age_days": 365
   },
   "features": {
-    "hero_bars": true,
+    "hero_art": true,
     "metrics_preview": true
   },
   "metrics": {
@@ -32,5 +40,18 @@
       "7d",
       "30d"
     ]
+  },
+  "direction": {
+    "force": null,
+    "default": "ltr",
+    "_help": "force: null | \"ltr\" | \"rtl\". When set, every locale uses that direction (e.g. \"rtl\" to flip the UI even for English). When null, each locale's own `dir` is used."
+  },
+  "hero_art": {
+    "scenes": [
+      "bars",
+      "waves"
+    ],
+    "hold_seconds": 10,
+    "fade_seconds": 1.8
   }
 }

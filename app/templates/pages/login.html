@@ -1,29 +1,30 @@
 {% extends layout %}
+{% from "components/icons.html" import icon %}
 
 {% block shell %}
 {% include "components/prefs_corner.html" %}
-<main id="main" class="hero-glow flex min-h-screen items-center justify-center px-6 py-16">
+<main id="main" tabindex="-1" aria-labelledby="login-title" class="hero-glow flex min-h-screen items-center justify-center px-6 py-16">
   <div class="w-full max-w-md rounded-2xl border border-border bg-surface p-8">
     <a href="{{ config.endpoints.routes.home }}" class="mb-8 inline-block text-fg" aria-label="{{ t('brand.name') }}">{% include "components/logo.html" %}</a>
-    <h1 class="text-3xl font-semibold tracking-tight">{{ t('login.title') }}</h1>
+    <h1 id="login-title" class="text-3xl font-semibold tracking-tight">{{ t('login.title') }}</h1>
     <p class="mt-2 text-muted">{{ t('login.subtitle') }}</p>
 
-    <form class="mt-8 space-y-5" hx-post="{{ config.endpoints.auth.login }}" hx-target="#login-error" hx-swap="innerHTML">
+    <form class="mt-8 space-y-5" aria-labelledby="login-title" hx-post="{{ config.endpoints.auth.login }}" hx-target="#login-error" hx-swap="innerHTML">
       <label class="block">
         <span class="mb-1 block text-sm text-muted">{{ t('login.email') }}</span>
-        <input type="email" name="email" required autocomplete="email"
+        <input type="email" name="email" required aria-required="true" autocomplete="email" dir="auto" aria-describedby="login-hint"
                class="min-h-[48px] w-full rounded-lg border border-border bg-bg px-4 text-fg focus:border-accent focus:outline-none">
       </label>
       <label class="block">
         <span class="mb-1 block text-sm text-muted">{{ t('login.password') }}</span>
-        <input type="password" name="password" required minlength="6" autocomplete="current-password"
+        <input type="password" name="password" required aria-required="true" minlength="6" aria-describedby="login-hint" autocomplete="current-password"
                class="min-h-[48px] w-full rounded-lg border border-border bg-bg px-4 text-fg focus:border-accent focus:outline-none">
       </label>
-      <div id="login-error" role="alert" aria-live="polite"></div>
+      <div id="login-error" aria-live="assertive" aria-atomic="true"></div>
       <button type="submit" class="min-h-[48px] w-full rounded-full bg-accent px-6 font-semibold text-accent-fg transition hover:opacity-90">{{ t('login.submit') }}</button>
     </form>
-    <p class="mt-6 text-sm text-muted">{{ t('login.hint') }}</p>
-    <a href="{{ config.endpoints.routes.home }}" class="mt-4 inline-flex min-h-[44px] items-center text-sm text-accent-2 hover:underline">← {{ t('login.back') }}</a>
+    <p id="login-hint" class="mt-6 text-sm text-muted">{{ t('login.hint') }}</p>
+    <a href="{{ config.endpoints.routes.home }}" class="mt-4 inline-flex min-h-[44px] items-center text-sm text-accent-2 hover:underline">{{ icon('arrow', 'h-4 w-4 me-2 ltr:-scale-x-100', false) }}{{ t('login.back') }}</a>
   </div>
 </main>
 {% endblock %}

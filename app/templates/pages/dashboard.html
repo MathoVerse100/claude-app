@@ -2,9 +2,9 @@
 
 {% block shell %}
 {% include "components/prefs_corner.html" %}
-<main id="main" class="mx-auto flex min-h-screen max-w-3xl flex-col justify-center px-6 py-16 md:pl-28">
+<main id="main" tabindex="-1" aria-labelledby="dash-title" class="mx-auto flex min-h-screen max-w-3xl flex-col justify-center px-6 py-16">
   <a href="{{ config.endpoints.routes.home }}" class="mb-8 inline-block text-fg" aria-label="{{ t('brand.name') }}">{% include "components/logo.html" %}</a>
-  <h1 class="text-4xl font-semibold tracking-tight">{{ t('dashboard.title') }}</h1>
+  <h1 id="dash-title" class="text-4xl font-semibold tracking-tight">{{ t('dashboard.title') }}</h1>
   <p class="mt-2 text-accent-2">{{ t('dashboard.welcome', user=session.user) }}</p>
   <p class="mt-6 text-muted">{{ t('dashboard.body') }}</p>
   <button type="button" hx-post="{{ config.endpoints.auth.logout }}"

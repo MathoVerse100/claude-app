@@ -1,0 +1,72 @@
+{
+  "_help": "Each card has an optional `link` ({route|href, label_key?}). No link = plain card. Card copy lives in i18n under <group>.card.<id> / news.post.<id>.",
+  "features": [
+    {
+      "id": "connectors",
+      "icon": "plug",
+      "link": {
+        "route": "stories"
+      }
+    },
+    {
+      "id": "realtime",
+      "icon": "bolt",
+      "link": {
+        "route": "news"
+      }
+    },
+    {
+      "id": "modeling",
+      "icon": "cube",
+      "link": null
+    },
+    {
+      "id": "security",
+      "icon": "shield",
+      "link": null
+    },
+    {
+      "id": "teams",
+      "icon": "users",
+      "link": {
+        "route": "contacts",
+        "label_key": "common.contact_us"
+      }
+    },
+    {
+      "id": "edge",
+      "icon": "globe",
+      "link": null
+    }
+  ],
+  "stories": [
+    {
+      "id": "aurora",
+      "link": null
+    },
+    {
+      "id": "helix",
+      "link": null
+    },
+    {
+      "id": "orbit",
+      "link": null
+    }
+  ],
+  "news": [
+    {
+      "id": "edge_sync",
+      "link": {
+        "route": "about"
+      }
+    },
+    {
+      "id": "streaming",
+      "link": null
+    },
+    {
+      "id": "themes",
+      "link": null
+    }
+  ]
+}

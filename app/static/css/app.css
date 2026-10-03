@@ -1,5 +1,8 @@
 [x-cloak] { display: none !important; }
 
+/* Arabic is a connected script: letter-spacing breaks the joins, so neutralise tracking utilities. */
+:lang(ar) [class*="tracking-"] { letter-spacing: 0 !important; }
+
 /* Dropdown lists: tick the selected option. */
 .menu-option .check { opacity: 0; }
 .menu-option[aria-selected="true"] { color: rgb(var(--c-accent)); }

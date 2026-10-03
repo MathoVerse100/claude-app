@@ -60,6 +60,18 @@ def resolve_lang(request: Request) -> str:
     return cfg["app"]["default_locale"]
 
 
+def resolve_direction(lang: str) -> str:
+    """Text direction for ``lang``: the config-wide override wins, then the locale's own `dir`."""
+    cfg = load_json("app_config")
+    forced = (cfg.get("direction") or {}).get("force")
+    if forced in ("ltr", "rtl"):
+        return forced
+    for loc in cfg["app"]["locales"]:
+        if loc["code"] == lang and loc.get("dir") in ("ltr", "rtl"):
+            return loc["dir"]
+    return (cfg.get("direction") or {}).get("default", "ltr")
+
+
 def resolve_theme(request: Request) -> str:
     themes = load_json("themes")
     cookie = request.cookies.get(load_json("app_config")["cookies"]["theme"])
@@ -84,9 +96,12 @@ async def build_context(request: Request, **extra: Any) -> dict[str, Any]:
             "app": load_json("app_config"),
             "endpoints": load_json("endpoints"),
             "themes": load_json("themes"),
+            "home": load_json("home"),
+            "cards": load_json("cards"),
         },
         "t": make_translator(lang),
         "lang": lang,
+        "dir": resolve_direction(lang),
         "theme": theme,
         "session": session,
         "current_path": current_path(request),

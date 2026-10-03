@@ -4,29 +4,30 @@
 {% block shell %}
 {% include "components/navbar.html" %}
 
-<main id="main">
+<main id="main" tabindex="-1">
 
   {# ───────────── Hero ───────────── #}
-  <section id="top" class="hero-glow relative flex min-h-screen flex-col overflow-hidden">
-    {% if config.app.features.hero_bars %}
-    {# Animated bar charts (static/js/bars.js). Desktop only: on small screens one chart is stacked below the copy. #}
-    <canvas class="chart-canvas pointer-events-none absolute right-0 top-0 hidden h-[34vh] w-[34vw] opacity-80 md:block" data-bars="12" data-anchor="top" data-env="fall" aria-hidden="true"></canvas>
-    <canvas class="chart-canvas pointer-events-none absolute bottom-0 right-[3vw] hidden h-[72vh] w-[38vw] md:block" data-bars="22" data-env="peak" aria-hidden="true"></canvas>
-    <canvas class="chart-canvas pointer-events-none absolute right-0 top-[40vh] hidden h-[26vh] w-[16vw] opacity-90 lg:block" data-bars="8" data-env="rise" aria-hidden="true"></canvas>
-    <canvas class="chart-canvas pointer-events-none absolute bottom-0 left-0 hidden h-[32vh] w-[40vw] md:block" data-bars="16" data-env="peak" aria-hidden="true"></canvas>
-    <canvas class="chart-canvas pointer-events-none absolute left-0 top-[44vh] hidden h-[24vh] w-[12vw] opacity-90 lg:block" data-bars="6" data-env="fall" aria-hidden="true"></canvas>
+  <section id="top" class="hero-glow relative flex min-h-screen flex-col overflow-hidden" aria-labelledby="hero-title">
+    {% if config.app.features.hero_art %}
+    {# Hero art alternates between scenes (bars <-> waves); see config/app_config.json -> hero_art. Purely decorative. #}
+    <script type="application/json" id="hero-art-config">{{ config.app.hero_art | tojson }}</script>
+    <canvas class="chart-canvas pointer-events-none absolute end-0 top-0 hidden h-[34vh] w-[34vw] opacity-80 md:block" data-bars="12" data-anchor="top" data-env="fall" aria-hidden="true"></canvas>
+    <canvas class="chart-canvas pointer-events-none absolute bottom-0 end-[3vw] hidden h-[72vh] w-[38vw] md:block" data-bars="22" data-env="peak" aria-hidden="true"></canvas>
+    <canvas class="chart-canvas pointer-events-none absolute end-0 top-[40vh] hidden h-[26vh] w-[16vw] opacity-90 lg:block" data-bars="8" data-env="rise" aria-hidden="true"></canvas>
+    <canvas class="chart-canvas pointer-events-none absolute bottom-0 start-0 hidden h-[32vh] w-[40vw] md:block" data-bars="16" data-env="peak" aria-hidden="true"></canvas>
+    <canvas class="chart-canvas pointer-events-none absolute start-0 top-[44vh] hidden h-[24vh] w-[12vw] opacity-90 lg:block" data-bars="6" data-env="fall" aria-hidden="true"></canvas>
     {% endif %}
 
-    <div class="relative z-10 mx-auto flex w-full max-w-7xl flex-1 items-center px-6 pb-16 pt-32 md:pl-16 lg:pl-24 lg:pr-10">
+    <div class="relative z-10 mx-auto flex w-full max-w-7xl flex-1 items-center px-6 pb-16 pt-32 md:ps-16 lg:ps-24 lg:pe-10">
       <div class="max-w-2xl">
         <p class="mb-5 text-base text-fg/90">{{ t('hero.eyebrow') }}</p>
-        <h1 class="text-5xl font-semibold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
+        <h1 id="hero-title" class="text-5xl font-semibold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
           {{ t('hero.title_1') }}<br>{{ t('hero.title_2') }}
         </h1>
         <p class="mt-6 max-w-lg text-lg text-muted">{{ t('hero.subtitle') }}</p>
 
         {# HTMX session check: server-rendered first paint, refreshed from the endpoint on load. #}
-        <div id="hero-cta" class="mt-10"
+        <div id="hero-cta" class="mt-10" aria-live="polite"
              hx-get="{{ config.endpoints.session_check }}"
              hx-trigger="load"
              hx-swap="innerHTML">
@@ -35,39 +36,28 @@
       </div>
     </div>
 
-    {% if config.app.features.hero_bars %}
+    {% if config.app.features.hero_art %}
     <canvas class="chart-canvas pointer-events-none relative z-0 -mt-4 h-56 w-full opacity-70 md:hidden" data-bars="18" data-env="peak" aria-hidden="true"></canvas>
     {% endif %}
   </section>
 
-  {# ───────────── Scrollable teasers; each links to its own page ───────────── #}
-  <section id="about" class="mx-auto max-w-7xl scroll-mt-8 px-6 py-24 lg:px-10">
-    <p class="text-sm font-medium uppercase tracking-widest text-accent-2">{{ t('features.eyebrow') }}</p>
-    <h2 class="mt-3 max-w-3xl text-3xl font-semibold tracking-tight sm:text-5xl">{{ t('features.title') }}</h2>
-    <p class="mt-4 max-w-2xl text-lg text-muted">{{ t('features.subtitle') }}</p>
-    <div class="mt-14">{% include "partials/blocks/features_grid.html" %}</div>
-    <a href="{{ config.endpoints.routes.about }}" class="mt-8 inline-flex min-h-[44px] items-center gap-2 text-accent hover:underline">{{ t('common.learn_more') }} {{ icon('arrow', 'h-4 w-4') }}</a>
-  </section>
-
-  <section id="stories" class="scroll-mt-8 border-y border-border bg-surface/50">
+  {# ───────────── Scrollable teasers: sections, components and link targets come from config/home.json ───────────── #}
+  {% for sec in config.home.sections if not sec.feature or config.app.features[sec.feature] %}
+  {% set band = (sec.style == 'band') %}
+  <section id="{{ sec.id }}" aria-labelledby="{{ sec.id }}-title" class="scroll-mt-8 {{ 'border-y border-border bg-surface/50' if band }}">
     <div class="mx-auto max-w-7xl px-6 py-24 lg:px-10">
-      <p class="text-sm font-medium uppercase tracking-widest text-accent-2">{{ t('how.eyebrow') }}</p>
-      <h2 class="mt-3 text-3xl font-semibold tracking-tight sm:text-5xl">{{ t('how.title') }}</h2>
-      <p class="mt-4 max-w-2xl text-lg text-muted">{{ t('how.subtitle') }}</p>
-      <div class="mt-14">{% include "partials/blocks/how_steps.html" %}</div>
-      <a href="{{ config.endpoints.routes.stories }}" class="mt-8 inline-flex min-h-[44px] items-center gap-2 text-accent hover:underline">{{ t('common.learn_more') }} {{ icon('arrow', 'h-4 w-4') }}</a>
+      <p class="text-sm font-medium uppercase tracking-widest text-accent-2">{{ t(sec.i18n ~ '.eyebrow') }}</p>
+      <h2 id="{{ sec.id }}-title" class="mt-3 max-w-3xl text-3xl font-semibold tracking-tight sm:text-5xl">{{ t(sec.i18n ~ '.title') }}</h2>
+      <p class="mt-4 mb-12 max-w-2xl text-lg text-muted">{{ t(sec.i18n ~ '.subtitle') }}</p>
+      {% include sec.component %}
+      {% if sec.link %}
+      <a {{ link_attrs(sec.link) }} class="mt-8 inline-flex min-h-[44px] items-center gap-2 text-accent hover:underline">
+        {{ t(sec.link.label_key) }}<span class="sr-only"> — {{ t(sec.i18n ~ '.title') }}</span>{{ icon('arrow', 'h-4 w-4') }}
+      </a>
+      {% endif %}
     </div>
   </section>
-
-  {% if config.app.features.metrics_preview %}
-  <section id="news" class="mx-auto max-w-7xl scroll-mt-8 px-6 py-24 lg:px-10">
-    <p class="text-sm font-medium uppercase tracking-widest text-accent-2">{{ t('metrics.eyebrow') }}</p>
-    <h2 class="mt-3 text-3xl font-semibold tracking-tight sm:text-5xl">{{ t('metrics.title') }}</h2>
-    <p class="mt-4 mb-10 max-w-2xl text-lg text-muted">{{ t('metrics.subtitle') }}</p>
-    {% include "partials/metrics.html" %}
-    <a href="{{ config.endpoints.routes.news }}" class="mt-8 inline-flex min-h-[44px] items-center gap-2 text-accent hover:underline">{{ t('common.learn_more') }} {{ icon('arrow', 'h-4 w-4') }}</a>
-  </section>
-  {% endif %}
+  {% endfor %}
 </main>
 
 {% include "components/footer.html" %}

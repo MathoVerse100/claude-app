@@ -3,13 +3,13 @@
 {% set drop = drop | default('down') %}
 {% set lang_options = [] %}
 {% for loc in config.app.app.locales %}
-  {% set _ = lang_options.append({'value': loc.code, 'label': loc.name, 'short': loc.label}) %}
+  {% set _ = lang_options.append({'value': loc.code, 'label': loc.name, 'short': loc.label, 'lang': loc.code}) %}
 {% endfor %}
 {% set theme_options = [] %}
 {% for name, th in config.themes.themes.items() %}
   {% set _ = theme_options.append({'value': name, 'label': t(th.label_key), 'swatch': th.tokens.accent}) %}
 {% endfor %}
-<div class="flex flex-wrap items-center gap-2">
+<div class="flex flex-wrap items-center gap-2" role="group" aria-label="{{ t('nav.language') }} / {{ t('theme.label') }}">
   {{ select_menu('language', t('nav.language'), lang_options, lang, config.endpoints.set_language, 'lang', '#app-shell', 'innerHTML', drop, 'globe') }}
   {{ select_menu('theme', t('theme.label'), theme_options, theme, config.endpoints.set_theme, 'theme', None, 'none', drop, 'palette') }}
 </div>

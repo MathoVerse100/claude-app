@@ -1,0 +1,42 @@
+{
+  "_help": "Link targets: use \"route\" (a key of endpoints.json -> routes) or a literal \"href\". Omit/null `link` to hide it.",
+  "hero": {
+    "secondary_cta": {
+      "label_key": "hero.cta_details",
+      "route": "about"
+    }
+  },
+  "sections": [
+    {
+      "id": "about",
+      "i18n": "features",
+      "component": "partials/blocks/features_grid.html",
+      "style": "plain",
+      "link": {
+        "label_key": "common.learn_more",
+        "route": "about"
+      }
+    },
+    {
+      "id": "stories",
+      "i18n": "how",
+      "component": "partials/blocks/how_steps.html",
+      "style": "band",
+      "link": {
+        "label_key": "common.learn_more",
+        "route": "stories"
+      }
+    },
+    {
+      "id": "news",
+      "i18n": "metrics",
+      "component": "partials/metrics.html",
+      "style": "plain",
+      "feature": "metrics_preview",
+      "link": {
+        "label_key": "common.learn_more",
+        "route": "news"
+      }
+    }
+  ]
+}

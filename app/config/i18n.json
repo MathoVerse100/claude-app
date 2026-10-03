@@ -39,38 +39,32 @@
       "eyebrow": "About",
       "title": "Everything your data needs, in one universe",
       "subtitle": "From raw sources to shareable insight, DataVerse keeps every step fast, visible and secure.",
-      "cards": [
-        {
-          "icon": "plug",
+      "card": {
+        "connectors": {
           "title": "Universal connectors",
           "body": "Plug into databases, warehouses, files and SaaS APIs with guided, no-code connectors."
         },
-        {
-          "icon": "bolt",
+        "realtime": {
           "title": "Real-time pipelines",
           "body": "Stream changes as they happen with sub-second latency and automatic back-pressure."
         },
-        {
-          "icon": "cube",
+        "modeling": {
           "title": "Visual data modeling",
           "body": "Shape schemas and relationships on an interactive canvas, versioned like code."
         },
-        {
-          "icon": "shield",
+        "security": {
           "title": "Enterprise-grade security",
           "body": "End-to-end encryption, granular roles and a full audit trail out of the box."
         },
-        {
-          "icon": "users",
+        "teams": {
           "title": "Team workspaces",
           "body": "Share datasets, comment on models and review changes together in real time."
         },
-        {
-          "icon": "globe",
+        "edge": {
           "title": "Edge-ready sync",
           "body": "Work offline on any device and reconcile safely the moment you reconnect."
         }
-      ]
+      }
     },
     "how": {
       "eyebrow": "Stories",
@@ -186,7 +180,9 @@
     },
     "common": {
       "learn_more": "Learn more",
-      "placeholder_note": "Sample content for demonstration."
+      "placeholder_note": "Sample content for demonstration.",
+      "card_link": "Explore",
+      "contact_us": "Contact us"
     },
     "pages": {
       "about": {
@@ -216,49 +212,49 @@
     },
     "stories": {
       "title": "Customer stories",
-      "cards": [
-        {
+      "card": {
+        "aurora": {
           "org": "Aurora Retail",
           "quote": "We unified 40 store systems into one live view in under two weeks.",
           "metric": "9× faster",
           "metric_label": "reporting cycle"
         },
-        {
+        "helix": {
           "org": "Helix Labs",
           "quote": "Versioned models changed how our analysts collaborate — no more spreadsheet forks.",
           "metric": "-62%",
           "metric_label": "time to insight"
         },
-        {
+        "orbit": {
           "org": "Orbit Finance",
           "quote": "Audit trails and granular roles let us ship to regulated markets with confidence.",
           "metric": "0",
           "metric_label": "compliance findings"
         }
-      ]
+      }
     },
     "news": {
       "title": "Latest updates",
-      "posts": [
-        {
+      "post": {
+        "edge_sync": {
           "date": "Sep 24, 2026",
           "tag": "Product",
           "title": "Edge-ready sync is now generally available",
           "body": "Work offline on any device and reconcile safely the moment you reconnect."
         },
-        {
+        "streaming": {
           "date": "Sep 9, 2026",
           "tag": "Platform",
           "title": "Sub-second streaming pipelines",
           "body": "Streaming throughput doubled, with automatic back-pressure on every connector."
         },
-        {
+        "themes": {
           "date": "Aug 28, 2026",
           "tag": "Company",
           "title": "Neon theme and multilingual workspaces",
           "body": "DataVerse now ships with light, dark and neon themes and a growing list of languages."
         }
-      ]
+      }
     },
     "contact": {
       "info_title": "Get in touch",
@@ -274,6 +270,11 @@
       "send": "Send message",
       "success": "Thanks, {name}! We will reply within one business day.",
       "error": "Please fill in every field with a valid email address."
+    },
+    "a11y": {
+      "skip": "Skip to content",
+      "new_tab": "opens in a new tab",
+      "series_values": "Values: {values}"
     }
   },
   "es": {
@@ -316,38 +317,32 @@
       "eyebrow": "Nosotros",
       "title": "Todo lo que tus datos necesitan, en un solo universo",
       "subtitle": "De las fuentes en bruto a ideas compartibles, DataVerse mantiene cada paso rápido, visible y seguro.",
-      "cards": [
-        {
-          "icon": "plug",
+      "card": {
+        "connectors": {
           "title": "Conectores universales",
           "body": "Conecta bases de datos, almacenes, archivos y APIs SaaS con conectores guiados sin código."
         },
-        {
-          "icon": "bolt",
+        "realtime": {
           "title": "Pipelines en tiempo real",
           "body": "Transmite cambios al instante con latencia inferior al segundo y control de presión automático."
         },
-        {
-          "icon": "cube",
+        "modeling": {
           "title": "Modelado visual",
           "body": "Diseña esquemas y relaciones en un lienzo interactivo, versionado como código."
         },
-        {
-          "icon": "shield",
+        "security": {
           "title": "Seguridad empresarial",
           "body": "Cifrado de extremo a extremo, roles granulares y auditoría completa de serie."
         },
-        {
-          "icon": "users",
+        "teams": {
           "title": "Espacios de equipo",
           "body": "Comparte conjuntos de datos, comenta modelos y revisa cambios en tiempo real."
         },
-        {
-          "icon": "globe",
+        "edge": {
           "title": "Sincronización en el borde",
           "body": "Trabaja sin conexión en cualquier dispositivo y reconcilia con seguridad al volver."
         }
-      ]
+      }
     },
     "how": {
       "eyebrow": "Historias",
@@ -463,7 +458,9 @@
     },
     "common": {
       "learn_more": "Saber más",
-      "placeholder_note": "Contenido de muestra con fines demostrativos."
+      "placeholder_note": "Contenido de muestra con fines demostrativos.",
+      "card_link": "Explorar",
+      "contact_us": "Contáctanos"
     },
     "pages": {
       "about": {
@@ -493,49 +490,49 @@
     },
     "stories": {
       "title": "Historias de clientes",
-      "cards": [
-        {
+      "card": {
+        "aurora": {
           "org": "Aurora Retail",
           "quote": "Unificamos 40 sistemas de tiendas en una sola vista en vivo en menos de dos semanas.",
           "metric": "9× más rápido",
           "metric_label": "ciclo de reportes"
         },
-        {
+        "helix": {
           "org": "Helix Labs",
           "quote": "Los modelos versionados cambiaron cómo colaboran nuestros analistas: se acabaron las copias de hojas de cálculo.",
           "metric": "-62%",
           "metric_label": "tiempo hasta el insight"
         },
-        {
+        "orbit": {
           "org": "Orbit Finance",
           "quote": "La auditoría y los roles granulares nos permiten operar en mercados regulados con confianza.",
           "metric": "0",
           "metric_label": "hallazgos de cumplimiento"
         }
-      ]
+      }
     },
     "news": {
       "title": "Últimas novedades",
-      "posts": [
-        {
+      "post": {
+        "edge_sync": {
           "date": "24 sep 2026",
           "tag": "Producto",
           "title": "La sincronización en el borde ya está disponible",
           "body": "Trabaja sin conexión en cualquier dispositivo y reconcilia con seguridad al reconectar."
         },
-        {
+        "streaming": {
           "date": "9 sep 2026",
           "tag": "Plataforma",
           "title": "Pipelines de streaming en menos de un segundo",
           "body": "El rendimiento se duplicó, con control de presión automático en cada conector."
         },
-        {
+        "themes": {
           "date": "28 ago 2026",
           "tag": "Compañía",
           "title": "Tema neón y espacios multilingües",
           "body": "DataVerse ahora incluye temas claro, oscuro y neón, y una lista creciente de idiomas."
         }
-      ]
+      }
     },
     "contact": {
       "info_title": "Ponte en contacto",
@@ -551,6 +548,289 @@
       "send": "Enviar mensaje",
       "success": "¡Gracias, {name}! Responderemos en un día hábil.",
       "error": "Completa todos los campos con un correo válido."
+    },
+    "a11y": {
+      "skip": "Saltar al contenido",
+      "new_tab": "se abre en una pestaña nueva",
+      "series_values": "Valores: {values}"
+    }
+  },
+  "ar": {
+    "meta": {
+      "title": "DataVerse — ابنِ بياناتك أينما كنت",
+      "description": "DataVerse منصة بيانات موحّدة لربط مسارات البيانات ونمذجتها ونشرها من أي جهاز."
+    },
+    "brand": {
+      "name": "DataVerse"
+    },
+    "nav": {
+      "aria": "التنقل الرئيسي",
+      "home": "الرئيسية.",
+      "about": "من نحن.",
+      "stories": "قصص.",
+      "news": "الأخبار.",
+      "contacts": "اتصل بنا.",
+      "open_menu": "فتح القائمة",
+      "close_menu": "إغلاق القائمة",
+      "language": "اللغة"
+    },
+    "theme": {
+      "label": "المظهر",
+      "dark": "داكن",
+      "light": "فاتح",
+      "neon": "نيون"
+    },
+    "hero": {
+      "eyebrow": "منصة بيانات موحّدة",
+      "title_1": "ابنِ بياناتك،",
+      "title_2": "أينما كنت.",
+      "subtitle": "اربط مسارات البيانات ونمذجها وانشرها من أي جهاز — مساحة عمل واحدة آمنة بلا تعقيد.",
+      "cta_login": "تسجيل الدخول",
+      "cta_dashboard": "الانتقال إلى لوحة التحكم",
+      "cta_details": "تفاصيل المشروع",
+      "session_checking": "جارٍ التحقق من الجلسة…",
+      "welcome_back": "مرحبًا بعودتك، {user}"
+    },
+    "features": {
+      "eyebrow": "من نحن",
+      "title": "كل ما تحتاجه بياناتك في كون واحد",
+      "subtitle": "من المصادر الخام إلى الرؤى القابلة للمشاركة، تُبقي DataVerse كل خطوة سريعة وواضحة وآمنة.",
+      "card": {
+        "connectors": {
+          "title": "موصلات شاملة",
+          "body": "اتصل بقواعد البيانات والمستودعات والملفات وواجهات SaaS عبر موصلات موجّهة بلا كود."
+        },
+        "realtime": {
+          "title": "مسارات فورية",
+          "body": "ابثّ التغييرات لحظة حدوثها بزمن استجابة أقل من ثانية وبتحكم تلقائي في الضغط."
+        },
+        "modeling": {
+          "title": "نمذجة بصرية للبيانات",
+          "body": "صمّم المخططات والعلاقات على لوحة تفاعلية مع إدارة إصدارات كالشيفرة."
+        },
+        "security": {
+          "title": "أمان بمستوى المؤسسات",
+          "body": "تشفير شامل وأدوار دقيقة وسجل تدقيق كامل بشكل افتراضي."
+        },
+        "teams": {
+          "title": "مساحات عمل للفرق",
+          "body": "شارك مجموعات البيانات وعلّق على النماذج وراجع التغييرات معًا في الوقت الفعلي."
+        },
+        "edge": {
+          "title": "مزامنة جاهزة للأطراف",
+          "body": "اعمل دون اتصال على أي جهاز وسوِّ التغييرات بأمان فور عودة الاتصال."
+        }
+      }
+    },
+    "how": {
+      "eyebrow": "قصص",
+      "title": "كيف تعمل DataVerse",
+      "subtitle": "أربع خطوات من المصادر المتفرقة إلى طبقة بيانات حيّة وموثوقة.",
+      "step_label": "الخطوة {n}",
+      "steps": [
+        {
+          "title": "اربط",
+          "body": "اربط مصادرك في دقائق. تكتشف DataVerse المخططات وتبقيها متزامنة."
+        },
+        {
+          "title": "نمذج",
+          "body": "نظّف وادمج وأثرِ البيانات عبر لوحة بصرية أو SQL — وكل تغيير مُصدَّر."
+        },
+        {
+          "title": "أتمت",
+          "body": "جدول المسارات أو ابثّها مع تنبيهات وإعادة محاولة تلقائية عند حدوث أي انحراف."
+        },
+        {
+          "title": "شارك",
+          "body": "انشر مجموعات بيانات خاضعة للحوكمة ولوحات مباشرة للأشخاص والتطبيقات في أي مكان."
+        }
+      ]
+    },
+    "metrics": {
+      "eyebrow": "الأخبار",
+      "title": "نبض المنصة المباشر",
+      "subtitle": "معاينة للأرقام التي تدعم الفرق على DataVerse. غيّر النطاق للاستكشاف.",
+      "range_label": "النطاق الزمني",
+      "series_label": "السجلات المستوعبة عبر الزمن",
+      "ranges": {
+        "24h": "24 ساعة",
+        "7d": "7 أيام",
+        "30d": "30 يومًا"
+      },
+      "kpi": {
+        "records": "السجلات المستوعبة",
+        "latency": "الوسيط الزمني للمزامنة",
+        "uptime": "وقت التشغيل"
+      }
+    },
+    "login": {
+      "title": "تسجيل الدخول إلى DataVerse",
+      "subtitle": "استخدم بيانات اعتماد مساحة عملك للمتابعة.",
+      "email": "البريد الإلكتروني",
+      "password": "كلمة المرور",
+      "submit": "تسجيل الدخول",
+      "error": "أدخل بريدًا إلكترونيًا صالحًا وكلمة مرور من 6 أحرف على الأقل.",
+      "back": "العودة إلى الرئيسية",
+      "hint": "وضع تجريبي: يعمل أي بريد صالح وكلمة مرور من 6 أحرف أو أكثر."
+    },
+    "dashboard": {
+      "title": "لوحة التحكم",
+      "welcome": "تم تسجيل الدخول باسم {user}",
+      "body": "هذا عنصر نائب لنواة التطبيق. اربط هنا مسارات لوحة التحكم الفعلية.",
+      "logout": "تسجيل الخروج"
+    },
+    "footer": {
+      "tagline": "ابنِ بياناتك، أينما كنت.",
+      "social_label": "تابع DataVerse",
+      "status": "جميع الأنظمة تعمل",
+      "legal": "© {year} DataVerse. جميع الحقوق محفوظة.",
+      "columns": [
+        {
+          "title": "المنتج",
+          "links": [
+            {
+              "label": "الميزات",
+              "endpoint": "about"
+            },
+            {
+              "label": "كيف تعمل",
+              "endpoint": "stories"
+            },
+            {
+              "label": "المقاييس المباشرة",
+              "endpoint": "news"
+            }
+          ]
+        },
+        {
+          "title": "الشركة",
+          "links": [
+            {
+              "label": "من نحن",
+              "endpoint": "about"
+            },
+            {
+              "label": "قصص",
+              "endpoint": "stories"
+            },
+            {
+              "label": "اتصل بنا",
+              "endpoint": "contacts"
+            }
+          ]
+        },
+        {
+          "title": "الحساب",
+          "links": [
+            {
+              "label": "تسجيل الدخول",
+              "endpoint": "login"
+            },
+            {
+              "label": "لوحة التحكم",
+              "endpoint": "dashboard"
+            }
+          ]
+        }
+      ]
+    },
+    "common": {
+      "learn_more": "اعرف المزيد",
+      "placeholder_note": "محتوى تجريبي لأغراض العرض.",
+      "card_link": "استكشف",
+      "contact_us": "تواصل معنا"
+    },
+    "a11y": {
+      "skip": "انتقل إلى المحتوى",
+      "new_tab": "يفتح في علامة تبويب جديدة",
+      "series_values": "القيم: {values}"
+    },
+    "pages": {
+      "about": {
+        "doc": "من نحن",
+        "eyebrow": "من نحن",
+        "title": "منصة بيانات لمن هم دائمو الحركة",
+        "subtitle": "بدأت DataVerse بفكرة بسيطة: بياناتك يجب أن تكون متنقلة مثلك. هكذا يبدو ذلك عمليًا."
+      },
+      "stories": {
+        "doc": "قصص",
+        "eyebrow": "قصص",
+        "title": "كيف تبني الفرق مع DataVerse",
+        "subtitle": "سير العمل خلف المنصة والنتائج التي تحققها الفرق حين تواكبها بياناتها."
+      },
+      "news": {
+        "doc": "الأخبار",
+        "eyebrow": "الأخبار",
+        "title": "الجديد في DataVerse",
+        "subtitle": "تحديثات المنتج وأرقام المنصة المباشرة في مكان واحد."
+      },
+      "contacts": {
+        "doc": "اتصل بنا",
+        "eyebrow": "اتصل بنا",
+        "title": "لنتحدث عن بياناتك",
+        "subtitle": "أسئلة أو عروض توضيحية أو شراكات — نردّ خلال يوم عمل واحد."
+      }
+    },
+    "stories": {
+      "title": "قصص العملاء",
+      "card": {
+        "aurora": {
+          "org": "Aurora Retail",
+          "quote": "وحّدنا 40 نظامًا للمتاجر في عرض مباشر واحد في أقل من أسبوعين.",
+          "metric": "أسرع 9 مرات",
+          "metric_label": "دورة إعداد التقارير"
+        },
+        "helix": {
+          "org": "Helix Labs",
+          "quote": "غيّرت النماذج المُصدَّرة طريقة تعاون محللينا — لا مزيد من نسخ جداول البيانات المتفرعة.",
+          "metric": "-62%",
+          "metric_label": "الوقت اللازم للوصول إلى الرؤى"
+        },
+        "orbit": {
+          "org": "Orbit Finance",
+          "quote": "سجلات التدقيق والأدوار الدقيقة تتيح لنا دخول الأسواق المنظَّمة بثقة.",
+          "metric": "0",
+          "metric_label": "ملاحظات امتثال"
+        }
+      }
+    },
+    "news": {
+      "title": "آخر التحديثات",
+      "post": {
+        "edge_sync": {
+          "date": "24 سبتمبر 2026",
+          "tag": "المنتج",
+          "title": "المزامنة الجاهزة للأطراف متاحة الآن للجميع",
+          "body": "اعمل دون اتصال على أي جهاز وسوِّ التغييرات بأمان فور عودة الاتصال."
+        },
+        "streaming": {
+          "date": "9 سبتمبر 2026",
+          "tag": "المنصة",
+          "title": "مسارات بث بزمن أقل من ثانية",
+          "body": "تضاعف معدل البث مع تحكم تلقائي في الضغط على كل موصل."
+        },
+        "themes": {
+          "date": "28 أغسطس 2026",
+          "tag": "الشركة",
+          "title": "مظهر النيون ومساحات عمل متعددة اللغات",
+          "body": "تأتي DataVerse الآن بمظاهر فاتح وداكن ونيون وقائمة متنامية من اللغات."
+        }
+      }
+    },
+    "contact": {
+      "info_title": "تواصل معنا",
+      "info_body": "أخبرنا بتحدي البيانات لديك وسنوجّهك إلى الأشخاص المناسبين.",
+      "email_label": "البريد الإلكتروني",
+      "email": "hello@dataverse.example",
+      "hours_label": "ساعات الدعم",
+      "hours": "الإثنين–الجمعة، 9:00–18:00 بالتوقيت العالمي",
+      "form_title": "أرسل لنا رسالة",
+      "name": "الاسم",
+      "email_field": "البريد الإلكتروني",
+      "message": "الرسالة",
+      "send": "إرسال الرسالة",
+      "success": "شكرًا يا {name}! سنرد خلال يوم عمل واحد.",
+      "error": "يرجى ملء جميع الحقول بعنوان بريد إلكتروني صالح."
     }
   }
 }

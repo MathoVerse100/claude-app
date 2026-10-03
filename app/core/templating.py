@@ -9,8 +9,10 @@ from fastapi.responses import Response
 from fastapi.templating import Jinja2Templates
 
 from app.core.config import load_json, settings
+from app.core.links import href, is_external, link_attrs
 
 templates = Jinja2Templates(directory=str(settings.templates_dir))
+templates.env.globals.update(href=href, is_external=is_external, link_attrs=link_attrs)
 
 FULL_LAYOUT = "base.html"
 SHELL_LAYOUT = "partials/shell_only.html"

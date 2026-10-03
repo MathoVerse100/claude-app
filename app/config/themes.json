@@ -1,9 +1,10 @@
 {
   "default": "dark",
   "typography": {
-    "google_href": "https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap",
+    "google_href": "https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap",
     "sans": [
       "Outfit",
+      "Noto Sans Arabic",
       "Urbanist",
       "ui-sans-serif",
       "system-ui",

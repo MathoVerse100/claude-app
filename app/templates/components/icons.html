@@ -16,6 +16,6 @@
   'clock': 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM12 6v6l4 2',
   'down': 'M7 7l10 10M17 8v9H8'
 } %}
-{% macro icon(name, class="h-6 w-6") -%}
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="{{ class }}" aria-hidden="true"><path d="{{ _paths[name] }}"/></svg>
+{% macro icon(name, class="h-6 w-6", flip=True) -%}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="{{ class }}{{ ' rtl:-scale-x-100' if flip and name == 'arrow' }}" aria-hidden="true" focusable="false"><path d="{{ _paths[name] }}"/></svg>
 {%- endmacro %}

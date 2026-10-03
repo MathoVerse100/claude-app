@@ -27,7 +27,7 @@ async def set_language(request: Request, lang: str = Form(...)) -> Response:
     context = getattr(response, "context", {}) or {}
     title = context.get("page_title") or context["t"]("meta.title") if "t" in context else None
     set_pref_cookie(response, "lang", lang)
-    return hx_trigger(response, languageChanged={"lang": lang, "title": title})
+    return hx_trigger(response, languageChanged={"lang": lang, "dir": config_service.resolve_direction(lang), "title": title})
 
 
 @router.post("/preferences/theme")

@@ -1,16 +1,19 @@
 {% from "components/icons.html" import icon %}
 {#
-  Reusable dropdown list (Alpine for open/close, HTMX for the selection).
+  Reusable dropdown list (Alpine `selectMenu` for state/keyboard, HTMX for the selection).
   options: [{value, label, short?, swatch?}]. `short` is shown on the closed button.
   Used for both the language and theme selectors, so new locales/themes added to the
   JSON config simply appear as extra list entries.
+  Keyboard: Enter/Space/ArrowDown opens, Arrow keys/Home/End move, Esc closes and restores focus.
 #}
 {% macro select_menu(kind, label, options, current, endpoint, field, target, swap, drop="down", leading=None) -%}
 {% set cur = (options | selectattr("value", "equalto", current) | first) or options[0] %}
-<div class="relative" data-menu="{{ kind }}" x-data="{ open: false }" @click.outside="open = false" @keydown.escape.stop="open = false">
-  <button type="button"
-          @click="open = !open"
+<div class="relative" data-menu="{{ kind }}" x-data="selectMenu" x-id="['menu']" @click.outside="open = false">
+  <button type="button" x-ref="button"
+          @click="open ? hide(false) : show()"
+          @keydown.arrow-down.prevent="show()"
           :aria-expanded="open.toString()"
+          :aria-controls="$id('menu')"
           aria-haspopup="listbox"
           aria-label="{{ label }}"
           class="flex min-h-[44px] items-center gap-2 rounded-full border border-border px-4 text-sm font-medium text-fg transition-colors hover:border-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent">
@@ -18,23 +21,27 @@
     <span class="menu-current">{{ cur.short or cur.label }}</span>
     {{ icon('chevron', 'h-4 w-4') }}
   </button>
-  <ul x-show="open" x-cloak
+  <ul x-show="open" x-cloak x-ref="list" :id="$id('menu')"
+      @keydown.arrow-down.prevent="move(1)" @keydown.arrow-up.prevent="move(-1)"
+      @keydown.home.prevent="edge(false)" @keydown.end.prevent="edge(true)"
+      @keydown.escape.stop.prevent="hide()" @keydown.tab="hide(false)"
       x-transition:enter="transition duration-150" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
       x-transition:leave="transition duration-100" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
       role="listbox" aria-label="{{ label }}"
-      class="absolute right-0 z-50 min-w-[11rem] overflow-hidden rounded-xl border border-border bg-surface p-1 shadow-xl {{ 'top-full mt-2' if drop == 'down' else 'bottom-full mb-2' }}">
+      class="absolute end-0 z-50 min-w-[11rem] overflow-hidden rounded-xl border border-border bg-surface p-1 shadow-xl {{ 'top-full mt-2' if drop == 'down' else 'bottom-full mb-2' }}">
     {% for o in options %}
     <li role="presentation">
       <button type="button" role="option"
               aria-selected="{{ 'true' if o.value == current else 'false' }}"
               data-value="{{ o.value }}" data-label="{{ o.short or o.label }}"
+              {% if o.lang %}lang="{{ o.lang }}"{% endif %}
               hx-post="{{ endpoint }}" hx-vals='{"{{ field }}": "{{ o.value }}"}'
               {% if target %}hx-target="{{ target }}"{% endif %} hx-swap="{{ swap }}"
-              @click="open = false"
-              class="menu-option flex min-h-[44px] w-full items-center gap-3 rounded-lg px-3 text-left text-sm text-fg/90 transition-colors hover:bg-surface-2">
-        {% if o.swatch %}<span class="h-3.5 w-3.5 rounded-full border border-border" style="background: rgb({{ o.swatch }})"></span>{% endif %}
+              @click="hide(false)"
+              class="menu-option flex min-h-[44px] w-full items-center gap-3 rounded-lg px-3 text-start text-sm text-fg/90 transition-colors hover:bg-surface-2 focus-visible:bg-surface-2 focus-visible:outline-none">
+        {% if o.swatch %}<span class="h-3.5 w-3.5 rounded-full border border-border" style="background: rgb({{ o.swatch }})" aria-hidden="true"></span>{% endif %}
         <span class="flex-1">{{ o.label }}</span>
-        <span class="check">{{ icon('check', 'h-4 w-4') }}</span>
+        <span class="check" aria-hidden="true">{{ icon('check', 'h-4 w-4') }}</span>
       </button>
     </li>
     {% endfor %}

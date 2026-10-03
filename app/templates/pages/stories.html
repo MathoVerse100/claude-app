@@ -1,4 +1,5 @@
 {% extends "pages/_inner.html" %}
+{% from "components/card.html" import card with context %}
 
 {% block content %}
 <section aria-labelledby="stories-how">
@@ -10,15 +11,17 @@
 <section aria-labelledby="stories-customers">
   <h2 id="stories-customers" class="mb-10 text-3xl font-semibold tracking-tight">{{ t('stories.title') }}</h2>
   <ul class="grid gap-4 lg:grid-cols-3">
-    {% for s in t('stories.cards') %}
-    <li class="flex flex-col justify-between rounded-2xl border border-border bg-surface p-7">
+    {% for c in config.cards.stories %}
+    {% set s = t('stories.card.' ~ c.id) %}
+    {% set label = t(c.link.label_key or 'common.card_link') if c.link else '' %}
+    {% call card(c.link, label, s.org, 'flex flex-col justify-between') %}
       <blockquote class="text-lg">“{{ s.quote }}”</blockquote>
       <div class="mt-8 border-t border-border pt-5">
         <p class="text-3xl font-semibold text-accent">{{ s.metric }}</p>
         <p class="text-sm text-muted">{{ s.metric_label }}</p>
         <p class="mt-4 text-sm font-medium">{{ s.org }}</p>
       </div>
-    </li>
+    {% endcall %}
     {% endfor %}
   </ul>
   <p class="mt-4 text-sm text-muted">{{ t('common.placeholder_note') }}</p>

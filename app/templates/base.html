@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ lang }}" data-theme="{{ theme }}" class="scroll-smooth">
+<html lang="{{ lang }}" dir="{{ dir }}" data-theme="{{ theme }}" class="scroll-smooth">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,12 +36,13 @@
   <link rel="stylesheet" href="/static/css/app.css">
 
   <script src="https://unpkg.com/htmx.org@2.0.4" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js" defer></script>
-  <script src="/static/js/bars.js" defer></script>
+  <script src="/static/js/hero-art.js" defer></script>
+  {# app.js must precede Alpine: it registers Alpine components on `alpine:init`. #}
   <script src="/static/js/app.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js" defer></script>
 </head>
 <body class="bg-bg font-sans text-fg antialiased transition-colors duration-300">
-  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded focus:bg-accent focus:px-4 focus:py-2 focus:text-accent-fg">Skip to content</a>
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:z-[60] focus:rounded focus:bg-accent focus:px-4 focus:py-2 focus:text-accent-fg">{{ t('a11y.skip') }}</a>
   <div id="app-shell">
     {% block shell %}{% endblock %}
   </div>

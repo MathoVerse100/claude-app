@@ -1,4 +1,5 @@
 {% extends "pages/_inner.html" %}
+{% from "components/card.html" import stretch_link with context %}
 
 {% block content %}
 {% if config.app.features.metrics_preview %}
@@ -12,12 +13,15 @@
 <section aria-labelledby="news-posts">
   <h2 id="news-posts" class="mb-10 text-3xl font-semibold tracking-tight">{{ t('news.title') }}</h2>
   <ul class="divide-y divide-border border-y border-border">
-    {% for post in t('news.posts') %}
-    <li class="grid gap-2 py-7 md:grid-cols-[12rem_1fr] md:gap-8">
+    {% for c in config.cards.news %}
+    {% set post = t('news.post.' ~ c.id) %}
+    {% set label = t(c.link.label_key or 'common.card_link') if c.link else '' %}
+    <li class="relative grid gap-2 py-7 md:grid-cols-[12rem_1fr] md:gap-8">
       <p class="text-sm text-muted">{{ post.date }} · <span class="text-accent-2">{{ post.tag }}</span></p>
       <div>
         <h3 class="text-xl font-semibold">{{ post.title }}</h3>
         <p class="mt-2 text-muted">{{ post.body }}</p>
+        {{ stretch_link(c.link, label, post.title) }}
       </div>
     </li>
     {% endfor %}

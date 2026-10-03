@@ -46,9 +46,11 @@
       <h2 id="{{ sec.id }}-title" class="mt-3 max-w-3xl text-3xl font-semibold tracking-tight sm:text-5xl">{{ t(sec.i18n ~ '.title') }}</h2>
       <p class="mt-4 mb-12 max-w-2xl text-lg text-muted">{{ t(sec.i18n ~ '.subtitle') }}</p>
       {% include sec.component %}
-      {% if sec.link %}
-      <a {{ link_attrs(sec.link) }} class="mt-8 inline-flex min-h-[44px] items-center gap-2 text-accent hover:underline">
-        {{ t(sec.link.label_key) }}<span class="sr-only"> — {{ t(sec.i18n ~ '.title') }}</span>{{ icon('arrow', 'h-4 w-4') }}
+      {# Section link: config/home.json -> sections[].link (route|href, label_key|label, icon, external, enabled). Remove it by deleting `link` or setting enabled:false. #}
+      {% set l = active_link(sec.link) %}
+      {% if l %}
+      <a {{ link_attrs(l) }} class="mt-8 inline-flex min-h-[44px] items-center gap-2 text-accent hover:underline">
+        {{ link_label(l, t(sec.i18n), 'common.learn_more') }}<span class="sr-only"> — {{ t(sec.i18n ~ '.title') }}{% if is_external(href(l)) %} ({{ t('a11y.new_tab') }}){% endif %}</span>{% if l.icon is not defined or l.icon %}{{ icon(l.icon or 'arrow', 'h-4 w-4') }}{% endif %}
       </a>
       {% endif %}
     </div>

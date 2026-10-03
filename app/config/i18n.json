@@ -89,7 +89,8 @@
           "title": "Share",
           "body": "Publish governed datasets and live dashboards to people and apps, anywhere."
         }
-      ]
+      ],
+      "link_label": "See how teams use it"
     },
     "metrics": {
       "eyebrow": "News",
@@ -368,7 +369,8 @@
           "title": "Comparte",
           "body": "Publica conjuntos de datos gobernados y paneles en vivo para personas y apps, donde sea."
         }
-      ]
+      ],
+      "link_label": "Mira cómo la usan los equipos"
     },
     "metrics": {
       "eyebrow": "Noticias",
@@ -647,7 +649,8 @@
           "title": "شارك",
           "body": "انشر مجموعات بيانات خاضعة للحوكمة ولوحات مباشرة للأشخاص والتطبيقات في أي مكان."
         }
-      ]
+      ],
+      "link_label": "شاهد كيف تستخدمها الفرق"
     },
     "metrics": {
       "eyebrow": "الأخبار",

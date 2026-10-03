@@ -124,28 +124,31 @@ def current_path(request: Request) -> str:
 
 
 def make_link_label(lang: str, t: Callable[..., Any]) -> Callable[..., str]:
-    """Resolve the text of a card's link, most specific source first:
+    """Resolve the visible text of any configurable link (card, section or button).
 
-    1. ``link.label_key``   - any i18n key (shared across cards, translated)
-    2. ``link.label``       - literal text, or a ``{"en": "...", "es": "..."}`` per-locale map
-    3. ``link_label``       - per-card copy in i18n (e.g. features.card.<id>.link_label)
-    4. ``common.card_link`` - the global default
+    Sources, most specific first:
+    1. ``link.label_key``  - any i18n key (shared, translated)
+    2. ``link.label``      - literal text, or a ``{"en": "...", "es": "..."}`` per-locale map
+    3. ``link_label``      - copy that lives with the thing being linked, in i18n
+                             (``text`` is that i18n dict, e.g. features.card.<id> or the section's namespace)
+    4. ``default_key``     - the global default (common.card_link for cards, common.learn_more for sections)
+    A missing or disabled (``"enabled": false``) link has no text.
     """
-    default = load_json("app_config")["app"]["default_locale"]
+    default_locale = load_json("app_config")["app"]["default_locale"]
 
-    def link_label(link: dict[str, Any] | None, card_text: Any = None) -> str:
-        if not link:
+    def link_label(link: dict[str, Any] | None, text: Any = None, default_key: str = "common.card_link") -> str:
+        if not link or link.get("enabled", True) is False:
             return ""
         if link.get("label_key"):
             return t(link["label_key"])
         label = link.get("label")
         if isinstance(label, dict):
-            return label.get(lang) or label.get(default) or next(iter(label.values()), "")
+            return label.get(lang) or label.get(default_locale) or next(iter(label.values()), "")
         if label:
             return str(label)
-        if isinstance(card_text, dict) and card_text.get("link_label"):
-            return card_text["link_label"]
-        return t("common.card_link")
+        if isinstance(text, dict) and text.get("link_label"):
+            return text["link_label"]
+        return t(default_key)
 
     return link_label
 

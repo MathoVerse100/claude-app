@@ -1,5 +1,5 @@
 {
-  "_help": "Link targets: use \"route\" (a key of endpoints.json -> routes) or a literal \"href\". Omit/null `link` to hide it.",
+  "_help": "Links (sections, hero button, and cards in cards.json) all share one format: route (key of endpoints.routes) OR href; external:true to open in a new tab; label_key (i18n key) OR label (text or {\"en\":..,\"es\":..}); icon (name, or false for none); enabled:false to switch it off. Text fallbacks: link_label in the section's i18n namespace, then common.learn_more. Delete `link` (or the whole section) to remove it.",
   "hero": {
     "secondary_cta": {
       "label_key": "hero.cta_details",
@@ -13,8 +13,12 @@
       "component": "partials/blocks/features_grid.html",
       "style": "plain",
       "link": {
-        "label_key": "common.learn_more",
-        "route": "about"
+        "route": "about",
+        "label": {
+          "en": "About DataVerse",
+          "es": "Sobre DataVerse",
+          "ar": "عن DataVerse"
+        }
       }
     },
     {
@@ -23,7 +27,6 @@
       "component": "partials/blocks/how_steps.html",
       "style": "band",
       "link": {
-        "label_key": "common.learn_more",
         "route": "stories"
       }
     },
@@ -34,8 +37,8 @@
       "style": "plain",
       "feature": "metrics_preview",
       "link": {
-        "label_key": "common.learn_more",
-        "route": "news"
+        "route": "news",
+        "label_key": "common.learn_more"
       }
     }
   ]

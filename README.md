@@ -22,6 +22,21 @@ npm run watch:css    # rebuild CSS on change
 Config highlights: `app_config.json` (locales + `dir`, `direction.force`, `hero_art.ripple_interval_seconds` / `click_ripples`), `home.json` (home
 sections and link targets), `cards.json` (cards and optional links), `themes.json` (palettes), `i18n.json`.
 
+## Links (cards, sections, hero button)
+
+Every link uses one format, in `app/config/cards.json` (per card) and `app/config/home.json` (per section, plus the
+hero's secondary button). Each is **pluggable** (add a `link`) and **removable** (delete it, or set `"enabled": false`):
+
+```json
+"link": {"route": "news",            // or "href": "https://..." (+ "external": true for a new tab)
+         "label": {"en": "Read the news", "es": "Leer las noticias"},   // or a string, or "label_key": "some.i18n.key"
+         "icon": "arrow",            // any icon name, or false for none
+         "enabled": true}
+```
+
+Text order: `label_key` -> `label` -> the item's own `link_label` in `i18n.json` (e.g. `how.link_label` for a section,
+`features.card.<id>.link_label` for a card) -> the default (`common.learn_more` for sections, `common.card_link` for cards).
+
 ## Card links
 
 Each card in `app/config/cards.json` can have its own optional `link`:

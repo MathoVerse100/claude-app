@@ -8,6 +8,7 @@
   still see one normal link whose accessible name is "<label>: <card title>".
 #}
 {% macro stretch_link(link, label, title, extra="") -%}
+{% set link = active_link(link) %}
 {% if link %}
 <a {{ link_attrs(link) }} aria-label="{{ label }}: {{ title }}{% if is_external(href(link)) %} ({{ t('a11y.new_tab') }}){% endif %}"
    class="mt-5 inline-flex min-h-[44px] items-center gap-2 text-sm font-medium text-accent after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-accent {{ extra }}">
@@ -17,6 +18,7 @@
 {%- endmacro %}
 
 {% macro card(link=None, label="", title="", class="") -%}
+{% set link = active_link(link) %}
 <li class="relative rounded-2xl border border-border bg-surface p-7 transition-colors {{ 'hover:border-accent focus-within:border-accent' if link }} {{ class }}">
   {{ caller() }}
   {{ stretch_link(link, label, title) }}

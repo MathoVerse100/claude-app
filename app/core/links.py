@@ -12,6 +12,13 @@ def is_external(url: str | None) -> bool:
     return bool(url) and url.startswith(("http://", "https://", "//"))
 
 
+def active_link(link: Mapping[str, Any] | None) -> Mapping[str, Any] | None:
+    """The link if it exists and is not switched off (`"enabled": false`); else None (so it is not rendered)."""
+    if not link or link.get("enabled", True) is False:
+        return None
+    return link
+
+
 def href(link: Mapping[str, Any] | None) -> str:
     """`{"route": "about"}` -> endpoints.routes.about; `{"href": "..."}` -> literal."""
     if not link:

@@ -1,0 +1,23 @@
+{#- Result of the HTMX session check. `variant == "drawer"` renders the primary action only. -#}
+{% from "components/icons.html" import icon %}
+{% set primary = "inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-accent px-7 text-sm font-semibold text-accent-fg transition hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent" %}
+{% if session.authenticated %}
+  {% if variant != 'drawer' %}<p class="mb-4 text-sm text-muted">{{ t('hero.welcome_back', user=session.user) }}</p>{% endif %}
+  <div class="flex flex-wrap items-center gap-3">
+    <a href="{{ config.endpoints.routes.dashboard }}" class="{{ primary }}{{ ' w-full' if variant == 'drawer' }}">
+      {{ t('hero.cta_dashboard') }} {{ icon('arrow', 'h-4 w-4') }}
+    </a>
+    {% if variant != 'drawer' %}
+    <a href="#about" class="inline-flex min-h-[48px] items-center bg-surface-2 px-6 text-sm text-fg transition hover:bg-surface">{{ t('hero.cta_details') }}</a>
+    {% endif %}
+  </div>
+{% else %}
+  <div class="flex flex-wrap items-center gap-3">
+    <a href="{{ config.endpoints.routes.login }}" class="{{ primary }}{{ ' w-full' if variant == 'drawer' }}">
+      {{ t('hero.cta_login') }} {{ icon('arrow', 'h-4 w-4') }}
+    </a>
+    {% if variant != 'drawer' %}
+    <a href="#about" class="inline-flex min-h-[48px] items-center bg-surface-2 px-6 text-sm text-fg transition hover:bg-surface">{{ t('hero.cta_details') }}</a>
+    {% endif %}
+  </div>
+{% endif %}

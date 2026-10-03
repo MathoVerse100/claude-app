@@ -1,0 +1,85 @@
+"""Lookups over the JSON UI DB and the Jinja context builder."""
+from __future__ import annotations
+
+from datetime import datetime
+from typing import Any, Callable
+
+from fastapi import Request
+
+from app.core.config import load_json
+from app.core.security import get_token
+from app.services import auth_service
+
+_MISSING = object()
+
+
+def _lookup(tree: Any, dotted: str) -> Any:
+    node = tree
+    for part in dotted.split("."):
+        if isinstance(node, dict) and part in node:
+            node = node[part]
+        else:
+            return _MISSING
+    return node
+
+
+def make_translator(lang: str) -> Callable[..., Any]:
+    """Return ``t(key, **fmt)`` resolving dotted keys with default-locale fallback."""
+    i18n = load_json("i18n")
+    default = load_json("app_config")["app"]["default_locale"]
+    primary, fallback = i18n.get(lang, {}), i18n.get(default, {})
+
+    def t(key: str, **fmt: Any) -> Any:
+        value = _lookup(primary, key)
+        if value is _MISSING:
+            value = _lookup(fallback, key)
+        if value is _MISSING:
+            return key
+        if fmt and isinstance(value, str):
+            return value.format(**fmt)
+        return value
+
+    return t
+
+
+def supported_locales() -> list[str]:
+    return [loc["code"] for loc in load_json("app_config")["app"]["locales"]]
+
+
+def resolve_lang(request: Request) -> str:
+    cfg = load_json("app_config")
+    supported = supported_locales()
+    cookie = request.cookies.get(cfg["cookies"]["lang"])
+    if cookie in supported:
+        return cookie
+    for chunk in request.headers.get("accept-language", "").split(","):
+        code = chunk.split(";")[0].strip().lower()[:2]
+        if code in supported:
+            return code
+    return cfg["app"]["default_locale"]
+
+
+def resolve_theme(request: Request) -> str:
+    themes = load_json("themes")
+    cookie = request.cookies.get(load_json("app_config")["cookies"]["theme"])
+    return cookie if cookie in themes["themes"] else themes["default"]
+
+
+async def build_context(request: Request, **extra: Any) -> dict[str, Any]:
+    """Context shared by every template: config maps, i18n, theme, session."""
+    lang, theme = resolve_lang(request), resolve_theme(request)
+    session = await auth_service.validate_token(get_token(request))
+    context: dict[str, Any] = {
+        "config": {
+            "app": load_json("app_config"),
+            "endpoints": load_json("endpoints"),
+            "themes": load_json("themes"),
+        },
+        "t": make_translator(lang),
+        "lang": lang,
+        "theme": theme,
+        "session": session,
+        "year": datetime.now().year,
+    }
+    context.update(extra)
+    return context

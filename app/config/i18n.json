@@ -1,0 +1,242 @@
+{
+  "en": {
+    "meta": {
+      "title": "DataVerse — Build your data, wherever you are",
+      "description": "DataVerse is a unified data platform to connect, model and ship data pipelines from any device."
+    },
+    "brand": { "name": "DataVerse" },
+    "nav": {
+      "aria": "Main navigation",
+      "home": "Home.",
+      "about": "About.",
+      "stories": "Stories.",
+      "news": "News.",
+      "contacts": "Contacts.",
+      "open_menu": "Open menu",
+      "close_menu": "Close menu",
+      "language": "Language"
+    },
+    "theme": {
+      "label": "Theme",
+      "dark": "Dark",
+      "light": "Light",
+      "neon": "Neon"
+    },
+    "hero": {
+      "eyebrow": "Unified data platform",
+      "title_1": "Build your data,",
+      "title_2": "wherever you are.",
+      "subtitle": "Connect, model and ship data pipelines from any device — one secure workspace, zero friction.",
+      "cta_login": "Log In",
+      "cta_dashboard": "Go to Dashboard",
+      "cta_details": "Project Details",
+      "session_checking": "Checking session…",
+      "welcome_back": "Welcome back, {user}"
+    },
+    "features": {
+      "eyebrow": "About",
+      "title": "Everything your data needs, in one universe",
+      "subtitle": "From raw sources to shareable insight, DataVerse keeps every step fast, visible and secure.",
+      "cards": [
+        { "icon": "plug", "title": "Universal connectors", "body": "Plug into databases, warehouses, files and SaaS APIs with guided, no-code connectors." },
+        { "icon": "bolt", "title": "Real-time pipelines", "body": "Stream changes as they happen with sub-second latency and automatic back-pressure." },
+        { "icon": "cube", "title": "Visual data modeling", "body": "Shape schemas and relationships on an interactive canvas, versioned like code." },
+        { "icon": "shield", "title": "Enterprise-grade security", "body": "End-to-end encryption, granular roles and a full audit trail out of the box." },
+        { "icon": "users", "title": "Team workspaces", "body": "Share datasets, comment on models and review changes together in real time." },
+        { "icon": "globe", "title": "Edge-ready sync", "body": "Work offline on any device and reconcile safely the moment you reconnect." }
+      ]
+    },
+    "how": {
+      "eyebrow": "Stories",
+      "title": "How DataVerse Works",
+      "subtitle": "Four steps from scattered sources to a living, trusted data layer.",
+      "step_label": "Step {n}",
+      "steps": [
+        { "title": "Connect", "body": "Link your sources in minutes. DataVerse discovers schemas and keeps them in sync." },
+        { "title": "Model", "body": "Clean, join and enrich with a visual canvas or SQL — every change is versioned." },
+        { "title": "Automate", "body": "Schedule or stream pipelines, with alerts and automatic retries when things drift." },
+        { "title": "Share", "body": "Publish governed datasets and live dashboards to people and apps, anywhere." }
+      ]
+    },
+    "metrics": {
+      "eyebrow": "News",
+      "title": "Live platform pulse",
+      "subtitle": "A preview of the numbers powering teams on DataVerse. Switch the range to explore.",
+      "range_label": "Time range",
+      "series_label": "Records ingested over time",
+      "ranges": { "24h": "24 hours", "7d": "7 days", "30d": "30 days" },
+      "kpi": {
+        "records": "Records ingested",
+        "latency": "Median sync latency",
+        "uptime": "Platform uptime"
+      }
+    },
+    "login": {
+      "title": "Log in to DataVerse",
+      "subtitle": "Use your workspace credentials to continue.",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Log In",
+      "error": "Enter a valid email and a password of at least 6 characters.",
+      "back": "Back to home",
+      "hint": "Demo mode: any valid email and a 6+ character password works."
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "welcome": "Signed in as {user}",
+      "body": "This is the application core placeholder. Connect your real dashboard routes here.",
+      "logout": "Log out"
+    },
+    "footer": {
+      "tagline": "Build your data, wherever you are.",
+      "social_label": "Follow DataVerse",
+      "status": "All systems operational",
+      "legal": "© {year} DataVerse. All rights reserved.",
+      "columns": [
+        {
+          "title": "Product",
+          "links": [
+            { "label": "Features", "href": "/#about" },
+            { "label": "How it works", "href": "/#stories" },
+            { "label": "Live metrics", "href": "/#news" }
+          ]
+        },
+        {
+          "title": "Company",
+          "links": [
+            { "label": "About", "href": "/#about" },
+            { "label": "Stories", "href": "/#stories" },
+            { "label": "Contacts", "href": "/#contacts" }
+          ]
+        },
+        {
+          "title": "Account",
+          "links": [
+            { "label": "Log In", "endpoint": "login" },
+            { "label": "Dashboard", "endpoint": "dashboard" }
+          ]
+        }
+      ]
+    }
+  },
+  "es": {
+    "meta": {
+      "title": "DataVerse — Construye tus datos, estés donde estés",
+      "description": "DataVerse es una plataforma de datos unificada para conectar, modelar y publicar pipelines desde cualquier dispositivo."
+    },
+    "brand": { "name": "DataVerse" },
+    "nav": {
+      "aria": "Navegación principal",
+      "home": "Inicio.",
+      "about": "Nosotros.",
+      "stories": "Historias.",
+      "news": "Noticias.",
+      "contacts": "Contacto.",
+      "open_menu": "Abrir menú",
+      "close_menu": "Cerrar menú",
+      "language": "Idioma"
+    },
+    "theme": {
+      "label": "Tema",
+      "dark": "Oscuro",
+      "light": "Claro",
+      "neon": "Neón"
+    },
+    "hero": {
+      "eyebrow": "Plataforma de datos unificada",
+      "title_1": "Construye tus datos,",
+      "title_2": "estés donde estés.",
+      "subtitle": "Conecta, modela y publica pipelines de datos desde cualquier dispositivo: un espacio seguro, sin fricción.",
+      "cta_login": "Iniciar sesión",
+      "cta_dashboard": "Ir al panel",
+      "cta_details": "Detalles del proyecto",
+      "session_checking": "Comprobando sesión…",
+      "welcome_back": "Te damos la bienvenida, {user}"
+    },
+    "features": {
+      "eyebrow": "Nosotros",
+      "title": "Todo lo que tus datos necesitan, en un solo universo",
+      "subtitle": "De las fuentes en bruto a ideas compartibles, DataVerse mantiene cada paso rápido, visible y seguro.",
+      "cards": [
+        { "icon": "plug", "title": "Conectores universales", "body": "Conecta bases de datos, almacenes, archivos y APIs SaaS con conectores guiados sin código." },
+        { "icon": "bolt", "title": "Pipelines en tiempo real", "body": "Transmite cambios al instante con latencia inferior al segundo y control de presión automático." },
+        { "icon": "cube", "title": "Modelado visual", "body": "Diseña esquemas y relaciones en un lienzo interactivo, versionado como código." },
+        { "icon": "shield", "title": "Seguridad empresarial", "body": "Cifrado de extremo a extremo, roles granulares y auditoría completa de serie." },
+        { "icon": "users", "title": "Espacios de equipo", "body": "Comparte conjuntos de datos, comenta modelos y revisa cambios en tiempo real." },
+        { "icon": "globe", "title": "Sincronización en el borde", "body": "Trabaja sin conexión en cualquier dispositivo y reconcilia con seguridad al volver." }
+      ]
+    },
+    "how": {
+      "eyebrow": "Historias",
+      "title": "Cómo funciona DataVerse",
+      "subtitle": "Cuatro pasos desde fuentes dispersas hasta una capa de datos viva y confiable.",
+      "step_label": "Paso {n}",
+      "steps": [
+        { "title": "Conecta", "body": "Enlaza tus fuentes en minutos. DataVerse descubre esquemas y los mantiene sincronizados." },
+        { "title": "Modela", "body": "Limpia, une y enriquece con un lienzo visual o SQL; cada cambio queda versionado." },
+        { "title": "Automatiza", "body": "Programa o transmite pipelines, con alertas y reintentos automáticos ante desvíos." },
+        { "title": "Comparte", "body": "Publica conjuntos de datos gobernados y paneles en vivo para personas y apps, donde sea." }
+      ]
+    },
+    "metrics": {
+      "eyebrow": "Noticias",
+      "title": "El pulso de la plataforma",
+      "subtitle": "Una vista previa de las cifras que impulsan a los equipos en DataVerse. Cambia el rango para explorar.",
+      "range_label": "Rango de tiempo",
+      "series_label": "Registros ingeridos en el tiempo",
+      "ranges": { "24h": "24 horas", "7d": "7 días", "30d": "30 días" },
+      "kpi": {
+        "records": "Registros ingeridos",
+        "latency": "Latencia mediana de sync",
+        "uptime": "Disponibilidad"
+      }
+    },
+    "login": {
+      "title": "Inicia sesión en DataVerse",
+      "subtitle": "Usa las credenciales de tu espacio de trabajo para continuar.",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "submit": "Iniciar sesión",
+      "error": "Introduce un correo válido y una contraseña de al menos 6 caracteres.",
+      "back": "Volver al inicio",
+      "hint": "Modo demo: sirve cualquier correo válido y una contraseña de 6+ caracteres."
+    },
+    "dashboard": {
+      "title": "Panel",
+      "welcome": "Sesión iniciada como {user}",
+      "body": "Este es el marcador del núcleo de la aplicación. Conecta aquí tus rutas reales del panel.",
+      "logout": "Cerrar sesión"
+    },
+    "footer": {
+      "tagline": "Construye tus datos, estés donde estés.",
+      "social_label": "Sigue a DataVerse",
+      "status": "Todos los sistemas operativos",
+      "legal": "© {year} DataVerse. Todos los derechos reservados.",
+      "columns": [
+        {
+          "title": "Producto",
+          "links": [
+            { "label": "Funciones", "href": "/#about" },
+            { "label": "Cómo funciona", "href": "/#stories" },
+            { "label": "Métricas en vivo", "href": "/#news" }
+          ]
+        },
+        {
+          "title": "Compañía",
+          "links": [
+            { "label": "Nosotros", "href": "/#about" },
+            { "label": "Historias", "href": "/#stories" },
+            { "label": "Contacto", "href": "/#contacts" }
+          ]
+        },
+        {
+          "title": "Cuenta",
+          "links": [
+            { "label": "Iniciar sesión", "endpoint": "login" },
+            { "label": "Panel", "endpoint": "dashboard" }
+          ]
+        }
+      ]
+    }
+  }
+}

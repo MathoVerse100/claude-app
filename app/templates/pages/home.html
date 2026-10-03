@@ -1,0 +1,94 @@
+{% extends layout %}
+{% from "components/icons.html" import icon %}
+
+{% block shell %}
+{% include "components/theme_pill.html" %}
+{% include "components/navbar.html" %}
+
+<main id="main">
+
+  {# ───────────── Hero ───────────── #}
+  <section id="top" class="hero-glow relative flex min-h-screen flex-col overflow-hidden">
+    {% if config.app.features.mesh_graphics %}
+    {# Desktop wireframe shards. Hidden on small screens so the headline stays readable. #}
+    <canvas class="mesh pointer-events-none absolute right-0 top-0 hidden h-[38vh] w-[34vw] opacity-80 md:block" data-mesh="wedge" data-seed="3" aria-hidden="true"></canvas>
+    <canvas class="mesh pointer-events-none absolute bottom-0 right-[4vw] hidden h-[72vh] w-[38vw] md:block" data-mesh="tower" data-seed="7" aria-hidden="true"></canvas>
+    <canvas class="mesh pointer-events-none absolute right-0 top-[44vh] hidden h-[32vh] w-[17vw] opacity-90 lg:block" data-mesh="slab" data-seed="11" aria-hidden="true"></canvas>
+    <canvas class="mesh pointer-events-none absolute bottom-0 left-0 hidden h-[34vh] w-[40vw] md:block" data-mesh="ridge" data-seed="5" aria-hidden="true"></canvas>
+    <canvas class="mesh pointer-events-none absolute left-0 top-[42vh] hidden h-[32vh] w-[12vw] opacity-90 lg:block" data-mesh="shard" data-seed="9" aria-hidden="true"></canvas>
+    {% endif %}
+
+    <div class="relative z-10 mx-auto flex w-full max-w-7xl flex-1 items-center px-6 pb-16 pt-32 md:pl-28 lg:pl-40 lg:pr-10">
+      <div class="max-w-2xl">
+        <p class="mb-5 text-base text-fg/90">{{ t('hero.eyebrow') }}</p>
+        <h1 class="text-5xl font-semibold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
+          {{ t('hero.title_1') }}<br>{{ t('hero.title_2') }}
+        </h1>
+        <p class="mt-6 max-w-lg text-lg text-muted">{{ t('hero.subtitle') }}</p>
+
+        {# HTMX session check: server-rendered first paint, refreshed from the endpoint on load. #}
+        <div id="hero-cta" class="mt-10"
+             hx-get="{{ config.endpoints.session_check }}"
+             hx-trigger="load"
+             hx-swap="innerHTML">
+          {% include "partials/session_cta.html" %}
+        </div>
+      </div>
+    </div>
+
+    {# Mobile: a single wireframe tower stacked below the copy instead of behind it. #}
+    {% if config.app.features.mesh_graphics %}
+    <canvas class="mesh pointer-events-none relative z-0 -mt-4 h-56 w-full opacity-70 md:hidden" data-mesh="tower" data-seed="7" aria-hidden="true"></canvas>
+    {% endif %}
+  </section>
+
+  {# ───────────── Features grid (About) ───────────── #}
+  <section id="about" class="mx-auto max-w-7xl scroll-mt-8 px-6 py-24 lg:px-10">
+    <p class="text-sm font-medium uppercase tracking-widest text-accent-2">{{ t('features.eyebrow') }}</p>
+    <h2 class="mt-3 max-w-3xl text-3xl font-semibold tracking-tight sm:text-5xl">{{ t('features.title') }}</h2>
+    <p class="mt-4 max-w-2xl text-lg text-muted">{{ t('features.subtitle') }}</p>
+
+    <ul class="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {% for card in t('features.cards') %}
+      <li class="group rounded-2xl border border-border bg-surface p-7 transition-colors hover:border-accent">
+        <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-surface-2 text-accent">{{ icon(card.icon, 'h-6 w-6') }}</span>
+        <h3 class="mt-6 text-xl font-semibold">{{ card.title }}</h3>
+        <p class="mt-2 text-muted">{{ card.body }}</p>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  {# ───────────── How DataVerse Works (Stories) ───────────── #}
+  <section id="stories" class="scroll-mt-8 border-y border-border bg-surface/50">
+    <div class="mx-auto max-w-7xl px-6 py-24 lg:px-10">
+      <p class="text-sm font-medium uppercase tracking-widest text-accent-2">{{ t('how.eyebrow') }}</p>
+      <h2 class="mt-3 text-3xl font-semibold tracking-tight sm:text-5xl">{{ t('how.title') }}</h2>
+      <p class="mt-4 max-w-2xl text-lg text-muted">{{ t('how.subtitle') }}</p>
+
+      <ol class="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        {% for step in t('how.steps') %}
+        <li class="relative border-t border-border pt-6">
+          <span class="absolute -top-px left-0 h-px w-16 bg-accent"></span>
+          <p class="text-sm text-muted">{{ t('how.step_label', n=loop.index) }}</p>
+          <h3 class="mt-2 text-2xl font-semibold">{{ step.title }}</h3>
+          <p class="mt-3 text-muted">{{ step.body }}</p>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+  </section>
+
+  {# ───────────── Interactive metric preview (News) ───────────── #}
+  {% if config.app.features.metrics_preview %}
+  <section id="news" class="mx-auto max-w-7xl scroll-mt-8 px-6 py-24 lg:px-10">
+    <p class="text-sm font-medium uppercase tracking-widest text-accent-2">{{ t('metrics.eyebrow') }}</p>
+    <h2 class="mt-3 text-3xl font-semibold tracking-tight sm:text-5xl">{{ t('metrics.title') }}</h2>
+    <p class="mt-4 mb-10 max-w-2xl text-lg text-muted">{{ t('metrics.subtitle') }}</p>
+    {% include "partials/metrics.html" %}
+  </section>
+  {% endif %}
+</main>
+
+{% include "components/footer.html" %}
+{% endblock %}

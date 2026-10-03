@@ -1,0 +1,43 @@
+{#- Comprehensive footer: brand, link columns (labels from i18n, targets from endpoints), social badges, status. -#}
+<footer id="contacts" class="border-t border-border bg-surface">
+  <div class="mx-auto grid max-w-7xl gap-12 px-6 py-16 lg:grid-cols-[1.4fr_2fr] lg:px-10">
+    <div class="space-y-6">
+      <a href="{{ config.endpoints.routes.home }}" class="inline-block text-fg" aria-label="{{ t('brand.name') }}">
+        {% include "components/logo.html" %}
+      </a>
+      <p class="max-w-xs text-lg text-muted">{{ t('footer.tagline') }}</p>
+      <ul class="flex flex-wrap gap-3" aria-label="{{ t('footer.social_label') }}">
+        {% for s in config.endpoints.social %}
+        <li>
+          <a href="{{ s.href }}" target="_blank" rel="noopener noreferrer" aria-label="{{ s.label }}"
+             class="flex h-11 w-11 items-center justify-center rounded-full border border-border text-sm font-semibold text-muted transition-colors hover:border-accent hover:text-accent">{{ s.badge }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+      <p class="inline-flex items-center gap-2 text-sm text-muted">
+        <span class="relative flex h-2.5 w-2.5">
+          <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60"></span>
+          <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-accent"></span>
+        </span>
+        {{ t('footer.status') }}
+      </p>
+    </div>
+
+    <div class="grid gap-10 sm:grid-cols-3">
+      {% for col in t('footer.columns') %}
+      <nav aria-label="{{ col.title }}">
+        <h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-muted">{{ col.title }}</h3>
+        <ul class="space-y-1">
+          {% for link in col.links %}
+          {% set href = config.endpoints.routes[link.endpoint] if link.endpoint else link.href %}
+          <li><a href="{{ href }}" class="inline-flex min-h-[44px] items-center text-fg/90 transition-colors hover:text-accent-2">{{ link.label }}</a></li>
+          {% endfor %}
+        </ul>
+      </nav>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="border-t border-border">
+    <p class="mx-auto max-w-7xl px-6 py-6 text-sm text-muted lg:px-10">{{ t('footer.legal', year=year) }}</p>
+  </div>
+</footer>

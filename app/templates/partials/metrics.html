@@ -1,0 +1,37 @@
+{% from "components/icons.html" import icon %}
+{# Interactive metric preview: range tabs re-fetch this fragment and swap it in place. #}
+<div id="metrics-panel">
+  <div class="flex flex-wrap items-center justify-between gap-4">
+    <div role="tablist" aria-label="{{ t('metrics.range_label') }}" class="inline-flex rounded-full border border-border p-1">
+      {% for r in config.app.metrics.ranges %}
+      <button type="button" role="tab" aria-selected="{{ 'true' if r == metrics_range else 'false' }}"
+              hx-get="{{ config.endpoints.metrics }}" hx-vals='{"range": "{{ r }}"}'
+              hx-target="#metrics-panel" hx-swap="outerHTML"
+              class="min-h-[44px] rounded-full px-5 text-sm font-medium transition-colors {{ 'bg-accent text-accent-fg' if r == metrics_range else 'text-muted hover:text-fg' }}">
+        {{ t('metrics.ranges.' ~ r) }}
+      </button>
+      {% endfor %}
+    </div>
+  </div>
+
+  <dl class="mt-8 grid gap-4 sm:grid-cols-3">
+    {% for kpi in metrics.kpis %}
+    <div class="rounded-2xl border border-border bg-surface p-6">
+      <dt class="text-sm text-muted">{{ t('metrics.kpi.' ~ kpi.key) }}</dt>
+      <dd class="mt-2 text-4xl font-semibold tracking-tight">{{ kpi.value }}</dd>
+      <dd class="mt-3 inline-flex items-center gap-1 text-sm {{ 'text-accent' if kpi.trend == 'up' else 'text-accent-2' }}">
+        {{ icon(kpi.trend, 'h-4 w-4') }} {{ kpi.delta }}
+      </dd>
+    </div>
+    {% endfor %}
+  </dl>
+
+  <figure class="mt-4 rounded-2xl border border-border bg-surface p-6">
+    <figcaption class="mb-6 text-sm text-muted">{{ t('metrics.series_label') }} · {{ t('metrics.ranges.' ~ metrics_range) }}</figcaption>
+    <div class="flex h-44 items-end gap-1 sm:gap-1.5" role="img" aria-label="{{ t('metrics.series_label') }}">
+      {% for pct in metrics.series %}
+      <div class="bar flex-1 rounded-t bg-gradient-to-t from-accent-2/40 to-accent" style="height: {{ pct }}%; animation-delay: {{ loop.index0 * 18 }}ms"></div>
+      {% endfor %}
+    </div>
+  </figure>
+</div>

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="{{ lang }}" data-theme="{{ theme }}" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ t('meta.title') }}</title>
+  <meta name="description" content="{{ t('meta.description') }}">
+  <meta name="theme-color" content="{{ config.themes.themes[theme].meta_color }}">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="{{ config.themes.typography.google_href }}">
+
+  {# Theme tokens come straight from config/themes.json (space-separated RGB triplets). #}
+  <style>
+  {% for name, th in config.themes.themes.items() %}
+    :root[data-theme="{{ name }}"] { color-scheme: {{ th.color_scheme }};{% for key, value in th.tokens.items() %} --c-{{ key }}: {{ value }};{% endfor %} }
+  {% endfor %}
+  </style>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            {% for key in config.themes.themes[config.themes.default].tokens %}
+            '{{ key }}': 'rgb(var(--c-{{ key }}) / <alpha-value>)',
+            {% endfor %}
+          },
+          fontFamily: { sans: {{ config.themes.typography.sans | tojson }} }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="/static/css/app.css">
+
+  <script src="https://unpkg.com/htmx.org@2.0.4" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js" defer></script>
+  <script src="/static/js/mesh.js" defer></script>
+  <script src="/static/js/app.js" defer></script>
+</head>
+<body class="bg-bg font-sans text-fg antialiased transition-colors duration-300">
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded focus:bg-accent focus:px-4 focus:py-2 focus:text-accent-fg">Skip to content</a>
+  <div id="app-shell">
+    {% block shell %}{% endblock %}
+  </div>
+</body>
+</html>

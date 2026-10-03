@@ -1,0 +1,66 @@
+{
+  "default": "dark",
+  "typography": {
+    "google_href": "https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap",
+    "sans": ["Outfit", "Urbanist", "ui-sans-serif", "system-ui", "sans-serif"]
+  },
+  "themes": {
+    "dark": {
+      "label_key": "theme.dark",
+      "color_scheme": "dark",
+      "meta_color": "#000000",
+      "tokens": {
+        "bg": "0 0 0",
+        "surface": "20 20 22",
+        "surface-2": "34 34 38",
+        "fg": "255 255 255",
+        "muted": "161 161 170",
+        "border": "63 63 70",
+        "accent": "255 255 255",
+        "accent-fg": "0 0 0",
+        "accent-2": "148 163 184",
+        "mesh": "190 200 212",
+        "mesh-dot": "160 190 215",
+        "glow": "110 150 200"
+      }
+    },
+    "light": {
+      "label_key": "theme.light",
+      "color_scheme": "light",
+      "meta_color": "#fafafa",
+      "tokens": {
+        "bg": "250 250 250",
+        "surface": "255 255 255",
+        "surface-2": "238 238 242",
+        "fg": "10 10 12",
+        "muted": "82 82 91",
+        "border": "212 212 216",
+        "accent": "10 10 12",
+        "accent-fg": "255 255 255",
+        "accent-2": "71 85 105",
+        "mesh": "55 65 82",
+        "mesh-dot": "30 64 110",
+        "glow": "100 130 190"
+      }
+    },
+    "neon": {
+      "label_key": "theme.neon",
+      "color_scheme": "dark",
+      "meta_color": "#06021a",
+      "tokens": {
+        "bg": "6 2 26",
+        "surface": "18 8 48",
+        "surface-2": "32 14 76",
+        "fg": "236 255 250",
+        "muted": "168 156 224",
+        "border": "88 44 170",
+        "accent": "0 255 200",
+        "accent-fg": "6 2 26",
+        "accent-2": "255 46 205",
+        "mesh": "0 255 214",
+        "mesh-dot": "255 80 220",
+        "glow": "170 40 255"
+      }
+    }
+  }
+}

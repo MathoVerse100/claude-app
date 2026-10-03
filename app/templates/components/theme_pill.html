@@ -1,0 +1,19 @@
+{# Vertical theme switch pill. Options are generated from config/themes.json, so new palettes appear automatically. #}
+<div id="theme-pill"
+     role="radiogroup"
+     aria-label="{{ t('theme.label') }}"
+     class="fixed left-2 top-1/2 z-30 flex -translate-y-1/2 flex-col gap-1 rounded-full bg-fg p-1 shadow-lg shadow-black/30 sm:left-4">
+  {% for name, th in config.themes.themes.items() %}
+  <button type="button"
+          role="radio"
+          aria-checked="{{ 'true' if name == theme else 'false' }}"
+          hx-post="{{ config.endpoints.set_theme }}"
+          hx-vals='{"theme": "{{ name }}"}'
+          hx-target="#theme-pill"
+          hx-swap="outerHTML"
+          class="flex min-h-[44px] w-9 items-center justify-center rounded-full px-1 py-3 text-xs font-medium tracking-wide transition-colors sm:w-10
+                 {{ 'bg-bg text-fg' if name == theme else 'text-bg/70 hover:text-bg' }}">
+    <span class="vertical-text">{{ t(th.label_key) }}</span>
+  </button>
+  {% endfor %}
+</div>

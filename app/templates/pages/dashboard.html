@@ -1,0 +1,15 @@
+{% extends layout %}
+
+{% block shell %}
+{% include "components/theme_pill.html" %}
+<main id="main" class="mx-auto flex min-h-screen max-w-3xl flex-col justify-center px-6 py-16 md:pl-28">
+  <a href="{{ config.endpoints.routes.home }}" class="mb-8 inline-block text-fg" aria-label="{{ t('brand.name') }}">{% include "components/logo.html" %}</a>
+  <h1 class="text-4xl font-semibold tracking-tight">{{ t('dashboard.title') }}</h1>
+  <p class="mt-2 text-accent-2">{{ t('dashboard.welcome', user=session.user) }}</p>
+  <p class="mt-6 text-muted">{{ t('dashboard.body') }}</p>
+  <button type="button" hx-post="{{ config.endpoints.auth.logout }}"
+          class="mt-10 min-h-[48px] self-start rounded-full border border-border px-7 text-sm font-semibold transition-colors hover:border-accent">
+    {{ t('dashboard.logout') }}
+  </button>
+</main>
+{% endblock %}

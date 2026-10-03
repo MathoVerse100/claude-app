@@ -1,0 +1,28 @@
+{
+  "routes": {
+    "home": "/",
+    "login": "/login",
+    "dashboard": "/dashboard"
+  },
+  "session_check": "/partials/session-cta",
+  "metrics": "/partials/metrics",
+  "set_language": "/preferences/language",
+  "set_theme": "/preferences/theme",
+  "auth": {
+    "login": "/auth/login",
+    "logout": "/auth/logout"
+  },
+  "nav": [
+    { "id": "home", "label_key": "nav.home", "href": "/#top" },
+    { "id": "about", "label_key": "nav.about", "href": "/#about" },
+    { "id": "stories", "label_key": "nav.stories", "href": "/#stories" },
+    { "id": "news", "label_key": "nav.news", "href": "/#news" },
+    { "id": "contacts", "label_key": "nav.contacts", "href": "/#contacts" }
+  ],
+  "social": [
+    { "id": "github", "label": "GitHub", "badge": "GH", "href": "https://github.com/" },
+    { "id": "x", "label": "X", "badge": "X", "href": "https://x.com/" },
+    { "id": "linkedin", "label": "LinkedIn", "badge": "in", "href": "https://www.linkedin.com/" },
+    { "id": "youtube", "label": "YouTube", "badge": "YT", "href": "https://www.youtube.com/" }
+  ]
+}

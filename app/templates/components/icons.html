@@ -1,0 +1,16 @@
+{% set _paths = {
+  'plug': 'M9 2v6M15 2v6M7 8h10v4a5 5 0 0 1-10 0V8zM12 17v5',
+  'bolt': 'M13 2 4 14h7l-1 8 9-12h-7l1-8z',
+  'cube': 'M12 2 3 7v10l9 5 9-5V7l-9-5zM3 7l9 5 9-5M12 12v10',
+  'shield': 'M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5l-8-3zM9 12l2 2 4-4',
+  'users': 'M16 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM22 20v-2a4 4 0 0 0-3-3.9M16 2.1a4 4 0 0 1 0 7.8',
+  'globe': 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20',
+  'menu': 'M4 7h16M4 12h16M4 17h16',
+  'close': 'M6 6l12 12M18 6 6 18',
+  'arrow': 'M5 12h14M13 6l6 6-6 6',
+  'up': 'M7 17 17 7M8 7h9v9',
+  'down': 'M7 7l10 10M17 8v9H8'
+} %}
+{% macro icon(name, class="h-6 w-6") -%}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="{{ class }}" aria-hidden="true"><path d="{{ _paths[name] }}"/></svg>
+{%- endmacro %}

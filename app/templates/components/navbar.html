@@ -1,0 +1,82 @@
+{% from "components/icons.html" import icon %}
+{#
+  Transparent overlay navbar.
+  - md+: inline links + language switcher.
+  - <md: round hamburger opens an Alpine-controlled slide-out drawer (Esc / overlay / link click close it).
+  Labels come from config/i18n.json, hrefs from config/endpoints.json.
+#}
+<header id="site-nav"
+        class="absolute inset-x-0 top-0 z-40"
+        x-data="{ open: false }"
+        x-effect="document.body.classList.toggle('overflow-hidden', open)"
+        @keydown.escape.window="open = false">
+  <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-10">
+    <a href="{{ config.endpoints.routes.home }}" class="text-fg" aria-label="{{ t('brand.name') }}">
+      {% include "components/logo.html" %}
+    </a>
+
+    <div class="hidden items-center gap-8 md:flex">
+      <nav aria-label="{{ t('nav.aria') }}">
+        <ul class="flex items-center gap-8 text-sm">
+          {% for item in config.endpoints.nav %}
+          <li><a href="{{ item.href }}" class="py-3 text-fg/90 transition-colors hover:text-accent-2">{{ t(item.label_key) }}</a></li>
+          {% endfor %}
+        </ul>
+      </nav>
+      {% include "components/lang_switcher.html" %}
+    </div>
+
+    <button type="button"
+            class="flex h-11 w-11 items-center justify-center rounded-full bg-fg text-bg md:hidden"
+            @click="open = true"
+            :aria-expanded="open.toString()"
+            aria-controls="mobile-drawer"
+            aria-label="{{ t('nav.open_menu') }}">
+      {{ icon('menu', 'h-6 w-6') }}
+    </button>
+  </div>
+
+  <div id="mobile-drawer" class="md:hidden" x-show="open" x-cloak role="dialog" aria-modal="true" aria-label="{{ t('nav.aria') }}"
+       x-transition:enter="transition duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+       x-transition:leave="transition duration-300" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+    <div class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm" @click="open = false"></div>
+    <aside class="fixed right-0 top-0 z-50 flex h-full w-[85%] max-w-sm flex-col gap-8 overflow-y-auto border-l border-border bg-surface p-6 shadow-2xl"
+           x-show="open"
+           x-transition:enter="transition duration-300 ease-out" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
+           x-transition:leave="transition duration-300 ease-in" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full">
+      <div class="flex items-center justify-between">
+        <span class="text-lg font-semibold">{{ t('brand.name') }}</span>
+        <button type="button" class="flex h-11 w-11 items-center justify-center rounded-full bg-surface-2 text-fg"
+                @click="open = false" aria-label="{{ t('nav.close_menu') }}">
+          {{ icon('close', 'h-6 w-6') }}
+        </button>
+      </div>
+
+      <nav aria-label="{{ t('nav.aria') }}">
+        <ul class="flex flex-col">
+          {% for item in config.endpoints.nav %}
+          <li>
+            <a href="{{ item.href }}" @click="open = false"
+               class="flex min-h-[48px] items-center border-b border-border text-2xl font-medium transition-colors hover:text-accent-2">
+              {{ t(item.label_key) }}
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </nav>
+
+      <div class="mt-auto flex flex-col gap-4">
+        {% include "components/lang_switcher.html" %}
+        {# Same HTMX session check as the hero, so the drawer CTA never goes stale. #}
+        <div id="drawer-cta" hx-get="{{ config.endpoints.session_check }}" hx-trigger="load" hx-swap="innerHTML"
+             hx-vals='{"variant": "drawer"}'>
+          {% if session.authenticated %}
+          <a href="{{ config.endpoints.routes.dashboard }}" class="flex min-h-[48px] items-center justify-center rounded-full bg-accent px-6 font-medium text-accent-fg">{{ t('hero.cta_dashboard') }}</a>
+          {% else %}
+          <a href="{{ config.endpoints.routes.login }}" class="flex min-h-[48px] items-center justify-center rounded-full bg-accent px-6 font-medium text-accent-fg">{{ t('hero.cta_login') }}</a>
+          {% endif %}
+        </div>
+      </div>
+    </aside>
+  </div>
+</header>

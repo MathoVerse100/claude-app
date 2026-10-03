@@ -3,10 +3,9 @@
  *
  *   bars    - bars along the bottom (and hanging from the top-right) that ease to new random
  *             heights at random moments while drifting sideways. Lower/dimmer behind the copy.
- *   ripples - expanding rings that make the bars bob and glow as each ring passes, so the screen
- *             itself seems to ripple. One starts every `ripple_interval_seconds`, and a click/tap
- *             on any non-interactive spot of the hero starts one under the cursor.
- *             (config/app_config.json -> hero_art)
+ *   ripples - expanding rings drawn over the bars (the bars are NOT affected by them). One starts
+ *             every `ripple_interval_seconds`, and a click/tap on any non-interactive spot of the
+ *             hero starts one under the cursor. (config/app_config.json -> hero_art)
  *
  * Seamless swaps: animation state lives here, keyed by the canvas's data-hero-art value, so when
  * HTMX replaces the DOM (e.g. a language change) the new canvas adopts the running state and is
@@ -62,7 +61,7 @@
   function spawnDrop(s, x, y, strong, source) {
     s.drops.push({
       x: x, y: y, age: 0,
-      amp: strong ? 1 : 0.8, k: rand(0.07, 0.09), c: rand(260, 330), sigma: rand(80, 105)
+      amp: strong ? 1 : 0.8, c: rand(260, 330)
     });
     if (s.drops.length > MAX_DROPS) s.drops.shift();
     document.dispatchEvent(new CustomEvent("heroart:ripple", { detail: { source: source } }));
@@ -77,20 +76,6 @@
       s.drops[i].age += dt;
       if (s.drops[i].age > MAX_AGE) s.drops.splice(i, 1);
     }
-  }
-  // How strongly ripples are pushing (pulse, signed) and lighting up (glow) the point (x, y).
-  function rippleAt(s, x, y) {
-    var pulse = 0, glow = 0;
-    for (var i = 0; i < s.drops.length; i++) {
-      var d = s.drops[i];
-      var off = Math.hypot(x - d.x, y - d.y) - d.c * d.age; // distance from the ring front
-      var env = Math.exp(-(off * off) / (2 * d.sigma * d.sigma));
-      if (env < 0.01) continue;
-      var life = (1 - d.age / MAX_AGE) * d.amp;
-      pulse += env * life * Math.sin(d.k * off);
-      glow += env * life;
-    }
-    return { pulse: pulse, glow: glow };
   }
   function ringsDraw(s) {
     var ctx = s.ctx;
@@ -148,7 +133,7 @@
     });
   }
   function barsDraw(s) {
-    var ctx = s.ctx, w = s.w, h = s.h, small = w < 640 ? 0.62 : 1, hasDrops = s.drops.length > 0;
+    var ctx = s.ctx, w = s.w, h = s.h, small = w < 640 ? 0.62 : 1;
     s.layers.forEach(function (l, li) {
       var L = LAYERS[li], step = w / l.count, barW = step * 0.62;
       for (var i = 0; i < l.bars.length; i++) {
@@ -158,11 +143,6 @@
         var bh = (0.06 + 0.94 * b.v) * L.hf(p) * small * h;
         if (bh < 3) continue;
         var alpha = L.alpha(p);
-        if (hasDrops) { // a passing ring lifts/lowers the bar and lights it up
-          var r = rippleAt(s, x + barW / 2, L.top ? bh : h - bh);
-          bh = Math.min(h * 0.97, bh * Math.max(0.25, 1 + 0.55 * r.pulse));
-          alpha = Math.min(1, alpha + 0.5 * r.glow);
-        }
         var y = L.top ? 0 : h - bh;
         var g = ctx.createLinearGradient(0, L.top ? bh : y, 0, L.top ? 0 : h);
         g.addColorStop(0, rgba(colors.tip, 0.9));

@@ -43,49 +43,5 @@
     </button>
   </div>
 
-  <div id="mobile-drawer" class="lg:hidden" x-show="open" x-cloak role="dialog" aria-modal="true" aria-labelledby="drawer-title"
-       x-transition:enter="transition duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-       x-transition:leave="transition duration-300" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
-    <div class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm" @click="open = false" aria-hidden="true"></div>
-    <aside class="fixed end-0 top-0 z-50 flex h-full w-[85%] max-w-sm flex-col gap-8 overflow-y-auto border-s border-border bg-surface p-6 shadow-2xl"
-           x-show="open"
-           x-transition:enter="transition duration-300 ease-out" x-transition:enter-start="ltr:translate-x-full rtl:-translate-x-full" x-transition:enter-end="translate-x-0"
-           x-transition:leave="transition duration-300 ease-in" x-transition:leave-start="translate-x-0" x-transition:leave-end="ltr:translate-x-full rtl:-translate-x-full">
-      <div class="flex items-center justify-between">
-        <span id="drawer-title" class="text-lg font-semibold">{{ t('brand.name') }}</span>
-        <button type="button" x-ref="close" class="flex h-11 w-11 items-center justify-center rounded-full bg-surface-2 text-fg"
-                @click="open = false" aria-label="{{ t('nav.close_menu') }}">
-          {{ icon('close', 'h-6 w-6') }}
-        </button>
-      </div>
-
-      <nav aria-label="{{ t('nav.aria') }}">
-        <ul class="flex flex-col">
-          {% for item in config.endpoints.nav %}
-          {% set active = (item.href == current_path) %}
-          <li>
-            <a href="{{ item.href }}" {% if active %}aria-current="page"{% endif %}
-               class="flex min-h-[48px] items-center border-b border-border text-2xl font-medium transition-colors hover:text-accent-2 {{ 'text-accent' if active }}">
-              {{ t(item.label_key) }}
-            </a>
-          </li>
-          {% endfor %}
-        </ul>
-      </nav>
-
-      <div class="mt-auto flex flex-col gap-4">
-        {% with drop = 'up' %}{% include "components/prefs.html" %}{% endwith %}
-        {# Same HTMX session check as the hero (re-checked on tab return / bfcache restore). #}
-        <div id="drawer-cta" hx-get="{{ config.endpoints.session_check }}" hx-swap="innerHTML"
-             hx-trigger="pageshow[persisted] from:window, visibilitychange[document.visibilityState=='visible'] from:document"
-             hx-vals='{"variant": "drawer"}' aria-live="polite">
-          {% if session.authenticated %}
-          <a href="{{ config.endpoints.routes.dashboard }}" class="flex min-h-[48px] items-center justify-center rounded-full bg-accent px-6 font-medium text-accent-fg">{{ t('hero.cta_dashboard') }}</a>
-          {% else %}
-          <a href="{{ config.endpoints.routes.login }}" class="flex min-h-[48px] items-center justify-center rounded-full bg-accent px-6 font-medium text-accent-fg">{{ t('hero.cta_login') }}</a>
-          {% endif %}
-        </div>
-      </div>
-    </aside>
-  </div>
+  {% include "components/drawer.html" %}
 </header>

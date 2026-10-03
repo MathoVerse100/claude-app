@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ page_title or t('meta.title') }}</title>
   <meta name="description" content="{{ t('meta.description') }}">
+  {# htmx re-applies the OLD element's class/style to same-id elements while settling, which wipes the display:none Alpine just
+     set (a closed drawer reappeared after a language swap). Nothing here relies on settle transitions, so turn it off. #}
+  <meta name="htmx-config" content='{"attributesToSettle": []}'>
   <meta name="theme-color" content="{{ config.themes.themes[theme].meta_color }}">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">

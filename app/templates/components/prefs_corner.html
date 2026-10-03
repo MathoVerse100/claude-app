@@ -1,2 +1,26 @@
-{# Floating preferences for pages without the navbar (login, dashboard). #}
-<div class="fixed end-4 top-4 z-40">{% include "components/prefs.html" %}</div>
+{% from "components/icons.html" import icon %}
+{#
+  Preferences for pages without the navbar (login, register, verify, dashboard).
+  - lg+: the language and theme dropdowns, floating top-right.
+  - <lg: just a round menu button (like the home page) that opens the shared slide-out drawer,
+    which holds the page links and both pickers. Same Alpine/focus behaviour as the navbar.
+#}
+<div class="fixed end-4 top-4 z-40"
+     x-data="{ open: false }"
+     x-init="$watch('open', v => $nextTick(() => (v ? $refs.close : $refs.burger).focus()))"
+     x-effect="document.body.classList.toggle('overflow-hidden', open)"
+     @keydown.escape.window="open = false">
+  <div class="hidden lg:block">{% include "components/prefs.html" %}</div>
+
+  <button type="button" x-ref="burger"
+          class="flex h-11 w-11 items-center justify-center rounded-full bg-fg text-bg lg:hidden"
+          @click="open = true"
+          :aria-expanded="open.toString()"
+          aria-haspopup="dialog"
+          aria-controls="mobile-drawer"
+          aria-label="{{ t('nav.open_menu') }}">
+    {{ icon('menu', 'h-6 w-6') }}
+  </button>
+
+  {% include "components/drawer.html" %}
+</div>

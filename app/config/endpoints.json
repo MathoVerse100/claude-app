@@ -2,7 +2,11 @@
   "routes": {
     "home": "/",
     "login": "/login",
-    "dashboard": "/dashboard"
+    "dashboard": "/dashboard",
+    "about": "/about",
+    "stories": "/stories",
+    "news": "/news",
+    "contacts": "/contacts"
   },
   "session_check": "/partials/session-cta",
   "metrics": "/partials/metrics",
@@ -13,16 +17,57 @@
     "logout": "/auth/logout"
   },
   "nav": [
-    { "id": "home", "label_key": "nav.home", "href": "/#top" },
-    { "id": "about", "label_key": "nav.about", "href": "/#about" },
-    { "id": "stories", "label_key": "nav.stories", "href": "/#stories" },
-    { "id": "news", "label_key": "nav.news", "href": "/#news" },
-    { "id": "contacts", "label_key": "nav.contacts", "href": "/#contacts" }
+    {
+      "id": "home",
+      "label_key": "nav.home",
+      "href": "/"
+    },
+    {
+      "id": "about",
+      "label_key": "nav.about",
+      "href": "/about"
+    },
+    {
+      "id": "stories",
+      "label_key": "nav.stories",
+      "href": "/stories"
+    },
+    {
+      "id": "news",
+      "label_key": "nav.news",
+      "href": "/news"
+    },
+    {
+      "id": "contacts",
+      "label_key": "nav.contacts",
+      "href": "/contacts"
+    }
   ],
   "social": [
-    { "id": "github", "label": "GitHub", "badge": "GH", "href": "https://github.com/" },
-    { "id": "x", "label": "X", "badge": "X", "href": "https://x.com/" },
-    { "id": "linkedin", "label": "LinkedIn", "badge": "in", "href": "https://www.linkedin.com/" },
-    { "id": "youtube", "label": "YouTube", "badge": "YT", "href": "https://www.youtube.com/" }
-  ]
+    {
+      "id": "github",
+      "label": "GitHub",
+      "badge": "GH",
+      "href": "https://github.com/"
+    },
+    {
+      "id": "x",
+      "label": "X",
+      "badge": "X",
+      "href": "https://x.com/"
+    },
+    {
+      "id": "linkedin",
+      "label": "LinkedIn",
+      "badge": "in",
+      "href": "https://www.linkedin.com/"
+    },
+    {
+      "id": "youtube",
+      "label": "YouTube",
+      "badge": "YT",
+      "href": "https://www.youtube.com/"
+    }
+  ],
+  "contact_send": "/contacts/send"
 }

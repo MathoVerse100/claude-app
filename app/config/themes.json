@@ -2,7 +2,13 @@
   "default": "dark",
   "typography": {
     "google_href": "https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap",
-    "sans": ["Outfit", "Urbanist", "ui-sans-serif", "system-ui", "sans-serif"]
+    "sans": [
+      "Outfit",
+      "Urbanist",
+      "ui-sans-serif",
+      "system-ui",
+      "sans-serif"
+    ]
   },
   "themes": {
     "dark": {
@@ -19,9 +25,9 @@
         "accent": "255 255 255",
         "accent-fg": "0 0 0",
         "accent-2": "148 163 184",
-        "mesh": "190 200 212",
-        "mesh-dot": "160 190 215",
-        "glow": "110 150 200"
+        "glow": "110 150 200",
+        "bar": "150 170 190",
+        "bar-tip": "230 240 250"
       }
     },
     "light": {
@@ -38,28 +44,28 @@
         "accent": "10 10 12",
         "accent-fg": "255 255 255",
         "accent-2": "71 85 105",
-        "mesh": "55 65 82",
-        "mesh-dot": "30 64 110",
-        "glow": "100 130 190"
+        "glow": "100 130 190",
+        "bar": "55 65 82",
+        "bar-tip": "20 40 80"
       }
     },
     "neon": {
       "label_key": "theme.neon",
       "color_scheme": "dark",
-      "meta_color": "#06021a",
+      "meta_color": "#020c06",
       "tokens": {
-        "bg": "6 2 26",
-        "surface": "18 8 48",
-        "surface-2": "32 14 76",
-        "fg": "236 255 250",
-        "muted": "168 156 224",
-        "border": "88 44 170",
-        "accent": "0 255 200",
-        "accent-fg": "6 2 26",
-        "accent-2": "255 46 205",
-        "mesh": "0 255 214",
-        "mesh-dot": "255 80 220",
-        "glow": "170 40 255"
+        "bg": "2 12 6",
+        "surface": "6 26 14",
+        "surface-2": "10 42 22",
+        "fg": "226 255 232",
+        "muted": "134 196 152",
+        "border": "22 96 52",
+        "accent": "57 255 20",
+        "accent-fg": "2 12 6",
+        "accent-2": "0 230 130",
+        "bar": "16 190 70",
+        "bar-tip": "57 255 20",
+        "glow": "20 255 100"
       }
     }
   }

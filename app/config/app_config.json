@@ -3,8 +3,16 @@
     "name": "DataVerse",
     "default_locale": "en",
     "locales": [
-      { "code": "en", "label": "EN", "name": "English" },
-      { "code": "es", "label": "ES", "name": "Español" }
+      {
+        "code": "en",
+        "label": "EN",
+        "name": "English"
+      },
+      {
+        "code": "es",
+        "label": "ES",
+        "name": "Español"
+      }
     ]
   },
   "cookies": {
@@ -14,11 +22,15 @@
     "max_age_days": 365
   },
   "features": {
-    "mesh_graphics": true,
+    "hero_bars": true,
     "metrics_preview": true
   },
   "metrics": {
     "default_range": "7d",
-    "ranges": ["24h", "7d", "30d"]
+    "ranges": [
+      "24h",
+      "7d",
+      "30d"
+    ]
   }
 }

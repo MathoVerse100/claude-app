@@ -1,0 +1,27 @@
+{% extends "pages/_inner.html" %}
+
+{% block content %}
+{% if config.app.features.metrics_preview %}
+<section aria-labelledby="news-metrics">
+  <h2 id="news-metrics" class="mb-3 text-3xl font-semibold tracking-tight">{{ t('metrics.title') }}</h2>
+  <p class="mb-10 max-w-2xl text-lg text-muted">{{ t('metrics.subtitle') }}</p>
+  {% include "partials/metrics.html" %}
+</section>
+{% endif %}
+
+<section aria-labelledby="news-posts">
+  <h2 id="news-posts" class="mb-10 text-3xl font-semibold tracking-tight">{{ t('news.title') }}</h2>
+  <ul class="divide-y divide-border border-y border-border">
+    {% for post in t('news.posts') %}
+    <li class="grid gap-2 py-7 md:grid-cols-[12rem_1fr] md:gap-8">
+      <p class="text-sm text-muted">{{ post.date }} · <span class="text-accent-2">{{ post.tag }}</span></p>
+      <div>
+        <h3 class="text-xl font-semibold">{{ post.title }}</h3>
+        <p class="mt-2 text-muted">{{ post.body }}</p>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  <p class="mt-4 text-sm text-muted">{{ t('common.placeholder_note') }}</p>
+</section>
+{% endblock %}

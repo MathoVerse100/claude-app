@@ -1,0 +1,10 @@
+{% from "components/icons.html" import icon %}
+<ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+  {% for card in t('features.cards') %}
+  <li class="rounded-2xl border border-border bg-surface p-7 transition-colors hover:border-accent">
+    <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-surface-2 text-accent">{{ icon(card.icon, 'h-6 w-6') }}</span>
+    <h3 class="mt-6 text-xl font-semibold">{{ card.title }}</h3>
+    <p class="mt-2 text-muted">{{ card.body }}</p>
+  </li>
+  {% endfor %}
+</ul>

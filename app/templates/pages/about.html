@@ -1,0 +1,9 @@
+{% extends "pages/_inner.html" %}
+
+{% block content %}
+<section aria-labelledby="about-features">
+  <h2 id="about-features" class="mb-3 text-3xl font-semibold tracking-tight">{{ t('features.title') }}</h2>
+  <p class="mb-10 max-w-2xl text-lg text-muted">{{ t('features.subtitle') }}</p>
+  {% include "partials/blocks/features_grid.html" %}
+</section>
+{% endblock %}

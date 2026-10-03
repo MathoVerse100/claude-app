@@ -6,13 +6,14 @@ from fastapi.responses import RedirectResponse, Response
 
 from app.core.config import load_json, settings
 from app.core.security import token_cookie_name
+from app.core.registry import page_route
 from app.core.templating import is_htmx, layout_for, render
 from app.services import auth_service, config_service
 
 router = APIRouter()
 
 
-@router.get("/login")
+@page_route(router, "/login")
 async def login_page(request: Request) -> Response:
     context = await config_service.build_context(request, layout=layout_for(request))
     if context["session"].authenticated:
@@ -51,7 +52,7 @@ async def logout(request: Request) -> Response:
     return response
 
 
-@router.get("/dashboard")
+@page_route(router, "/dashboard")
 async def dashboard(request: Request) -> Response:
     context = await config_service.build_context(request, layout=layout_for(request))
     if not context["session"].authenticated:

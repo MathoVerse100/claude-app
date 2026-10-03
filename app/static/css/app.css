@@ -1,20 +1,16 @@
 [x-cloak] { display: none !important; }
 
-/* Vertical label for the theme pill (reads bottom-to-top like the reference). */
-.vertical-text { writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; }
+/* Dropdown lists: tick the selected option. */
+.menu-option .check { opacity: 0; }
+.menu-option[aria-selected="true"] { color: rgb(var(--c-accent)); }
+.menu-option[aria-selected="true"] .check { opacity: 1; }
 
-/* Soft theme-driven glow behind the wireframes. */
+/* Soft theme-driven glow behind the hero charts. */
 .hero-glow {
   background:
     radial-gradient(60% 50% at 82% 100%, rgb(var(--c-glow) / 0.20), transparent 70%),
     radial-gradient(40% 40% at 0% 100%, rgb(var(--c-glow) / 0.10), transparent 70%);
 }
-
-@keyframes mesh-drift {
-  0%, 100% { transform: translate3d(0, 0, 0); }
-  50% { transform: translate3d(0, -6px, 0); }
-}
-.mesh { animation: mesh-drift 14s ease-in-out infinite; }
 
 @keyframes bar-grow {
   from { transform: scaleY(0); }

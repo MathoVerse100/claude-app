@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from datetime import datetime
+from urllib.parse import urlparse
 from typing import Any, Callable
 
 from fastapi import Request
@@ -65,6 +66,15 @@ def resolve_theme(request: Request) -> str:
     return cookie if cookie in themes["themes"] else themes["default"]
 
 
+def current_path(request: Request) -> str:
+    """Path the user is looking at; for HTMX calls that is the page that issued them."""
+    if request.headers.get("hx-request") == "true":
+        url = request.headers.get("hx-current-url")
+        if url:
+            return urlparse(url).path or "/"
+    return request.url.path
+
+
 async def build_context(request: Request, **extra: Any) -> dict[str, Any]:
     """Context shared by every template: config maps, i18n, theme, session."""
     lang, theme = resolve_lang(request), resolve_theme(request)
@@ -79,6 +89,7 @@ async def build_context(request: Request, **extra: Any) -> dict[str, Any]:
         "lang": lang,
         "theme": theme,
         "session": session,
+        "current_path": current_path(request),
         "year": datetime.now().year,
     }
     context.update(extra)

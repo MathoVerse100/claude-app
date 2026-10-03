@@ -19,6 +19,14 @@
     if (meta && bg.length === 3) {
       meta.content = "#" + bg.map(function (n) { return ("0" + (+n).toString(16)).slice(-2); }).join("");
     }
+    // Sync every theme dropdown (desktop + drawer) without a re-render.
+    document.querySelectorAll('[data-menu="theme"]').forEach(function (menu) {
+      menu.querySelectorAll("[role=option]").forEach(function (opt) {
+        var on = opt.dataset.value === theme;
+        opt.setAttribute("aria-selected", on ? "true" : "false");
+        if (on) menu.querySelector(".menu-current").textContent = opt.dataset.label;
+      });
+    });
     window.dispatchEvent(new Event("dataverse:theme"));
   });
 

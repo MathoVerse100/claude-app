@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import random
 
+from app.core.config import load_json
 from app.models.schemas import Kpi, MetricsSnapshot
 
 _POINTS = {"24h": 24, "7d": 14, "30d": 30}
@@ -26,3 +27,9 @@ async def get_metrics(range_: str) -> MetricsSnapshot:
         kpis=[Kpi(key=k, value=v, delta=d, trend=t) for k, v, d, t in _KPIS[range_]],
         series=series,
     )
+
+
+async def load_metrics(range_: str | None = None) -> MetricsSnapshot:
+    """Metrics for ``range_`` if it is a configured range, else the configured default."""
+    cfg = load_json("app_config")["metrics"]
+    return await get_metrics(range_ if range_ in cfg["ranges"] else cfg["default_range"])

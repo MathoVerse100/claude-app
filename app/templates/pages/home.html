@@ -9,7 +9,7 @@
   {# ───────────── Hero ───────────── #}
   <section id="top" class="hero-glow relative flex min-h-screen flex-col overflow-hidden" aria-labelledby="hero-title">
     {% if config.app.features.hero_art %}
-    {# One full-bleed animated canvas behind everything; bars <-> ripples alternate (config: hero_art). Decorative only. #}
+    {# One full-bleed animated canvas behind everything: bars + ripples every N seconds / on click (config: hero_art). Decorative only. #}
     <script type="application/json" id="hero-art-config">{{ config.app.hero_art | tojson }}</script>
     <canvas class="pointer-events-none absolute inset-0 h-full w-full" data-hero-art="hero" aria-hidden="true"></canvas>
     {# Soft scrim keeps the headline readable while the art stays visible underneath it. #}

@@ -19,5 +19,5 @@ npm run build        # vendors htmx/alpine + compiles app/static/css/tailwind.cs
 npm run watch:css    # rebuild CSS on change
 ```
 
-Config highlights: `app_config.json` (locales + `dir`, `direction.force`, `hero_art`), `home.json` (home
+Config highlights: `app_config.json` (locales + `dir`, `direction.force`, `hero_art.ripple_interval_seconds` / `click_ripples`), `home.json` (home
 sections and link targets), `cards.json` (cards and optional links), `themes.json` (palettes), `i18n.json`.

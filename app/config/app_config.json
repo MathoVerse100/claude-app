@@ -47,11 +47,7 @@
     "_help": "force: null | \"ltr\" | \"rtl\". When set, every locale uses that direction (e.g. \"rtl\" to flip the UI even for English). When null, each locale's own `dir` is used."
   },
   "hero_art": {
-    "scenes": [
-      "bars",
-      "ripples"
-    ],
-    "hold_seconds": 10,
-    "fade_seconds": 1.8
+    "ripple_interval_seconds": 10,
+    "click_ripples": true
   }
 }

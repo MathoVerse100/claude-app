@@ -1,1 +1,1 @@
-<p class="rounded-lg border border-accent-2 bg-surface-2 px-4 py-3 text-sm" role="alert">{{ t(error_key) }}</p>
+<p class="rounded-lg border border-accent-2 bg-surface-2 px-4 py-3 text-sm" role="alert">{{ t(error_key, n=error_n) if error_n is defined else t(error_key) }}</p>

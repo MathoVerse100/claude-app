@@ -47,8 +47,41 @@
     }
   });
 
+  // Registration step 2: tell the server when this page goes away. A reload comes straight back (allowed);
+  // closing the tab and reopening it later (Ctrl+Shift+T) finds the registration gone. See registration_service.
+  window.addEventListener("pagehide", function () {
+    var flow = document.querySelector("[data-register-flow]");
+    if (flow && navigator.sendBeacon) navigator.sendBeacon(flow.dataset.leaveUrl);
+  });
+
   // Dropdown behaviour shared by the language and theme selectors (keyboard + focus management).
   document.addEventListener("alpine:init", function () {
+    // Counts down `seconds` (from when the page was rendered). At zero it optionally hits `expireUrl`,
+    // so the server can redirect an expired flow back to the form.
+    window.Alpine.data("countdown", function (seconds, expireUrl) {
+      return {
+        left: seconds,
+        end: 0,
+        timer: null,
+        init: function () {
+          var self = this;
+          this.end = Date.now() + seconds * 1000;
+          this.timer = setInterval(function () { self.tick(); }, 1000);
+        },
+        tick: function () {
+          this.left = Math.max(0, Math.ceil((this.end - Date.now()) / 1000));
+          if (this.left === 0) {
+            clearInterval(this.timer);
+            if (expireUrl && window.htmx) window.htmx.ajax("GET", expireUrl, { swap: "none" });
+          }
+        },
+        get text() {
+          return Math.floor(this.left / 60) + ":" + ("0" + (this.left % 60)).slice(-2);
+        },
+        destroy: function () { clearInterval(this.timer); }
+      };
+    });
+
     window.Alpine.data("selectMenu", function () {
       return {
         open: false,

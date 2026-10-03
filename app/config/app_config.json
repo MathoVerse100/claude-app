@@ -27,7 +27,8 @@
     "token": "dv_token",
     "lang": "dv_lang",
     "theme": "dv_theme",
-    "max_age_days": 365
+    "max_age_days": 365,
+    "registration": "dv_reg"
   },
   "features": {
     "hero_art": true,
@@ -49,5 +50,18 @@
   "hero_art": {
     "ripple_interval_seconds": 10,
     "click_ripples": true
+  },
+  "auth_demo": {
+    "_help": "Demo-only settings for the register -> verify flow. code_ttl_minutes: how long the emailed code is valid. heartbeat_*: the open verify page pings the server; if the page is closed the flow dies (rejoin_grace_seconds lets a reload through). show_code_on_page: show the 'sent' email on the verify page (turn off once real email exists). allow_unregistered_login: demo login still accepts any valid email (false = only verified registrants can log in).",
+    "code_length": 8,
+    "code_ttl_minutes": 15,
+    "max_attempts": 5,
+    "max_resends": 3,
+    "resend_cooldown_seconds": 30,
+    "heartbeat_seconds": 15,
+    "heartbeat_timeout_seconds": 120,
+    "rejoin_grace_seconds": 5,
+    "show_code_on_page": true,
+    "allow_unregistered_login": true
   }
 }

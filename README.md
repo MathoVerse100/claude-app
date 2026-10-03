@@ -62,8 +62,31 @@ In `app/config/themes.json`:
 
 ## Demo auth
 
-`app/services/auth_service.py` is a stand-in for the external auth API. **Login** accepts any valid email + a 6+ character
-password. **Register** (`/register`) asks for name, email, password and confirmation, validates them, and signs the new
-user in; nothing is stored (`taken@example.com` simulates an existing account). Session = `HttpOnly` cookie `dv_token`.
-Swap the function bodies for real HTTP calls when your API is ready; `register()` should keep raising
-`RegistrationError("invalid" | "mismatch" | "taken")` so the form can explain what went wrong.
+`app/services/auth_service.py` stands in for the external auth API. Everything here is in memory and resets on restart.
+
+**Login** (`/login`): a verified registrant must use their real password; a registration still waiting for its code
+cannot log in; anyone else may log in with any valid email + 6+ character password
+(`auth_demo.allow_unregistered_login: false` in `app_config.json` makes that "registered users only").
+
+**Register** is two steps, and the person is **not a user until step 2**:
+
+1. `/register`: name, email, password, confirmation. This creates only a *pending* registration and "emails" a secret
+   one-time code (8 characters, `XXXX-XXXX`). No account, no session. `taken@example.com` simulates an existing account.
+2. `/register/verify`: type the code. Correct -> the account is created and the user is signed in.
+
+The code expires after **15 minutes** (`code_ttl_minutes`), allows 5 wrong tries, can be resent (3 times, 30 s apart; a new
+code kills the old one) and works once. Only a hash is stored, and the flow is bound to a **session cookie** (`dv_reg`) so the
+code is useless in another browser.
+
+**Closing the page ends the registration**, however much of the 15 minutes is left. The open verify page pings the server
+every 15 s and sends a `pagehide` beacon when it goes away. Loading the page again more than `rejoin_grace_seconds` (5 s)
+after that - e.g. reopening the tab with Ctrl+Shift+T - finds the registration gone and sends the user back to the form with a
+notice. A reload within the grace window resumes. If no beacon arrives (browser crash/kill), loading the page fails once the
+page has been silent for `heartbeat_timeout_seconds` (120 s). Leaving the verify page for any other page also cancels it.
+
+**Email** is a demo: the message is logged to the server console (`[demo mail] ...`) and, while `show_code_on_page` is true,
+shown in a "Demo inbox" box on the verify page. For real email, replace `send_verification()` in
+`app/services/email_service.py` and set `show_code_on_page` to false.
+
+All knobs are in `app_config.json` -> `auth_demo`. Swap the function bodies for real HTTP calls when your API is ready
+(`check_registration()` should keep raising `RegistrationError("invalid" | "mismatch" | "taken")`).

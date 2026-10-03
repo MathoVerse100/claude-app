@@ -119,7 +119,9 @@
       "back": "Back to home",
       "hint": "Demo mode: any valid email and a 6+ character password works.",
       "no_account": "No account yet?",
-      "register_link": "Register"
+      "register_link": "Register",
+      "error_unverified": "This email has not been verified yet. Finish registering with the code we sent you, or register again.",
+      "error_unknown": "No account found for that email. Please register first."
     },
     "dashboard": {
       "title": "Dashboard",
@@ -292,13 +294,36 @@
       "password": "Password",
       "confirm": "Confirm password",
       "submit": "Create account",
-      "hint": "Demo mode: nothing is stored. Use any valid email and a 6+ character password (taken@example.com simulates an existing account).",
+      "hint": "Demo mode: no real email is sent and nothing is stored permanently. Use any valid email and a 6+ character password (taken@example.com simulates an existing account).",
       "have_account": "Already have an account?",
       "login_link": "Log in",
       "back": "Back to home",
       "error_invalid": "Enter your name, a valid email and a password of at least 6 characters.",
       "error_mismatch": "The two passwords don't match.",
-      "error_taken": "That email is already registered. Try logging in instead."
+      "error_taken": "That email is already registered. Try logging in instead.",
+      "verify_title": "Check your email",
+      "verify_subtitle": "We sent a verification code to {email}.",
+      "code_label": "Verification code",
+      "verify_submit": "Verify and create account",
+      "expires_in": "Code expires in",
+      "resend": "Resend code",
+      "start_over": "Start over",
+      "keep_open": "Keep this page open: closing it cancels your registration and you will need to register again.",
+      "demo_inbox_title": "Demo inbox",
+      "demo_inbox_hint": "No real email is sent in demo mode; this is the message that would be delivered.",
+      "resent": "A new code was sent. The previous one no longer works.",
+      "error_code": "That code is incorrect. {n} attempts left.",
+      "error_attempts": "Too many wrong attempts. Please register again.",
+      "error_cooldown": "Please wait a moment before requesting another code.",
+      "error_limit": "You have reached the resend limit. Please start over.",
+      "notice_expired": "Your registration expired. Please register again.",
+      "notice_attempts": "Too many wrong codes. Please register again.",
+      "notice_cancelled": "Registration cancelled.",
+      "error_busy": "Registration is busy right now. Please try again in a few minutes."
+    },
+    "email": {
+      "verify_subject": "Your DataVerse verification code",
+      "verify_body": "Hi {name}, your DataVerse verification code is {code}. It expires in {minutes} minutes. If you did not request it, ignore this email."
     }
   },
   "es": {
@@ -421,7 +446,9 @@
       "back": "Volver al inicio",
       "hint": "Modo demo: sirve cualquier correo válido y una contraseña de 6+ caracteres.",
       "no_account": "¿Aún no tienes cuenta?",
-      "register_link": "Regístrate"
+      "register_link": "Regístrate",
+      "error_unverified": "Este correo aún no está verificado. Termina el registro con el código que te enviamos o regístrate de nuevo.",
+      "error_unknown": "No hay ninguna cuenta con ese correo. Regístrate primero."
     },
     "dashboard": {
       "title": "Panel",
@@ -594,13 +621,36 @@
       "password": "Contraseña",
       "confirm": "Confirmar contraseña",
       "submit": "Crear cuenta",
-      "hint": "Modo demo: no se guarda nada. Usa cualquier correo válido y una contraseña de 6+ caracteres (taken@example.com simula una cuenta existente).",
+      "hint": "Modo demo: no se envía correo real y nada se guarda de forma permanente. Usa cualquier correo válido y una contraseña de 6+ caracteres (taken@example.com simula una cuenta existente).",
       "have_account": "¿Ya tienes una cuenta?",
       "login_link": "Inicia sesión",
       "back": "Volver al inicio",
       "error_invalid": "Introduce tu nombre, un correo válido y una contraseña de al menos 6 caracteres.",
       "error_mismatch": "Las dos contraseñas no coinciden.",
-      "error_taken": "Ese correo ya está registrado. Prueba a iniciar sesión."
+      "error_taken": "Ese correo ya está registrado. Prueba a iniciar sesión.",
+      "verify_title": "Revisa tu correo",
+      "verify_subtitle": "Enviamos un código de verificación a {email}.",
+      "code_label": "Código de verificación",
+      "verify_submit": "Verificar y crear cuenta",
+      "expires_in": "El código caduca en",
+      "resend": "Reenviar código",
+      "start_over": "Empezar de nuevo",
+      "keep_open": "Mantén esta página abierta: al cerrarla se cancela tu registro y tendrás que registrarte de nuevo.",
+      "demo_inbox_title": "Bandeja demo",
+      "demo_inbox_hint": "En modo demo no se envía correo real; este es el mensaje que se entregaría.",
+      "resent": "Se envió un código nuevo. El anterior ya no funciona.",
+      "error_code": "Ese código no es correcto. Te quedan {n} intentos.",
+      "error_attempts": "Demasiados intentos fallidos. Regístrate de nuevo.",
+      "error_cooldown": "Espera un momento antes de pedir otro código.",
+      "error_limit": "Has alcanzado el límite de reenvíos. Empieza de nuevo.",
+      "notice_expired": "Tu registro caducó. Regístrate de nuevo.",
+      "notice_attempts": "Demasiados códigos incorrectos. Regístrate de nuevo.",
+      "notice_cancelled": "Registro cancelado.",
+      "error_busy": "El registro está saturado ahora. Inténtalo de nuevo en unos minutos."
+    },
+    "email": {
+      "verify_subject": "Tu código de verificación de DataVerse",
+      "verify_body": "Hola {name}, tu código de verificación de DataVerse es {code}. Caduca en {minutes} minutos. Si no lo solicitaste, ignora este correo."
     }
   },
   "ar": {
@@ -723,7 +773,9 @@
       "back": "العودة إلى الرئيسية",
       "hint": "وضع تجريبي: يعمل أي بريد صالح وكلمة مرور من 6 أحرف أو أكثر.",
       "no_account": "ليس لديك حساب؟",
-      "register_link": "سجّل الآن"
+      "register_link": "سجّل الآن",
+      "error_unverified": "لم يتم التحقق من هذا البريد بعد. أكمل التسجيل بالرمز الذي أرسلناه إليك أو سجّل مرة أخرى.",
+      "error_unknown": "لا يوجد حساب بهذا البريد. يرجى التسجيل أولًا."
     },
     "dashboard": {
       "title": "لوحة التحكم",
@@ -896,13 +948,36 @@
       "password": "كلمة المرور",
       "confirm": "تأكيد كلمة المرور",
       "submit": "إنشاء الحساب",
-      "hint": "وضع تجريبي: لا يتم حفظ أي شيء. استخدم أي بريد صالح وكلمة مرور من 6 أحرف أو أكثر (taken@example.com يحاكي حسابًا موجودًا).",
+      "hint": "وضع تجريبي: لا يُرسل بريد حقيقي ولا يُحفظ شيء بشكل دائم. استخدم أي بريد صالح وكلمة مرور من 6 أحرف أو أكثر (taken@example.com يحاكي حسابًا موجودًا).",
       "have_account": "لديك حساب بالفعل؟",
       "login_link": "تسجيل الدخول",
       "back": "العودة إلى الرئيسية",
       "error_invalid": "أدخل اسمك وبريدًا إلكترونيًا صالحًا وكلمة مرور من 6 أحرف على الأقل.",
       "error_mismatch": "كلمتا المرور غير متطابقتين.",
-      "error_taken": "هذا البريد مسجَّل بالفعل. جرّب تسجيل الدخول."
+      "error_taken": "هذا البريد مسجَّل بالفعل. جرّب تسجيل الدخول.",
+      "verify_title": "تحقق من بريدك",
+      "verify_subtitle": "أرسلنا رمز تحقق إلى {email}.",
+      "code_label": "رمز التحقق",
+      "verify_submit": "تحقق وأنشئ الحساب",
+      "expires_in": "ينتهي الرمز خلال",
+      "resend": "إعادة إرسال الرمز",
+      "start_over": "ابدأ من جديد",
+      "keep_open": "أبقِ هذه الصفحة مفتوحة: إغلاقها يلغي تسجيلك وسيتعين عليك التسجيل مرة أخرى.",
+      "demo_inbox_title": "صندوق وارد تجريبي",
+      "demo_inbox_hint": "لا يُرسل بريد حقيقي في الوضع التجريبي؛ هذه هي الرسالة التي كانت ستصل.",
+      "resent": "تم إرسال رمز جديد. الرمز السابق لم يعد صالحًا.",
+      "error_code": "هذا الرمز غير صحيح. متبقٍ {n} محاولات.",
+      "error_attempts": "محاولات خاطئة كثيرة. يرجى التسجيل مرة أخرى.",
+      "error_cooldown": "يرجى الانتظار قليلًا قبل طلب رمز آخر.",
+      "error_limit": "لقد بلغت حد إعادة الإرسال. يرجى البدء من جديد.",
+      "notice_expired": "انتهت صلاحية تسجيلك. يرجى التسجيل مرة أخرى.",
+      "notice_attempts": "رموز خاطئة كثيرة. يرجى التسجيل مرة أخرى.",
+      "notice_cancelled": "تم إلغاء التسجيل.",
+      "error_busy": "التسجيل مزدحم حاليًا. يرجى المحاولة بعد بضع دقائق."
+    },
+    "email": {
+      "verify_subject": "رمز التحقق الخاص بك في DataVerse",
+      "verify_body": "مرحبًا {name}، رمز التحقق الخاص بك في DataVerse هو {code}. ينتهي خلال {minutes} دقيقة. إذا لم تطلبه فتجاهل هذه الرسالة."
     }
   }
 }

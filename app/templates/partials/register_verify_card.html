@@ -1,0 +1,57 @@
+{% from "components/icons.html" import icon %}
+{#
+  Step 2 of registration. The whole card is swapped on "resend", so it carries all of its own state.
+  The wrapper pings the server while the page is open (heartbeat) and app.js sends a beacon on pagehide:
+  closing the page - or reopening it later with Ctrl+Shift+T - ends the registration (see registration_service).
+#}
+<div id="verify-card" class="w-full max-w-md rounded-2xl border border-border bg-surface p-8"
+     data-register-flow data-leave-url="{{ config.endpoints.auth.register_leave }}"
+     hx-disinherit="*"
+     hx-get="{{ config.endpoints.auth.register_ping }}" hx-swap="none"
+     hx-trigger="every {{ config.app.auth_demo.heartbeat_seconds }}s, visibilitychange[document.visibilityState=='visible'] from:document, pageshow[persisted] from:window">
+  <a href="{{ config.endpoints.routes.home }}" class="mb-8 inline-block text-fg" aria-label="{{ t('brand.name') }}">{% include "components/logo.html" %}</a>
+  <h1 id="verify-title" class="text-3xl font-semibold tracking-tight">{{ t('register.verify_title') }}</h1>
+  <p class="mt-2 text-muted" dir="auto">{{ t('register.verify_subtitle', email=masked_email) }}</p>
+
+  {% if inbox %}
+  <aside class="mt-6 rounded-lg border border-dashed border-border bg-bg p-4 text-sm" aria-labelledby="inbox-title">
+    <p id="inbox-title" class="font-semibold">{{ t('register.demo_inbox_title') }}</p>
+    <p class="mt-1 text-xs text-muted">{{ t('register.demo_inbox_hint') }}</p>
+    <p class="mt-3 font-medium" dir="auto">{{ inbox.subject }}</p>
+    <p class="mt-1 text-muted" dir="auto">{{ inbox.body }}</p>
+  </aside>
+  {% endif %}
+
+  <p class="mt-6 text-sm text-muted" x-data="countdown({{ seconds_left }}, '{{ config.endpoints.auth.register_ping }}')">
+    {{ t('register.expires_in') }} <span class="font-semibold text-fg" x-text="text" role="timer" dir="ltr">{{ '%d:%02d' % (seconds_left // 60, seconds_left % 60) }}</span>
+  </p>
+
+  {% if status_key %}
+  <p class="mt-4 rounded-lg border bg-surface-2 px-4 py-3 text-sm {{ 'border-accent-2' if status_kind == 'error' else 'border-accent' }}" role="status">{{ t(status_key) }}</p>
+  {% endif %}
+
+  <form class="mt-6 space-y-5" aria-labelledby="verify-title"
+        hx-post="{{ config.endpoints.auth.register_verify }}" hx-target="#verify-error" hx-swap="innerHTML">
+    <label class="block">
+      <span class="mb-1 block text-sm text-muted">{{ t('register.code_label') }}</span>
+      <input type="text" name="code" required aria-required="true" autocomplete="one-time-code" inputmode="text"
+             autocapitalize="characters" spellcheck="false" maxlength="{{ config.app.auth_demo.code_length + 4 }}" dir="ltr" aria-describedby="verify-keep-open"
+             class="min-h-[48px] w-full rounded-lg border border-border bg-bg px-4 text-center text-xl font-semibold uppercase tracking-widest text-fg focus:border-accent focus:outline-none">
+    </label>
+    <div id="verify-error" aria-live="assertive" aria-atomic="true"></div>
+    <button type="submit" class="min-h-[48px] w-full rounded-full bg-accent px-6 font-semibold text-accent-fg transition hover:opacity-90">{{ t('register.verify_submit') }}</button>
+  </form>
+
+  <div class="mt-4 flex flex-wrap items-center gap-3">
+    <span x-data="countdown({{ cooldown_left }}, null)">
+      <button type="button" class="min-h-[44px] rounded-full border border-border px-5 text-sm font-medium transition-colors hover:border-accent disabled:cursor-not-allowed disabled:opacity-50"
+              hx-post="{{ config.endpoints.auth.register_resend }}" hx-target="#verify-card" hx-swap="outerHTML"
+              {% if resends_left == 0 %}disabled{% else %}:disabled="left > 0"{% endif %}>
+        {{ t('register.resend') }}<span x-show="left > 0" x-cloak dir="ltr"> (<span x-text="left"></span>)</span>
+      </button>
+    </span>
+    <button type="button" class="min-h-[44px] rounded-full px-5 text-sm text-accent-2 hover:underline"
+            hx-post="{{ config.endpoints.auth.register_cancel }}" hx-swap="none">{{ t('register.start_over') }}</button>
+  </div>
+  <p id="verify-keep-open" class="mt-6 text-sm text-muted">{{ t('register.keep_open') }}</p>
+</div>

@@ -7,7 +7,8 @@
     "stories": "/stories",
     "news": "/news",
     "contacts": "/contacts",
-    "register": "/register"
+    "register": "/register",
+    "register_verify": "/register/verify"
   },
   "session_check": "/partials/session-cta",
   "metrics": "/partials/metrics",
@@ -16,7 +17,12 @@
   "auth": {
     "login": "/auth/login",
     "logout": "/auth/logout",
-    "register": "/auth/register"
+    "register": "/auth/register",
+    "register_verify": "/auth/register/verify",
+    "register_resend": "/auth/register/resend",
+    "register_cancel": "/auth/register/cancel",
+    "register_ping": "/auth/register/ping",
+    "register_leave": "/auth/register/leave"
   },
   "nav": [
     {

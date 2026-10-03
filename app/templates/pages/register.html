@@ -8,6 +8,7 @@
     <a href="{{ config.endpoints.routes.home }}" class="mb-8 inline-block text-fg" aria-label="{{ t('brand.name') }}">{% include "components/logo.html" %}</a>
     <h1 id="register-title" class="text-3xl font-semibold tracking-tight">{{ t('register.title') }}</h1>
     <p class="mt-2 text-muted">{{ t('register.subtitle') }}</p>
+    {% if notice_key %}<p class="mt-6 rounded-lg border border-accent-2 bg-surface-2 px-4 py-3 text-sm" role="status">{{ t(notice_key) }}</p>{% endif %}
 
     <form class="mt-8 space-y-5" aria-labelledby="register-title" hx-post="{{ config.endpoints.auth.register }}" hx-target="#register-error" hx-swap="innerHTML">
       <label class="block">

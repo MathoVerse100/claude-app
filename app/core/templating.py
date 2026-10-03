@@ -5,7 +5,7 @@ import json
 from typing import Any
 
 from fastapi import Request
-from fastapi.responses import Response
+from fastapi.responses import RedirectResponse, Response
 from fastapi.templating import Jinja2Templates
 
 from app.core.config import load_json, settings
@@ -32,6 +32,15 @@ def render(request: Request, name: str, context: dict[str, Any], status_code: in
     # Same URL yields a full page or a fragment: caches must key on HX-Request.
     response.headers["Vary"] = "HX-Request"
     return response
+
+
+def redirect(request: Request, url: str) -> Response:
+    """Send the user elsewhere: HX-Redirect for HTMX requests (a plain 303 would swap the target page into a fragment)."""
+    if is_htmx(request):
+        response = Response(status_code=204)
+        response.headers["HX-Redirect"] = url
+        return response
+    return RedirectResponse(url, status_code=303)
 
 
 def hx_trigger(response: Response, **events: Any) -> Response:

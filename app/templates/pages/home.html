@@ -9,13 +9,11 @@
   {# ───────────── Hero ───────────── #}
   <section id="top" class="hero-glow relative flex min-h-screen flex-col overflow-hidden" aria-labelledby="hero-title">
     {% if config.app.features.hero_art %}
-    {# Hero art alternates between scenes (bars <-> waves); see config/app_config.json -> hero_art. Purely decorative. #}
+    {# One full-bleed animated canvas behind everything; bars <-> ripples alternate (config: hero_art). Decorative only. #}
     <script type="application/json" id="hero-art-config">{{ config.app.hero_art | tojson }}</script>
-    <canvas class="chart-canvas pointer-events-none absolute end-0 top-0 hidden h-[34vh] w-[34vw] opacity-80 md:block" data-bars="12" data-anchor="top" data-env="fall" aria-hidden="true"></canvas>
-    <canvas class="chart-canvas pointer-events-none absolute bottom-0 end-[3vw] hidden h-[72vh] w-[38vw] md:block" data-bars="22" data-env="peak" aria-hidden="true"></canvas>
-    <canvas class="chart-canvas pointer-events-none absolute end-0 top-[40vh] hidden h-[26vh] w-[16vw] opacity-90 lg:block" data-bars="8" data-env="rise" aria-hidden="true"></canvas>
-    <canvas class="chart-canvas pointer-events-none absolute bottom-0 start-0 hidden h-[32vh] w-[40vw] md:block" data-bars="16" data-env="peak" aria-hidden="true"></canvas>
-    <canvas class="chart-canvas pointer-events-none absolute start-0 top-[44vh] hidden h-[24vh] w-[12vw] opacity-90 lg:block" data-bars="6" data-env="fall" aria-hidden="true"></canvas>
+    <canvas class="pointer-events-none absolute inset-0 h-full w-full" data-hero-art="hero" aria-hidden="true"></canvas>
+    {# Soft scrim keeps the headline readable while the art stays visible underneath it. #}
+    <div class="pointer-events-none absolute inset-0 z-[1] from-bg/75 via-bg/30 to-transparent ltr:bg-gradient-to-r rtl:bg-gradient-to-l" aria-hidden="true"></div>
     {% endif %}
 
     <div class="relative z-10 mx-auto flex w-full max-w-7xl flex-1 items-center px-6 pb-16 pt-32 md:ps-16 lg:ps-24 lg:pe-10">
@@ -26,19 +24,17 @@
         </h1>
         <p class="mt-6 max-w-lg text-lg text-muted">{{ t('hero.subtitle') }}</p>
 
-        {# HTMX session check: server-rendered first paint, refreshed from the endpoint on load. #}
+        {# HTMX session check: the server renders the right state on first paint, so no refetch (and no flash) on load;
+           it is re-checked when the tab regains focus or the page returns from the back/forward cache. #}
         <div id="hero-cta" class="mt-10" aria-live="polite"
              hx-get="{{ config.endpoints.session_check }}"
-             hx-trigger="load"
+             hx-trigger="pageshow[persisted] from:window, visibilitychange[document.visibilityState=='visible'] from:document"
              hx-swap="innerHTML">
           {% include "partials/session_cta.html" %}
         </div>
       </div>
     </div>
 
-    {% if config.app.features.hero_art %}
-    <canvas class="chart-canvas pointer-events-none relative z-0 -mt-4 h-56 w-full opacity-70 md:hidden" data-bars="18" data-env="peak" aria-hidden="true"></canvas>
-    {% endif %}
   </section>
 
   {# ───────────── Scrollable teasers: sections, components and link targets come from config/home.json ───────────── #}

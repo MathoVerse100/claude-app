@@ -49,7 +49,7 @@
   "hero_art": {
     "scenes": [
       "bars",
-      "waves"
+      "ripples"
     ],
     "hold_seconds": 10,
     "fade_seconds": 1.8

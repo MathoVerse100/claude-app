@@ -39,6 +39,14 @@
     if (d.title) document.title = d.title;
   });
 
+  // The swap replaces the dropdown that had focus; hand focus to its replacement (keyboard/screen-reader users).
+  document.addEventListener("htmx:afterSwap", function (e) {
+    if (e.detail.target && e.detail.target.id === "app-shell" && e.detail.requestConfig.path.indexOf("/preferences/language") === 0) {
+      var btn = document.querySelector('[data-menu="language"] button');
+      if (btn && btn.offsetParent !== null) btn.focus({ preventScroll: true });
+    }
+  });
+
   // Dropdown behaviour shared by the language and theme selectors (keyboard + focus management).
   document.addEventListener("alpine:init", function () {
     window.Alpine.data("selectMenu", function () {

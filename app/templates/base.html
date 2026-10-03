@@ -18,28 +18,15 @@
   {% endfor %}
   </style>
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            {% for key in config.themes.themes[config.themes.default].tokens %}
-            '{{ key }}': 'rgb(var(--c-{{ key }}) / <alpha-value>)',
-            {% endfor %}
-          },
-          fontFamily: { sans: {{ config.themes.typography.sans | tojson }} }
-        }
-      }
-    };
-  </script>
+  {# Compiled by `npm run build:css` (tailwind.config.js reads the same themes.json). #}
+  <link rel="stylesheet" href="/static/css/tailwind.css">
   <link rel="stylesheet" href="/static/css/app.css">
 
-  <script src="https://unpkg.com/htmx.org@2.0.4" defer></script>
+  <script src="/static/js/vendor/htmx.min.js" defer></script>
   <script src="/static/js/hero-art.js" defer></script>
   {# app.js must precede Alpine: it registers Alpine components on `alpine:init`. #}
   <script src="/static/js/app.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js" defer></script>
+  <script src="/static/js/vendor/alpine.min.js" defer></script>
 </head>
 <body class="bg-bg font-sans text-fg antialiased transition-colors duration-300">
   <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:z-[60] focus:rounded focus:bg-accent focus:px-4 focus:py-2 focus:text-accent-fg">{{ t('a11y.skip') }}</a>

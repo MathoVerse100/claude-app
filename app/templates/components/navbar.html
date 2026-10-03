@@ -75,8 +75,9 @@
 
       <div class="mt-auto flex flex-col gap-4">
         {% with drop = 'up' %}{% include "components/prefs.html" %}{% endwith %}
-        {# Same HTMX session check as the hero, so the drawer CTA never goes stale. #}
-        <div id="drawer-cta" hx-get="{{ config.endpoints.session_check }}" hx-trigger="load" hx-swap="innerHTML"
+        {# Same HTMX session check as the hero (re-checked on tab return / bfcache restore). #}
+        <div id="drawer-cta" hx-get="{{ config.endpoints.session_check }}" hx-swap="innerHTML"
+             hx-trigger="pageshow[persisted] from:window, visibilitychange[document.visibilityState=='visible'] from:document"
              hx-vals='{"variant": "drawer"}' aria-live="polite">
           {% if session.authenticated %}
           <a href="{{ config.endpoints.routes.dashboard }}" class="flex min-h-[48px] items-center justify-center rounded-full bg-accent px-6 font-medium text-accent-fg">{{ t('hero.cta_dashboard') }}</a>

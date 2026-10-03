@@ -42,7 +42,8 @@
       "card": {
         "connectors": {
           "title": "Universal connectors",
-          "body": "Plug into databases, warehouses, files and SaaS APIs with guided, no-code connectors."
+          "body": "Plug into databases, warehouses, files and SaaS APIs with guided, no-code connectors.",
+          "link_label": "See customer stories"
         },
         "realtime": {
           "title": "Real-time pipelines",
@@ -320,7 +321,8 @@
       "card": {
         "connectors": {
           "title": "Conectores universales",
-          "body": "Conecta bases de datos, almacenes, archivos y APIs SaaS con conectores guiados sin código."
+          "body": "Conecta bases de datos, almacenes, archivos y APIs SaaS con conectores guiados sin código.",
+          "link_label": "Ver historias de clientes"
         },
         "realtime": {
           "title": "Pipelines en tiempo real",
@@ -598,7 +600,8 @@
       "card": {
         "connectors": {
           "title": "موصلات شاملة",
-          "body": "اتصل بقواعد البيانات والمستودعات والملفات وواجهات SaaS عبر موصلات موجّهة بلا كود."
+          "body": "اتصل بقواعد البيانات والمستودعات والملفات وواجهات SaaS عبر موصلات موجّهة بلا كود.",
+          "link_label": "اطّلع على قصص العملاء"
         },
         "realtime": {
           "title": "مسارات فورية",

@@ -87,6 +87,33 @@ def current_path(request: Request) -> str:
     return request.url.path
 
 
+def make_link_label(lang: str, t: Callable[..., Any]) -> Callable[..., str]:
+    """Resolve the text of a card's link, most specific source first:
+
+    1. ``link.label_key``   - any i18n key (shared across cards, translated)
+    2. ``link.label``       - literal text, or a ``{"en": "...", "es": "..."}`` per-locale map
+    3. ``link_label``       - per-card copy in i18n (e.g. features.card.<id>.link_label)
+    4. ``common.card_link`` - the global default
+    """
+    default = load_json("app_config")["app"]["default_locale"]
+
+    def link_label(link: dict[str, Any] | None, card_text: Any = None) -> str:
+        if not link:
+            return ""
+        if link.get("label_key"):
+            return t(link["label_key"])
+        label = link.get("label")
+        if isinstance(label, dict):
+            return label.get(lang) or label.get(default) or next(iter(label.values()), "")
+        if label:
+            return str(label)
+        if isinstance(card_text, dict) and card_text.get("link_label"):
+            return card_text["link_label"]
+        return t("common.card_link")
+
+    return link_label
+
+
 async def build_context(request: Request, **extra: Any) -> dict[str, Any]:
     """Context shared by every template: config maps, i18n, theme, session."""
     lang, theme = resolve_lang(request), resolve_theme(request)
@@ -99,7 +126,8 @@ async def build_context(request: Request, **extra: Any) -> dict[str, Any]:
             "home": load_json("home"),
             "cards": load_json("cards"),
         },
-        "t": make_translator(lang),
+        "t": (t := make_translator(lang)),
+        "link_label": make_link_label(lang, t),
         "lang": lang,
         "dir": resolve_direction(lang),
         "theme": theme,

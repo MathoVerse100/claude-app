@@ -15,7 +15,7 @@
   <ul class="divide-y divide-border border-y border-border">
     {% for c in config.cards.news %}
     {% set post = t('news.post.' ~ c.id) %}
-    {% set label = t(c.link.label_key or 'common.card_link') if c.link else '' %}
+    {% set label = link_label(c.link, post) %}
     <li class="relative grid gap-2 py-7 md:grid-cols-[12rem_1fr] md:gap-8">
       <p class="text-sm text-muted">{{ post.date }} · <span class="text-accent-2">{{ post.tag }}</span></p>
       <div>

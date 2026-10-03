@@ -2,6 +2,7 @@
 {#
   Import with context (`... import card with context`) so `t` is available.
   Card building blocks with an OPTIONAL link (config/cards.json -> `link`).
+  Per-card link options: route | href, external, label_key | label (text or per-locale map), icon (name or false).
   When a link is present the whole card becomes clickable via a stretched anchor
   (the anchor's ::after covers the card), while keyboard focus and screen readers
   still see one normal link whose accessible name is "<label>: <card title>".
@@ -10,7 +11,7 @@
 {% if link %}
 <a {{ link_attrs(link) }} aria-label="{{ label }}: {{ title }}{% if is_external(href(link)) %} ({{ t('a11y.new_tab') }}){% endif %}"
    class="mt-5 inline-flex min-h-[44px] items-center gap-2 text-sm font-medium text-accent after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-accent {{ extra }}">
-  <span aria-hidden="true">{{ label }}</span>{{ icon('arrow', 'h-4 w-4') }}
+  <span aria-hidden="true">{{ label }}</span>{% if link.icon is not defined or link.icon %}{{ icon(link.icon or 'arrow', 'h-4 w-4') }}{% endif %}
 </a>
 {% endif %}
 {%- endmacro %}

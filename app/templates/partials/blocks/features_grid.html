@@ -4,7 +4,7 @@
 <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
   {% for c in config.cards.features %}
   {% set txt = t('features.card.' ~ c.id) %}
-  {% set label = t(c.link.label_key or 'common.card_link') if c.link else '' %}
+  {% set label = link_label(c.link, txt) %}
   {% call card(c.link, label, txt.title, 'group') %}
     <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-surface-2 text-accent">{{ icon(c.icon, 'h-6 w-6') }}</span>
     <h3 class="mt-6 text-xl font-semibold">{{ txt.title }}</h3>

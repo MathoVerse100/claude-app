@@ -13,7 +13,7 @@
   <ul class="grid gap-4 lg:grid-cols-3">
     {% for c in config.cards.stories %}
     {% set s = t('stories.card.' ~ c.id) %}
-    {% set label = t(c.link.label_key or 'common.card_link') if c.link else '' %}
+    {% set label = link_label(c.link, s) %}
     {% call card(c.link, label, s.org, 'flex flex-col justify-between') %}
       <blockquote class="text-lg">“{{ s.quote }}”</blockquote>
       <div class="mt-8 border-t border-border pt-5">

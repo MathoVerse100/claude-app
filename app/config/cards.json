@@ -1,5 +1,5 @@
 {
-  "_help": "Each card has an optional `link` ({route|href, label_key?}). No link = plain card. Card copy lives in i18n under <group>.card.<id> / news.post.<id>.",
+  "_help": "Each card has an optional `link`; no link = plain card. Link options: route (key of endpoints.routes) OR href; external (open in new tab); label_key (i18n key) OR label (text, or {\"en\":..,\"es\":..} per locale); icon (icon name, or false for none). Without a label here, the card's own i18n `link_label` is used, then common.card_link. Card copy lives in i18n under <group>.card.<id> / news.post.<id>.",
   "features": [
     {
       "id": "connectors",
@@ -12,7 +12,12 @@
       "id": "realtime",
       "icon": "bolt",
       "link": {
-        "route": "news"
+        "route": "news",
+        "label": {
+          "en": "Read the news",
+          "es": "Leer las noticias",
+          "ar": "اقرأ الأخبار"
+        }
       }
     },
     {
@@ -23,7 +28,16 @@
     {
       "id": "security",
       "icon": "shield",
-      "link": null
+      "link": {
+        "href": "https://example.com/security",
+        "external": true,
+        "label": {
+          "en": "Security whitepaper",
+          "es": "Libro blanco de seguridad",
+          "ar": "الورقة البيضاء للأمان"
+        },
+        "icon": "up"
+      }
     },
     {
       "id": "teams",
@@ -50,7 +64,12 @@
     },
     {
       "id": "orbit",
-      "link": null
+      "link": {
+        "href": "https://example.com/orbit-case-study",
+        "external": true,
+        "label": "Orbit case study",
+        "icon": false
+      }
     }
   ],
   "news": [

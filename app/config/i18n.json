@@ -117,7 +117,9 @@
       "submit": "Log In",
       "error": "Enter a valid email and a password of at least 6 characters.",
       "back": "Back to home",
-      "hint": "Demo mode: any valid email and a 6+ character password works."
+      "hint": "Demo mode: any valid email and a 6+ character password works.",
+      "no_account": "No account yet?",
+      "register_link": "Register"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -171,6 +173,10 @@
             {
               "label": "Log In",
               "endpoint": "login"
+            },
+            {
+              "label": "Create account",
+              "endpoint": "register"
             },
             {
               "label": "Dashboard",
@@ -277,6 +283,22 @@
       "skip": "Skip to content",
       "new_tab": "opens in a new tab",
       "series_values": "Values: {values}"
+    },
+    "register": {
+      "title": "Create your account",
+      "subtitle": "Join DataVerse in a minute.",
+      "name": "Full name",
+      "email": "Email",
+      "password": "Password",
+      "confirm": "Confirm password",
+      "submit": "Create account",
+      "hint": "Demo mode: nothing is stored. Use any valid email and a 6+ character password (taken@example.com simulates an existing account).",
+      "have_account": "Already have an account?",
+      "login_link": "Log in",
+      "back": "Back to home",
+      "error_invalid": "Enter your name, a valid email and a password of at least 6 characters.",
+      "error_mismatch": "The two passwords don't match.",
+      "error_taken": "That email is already registered. Try logging in instead."
     }
   },
   "es": {
@@ -397,7 +419,9 @@
       "submit": "Iniciar sesión",
       "error": "Introduce un correo válido y una contraseña de al menos 6 caracteres.",
       "back": "Volver al inicio",
-      "hint": "Modo demo: sirve cualquier correo válido y una contraseña de 6+ caracteres."
+      "hint": "Modo demo: sirve cualquier correo válido y una contraseña de 6+ caracteres.",
+      "no_account": "¿Aún no tienes cuenta?",
+      "register_link": "Regístrate"
     },
     "dashboard": {
       "title": "Panel",
@@ -451,6 +475,10 @@
             {
               "label": "Iniciar sesión",
               "endpoint": "login"
+            },
+            {
+              "label": "Crear cuenta",
+              "endpoint": "register"
             },
             {
               "label": "Panel",
@@ -557,6 +585,22 @@
       "skip": "Saltar al contenido",
       "new_tab": "se abre en una pestaña nueva",
       "series_values": "Valores: {values}"
+    },
+    "register": {
+      "title": "Crea tu cuenta",
+      "subtitle": "Únete a DataVerse en un minuto.",
+      "name": "Nombre completo",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "confirm": "Confirmar contraseña",
+      "submit": "Crear cuenta",
+      "hint": "Modo demo: no se guarda nada. Usa cualquier correo válido y una contraseña de 6+ caracteres (taken@example.com simula una cuenta existente).",
+      "have_account": "¿Ya tienes una cuenta?",
+      "login_link": "Inicia sesión",
+      "back": "Volver al inicio",
+      "error_invalid": "Introduce tu nombre, un correo válido y una contraseña de al menos 6 caracteres.",
+      "error_mismatch": "Las dos contraseñas no coinciden.",
+      "error_taken": "Ese correo ya está registrado. Prueba a iniciar sesión."
     }
   },
   "ar": {
@@ -677,7 +721,9 @@
       "submit": "تسجيل الدخول",
       "error": "أدخل بريدًا إلكترونيًا صالحًا وكلمة مرور من 6 أحرف على الأقل.",
       "back": "العودة إلى الرئيسية",
-      "hint": "وضع تجريبي: يعمل أي بريد صالح وكلمة مرور من 6 أحرف أو أكثر."
+      "hint": "وضع تجريبي: يعمل أي بريد صالح وكلمة مرور من 6 أحرف أو أكثر.",
+      "no_account": "ليس لديك حساب؟",
+      "register_link": "سجّل الآن"
     },
     "dashboard": {
       "title": "لوحة التحكم",
@@ -731,6 +777,10 @@
             {
               "label": "تسجيل الدخول",
               "endpoint": "login"
+            },
+            {
+              "label": "إنشاء حساب",
+              "endpoint": "register"
             },
             {
               "label": "لوحة التحكم",
@@ -837,6 +887,22 @@
       "send": "إرسال الرسالة",
       "success": "شكرًا يا {name}! سنرد خلال يوم عمل واحد.",
       "error": "يرجى ملء جميع الحقول بعنوان بريد إلكتروني صالح."
+    },
+    "register": {
+      "title": "أنشئ حسابك",
+      "subtitle": "انضم إلى DataVerse في دقيقة.",
+      "name": "الاسم الكامل",
+      "email": "البريد الإلكتروني",
+      "password": "كلمة المرور",
+      "confirm": "تأكيد كلمة المرور",
+      "submit": "إنشاء الحساب",
+      "hint": "وضع تجريبي: لا يتم حفظ أي شيء. استخدم أي بريد صالح وكلمة مرور من 6 أحرف أو أكثر (taken@example.com يحاكي حسابًا موجودًا).",
+      "have_account": "لديك حساب بالفعل؟",
+      "login_link": "تسجيل الدخول",
+      "back": "العودة إلى الرئيسية",
+      "error_invalid": "أدخل اسمك وبريدًا إلكترونيًا صالحًا وكلمة مرور من 6 أحرف على الأقل.",
+      "error_mismatch": "كلمتا المرور غير متطابقتين.",
+      "error_taken": "هذا البريد مسجَّل بالفعل. جرّب تسجيل الدخول."
     }
   }
 }

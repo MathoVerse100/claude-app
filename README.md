@@ -59,3 +59,11 @@ In `app/config/themes.json`:
   from `on_dark` / `on_light` by contrast against the background they sit on, so dark screens always get white
   text and light screens black, even for new themes. Set `"mode": "manual"` (globally, or per theme with
   `"text_contrast": "manual"`) to use the literal values in `tokens` instead.
+
+## Demo auth
+
+`app/services/auth_service.py` is a stand-in for the external auth API. **Login** accepts any valid email + a 6+ character
+password. **Register** (`/register`) asks for name, email, password and confirmation, validates them, and signs the new
+user in; nothing is stored (`taken@example.com` simulates an existing account). Session = `HttpOnly` cookie `dv_token`.
+Swap the function bodies for real HTTP calls when your API is ready; `register()` should keep raising
+`RegistrationError("invalid" | "mismatch" | "taken")` so the form can explain what went wrong.

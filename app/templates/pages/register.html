@@ -1,0 +1,42 @@
+{% extends layout %}
+{% from "components/icons.html" import icon %}
+
+{% block shell %}
+{% include "components/prefs_corner.html" %}
+<main id="main" tabindex="-1" aria-labelledby="register-title" class="hero-glow flex min-h-screen items-center justify-center px-6 py-16">
+  <div class="w-full max-w-md rounded-2xl border border-border bg-surface p-8">
+    <a href="{{ config.endpoints.routes.home }}" class="mb-8 inline-block text-fg" aria-label="{{ t('brand.name') }}">{% include "components/logo.html" %}</a>
+    <h1 id="register-title" class="text-3xl font-semibold tracking-tight">{{ t('register.title') }}</h1>
+    <p class="mt-2 text-muted">{{ t('register.subtitle') }}</p>
+
+    <form class="mt-8 space-y-5" aria-labelledby="register-title" hx-post="{{ config.endpoints.auth.register }}" hx-target="#register-error" hx-swap="innerHTML">
+      <label class="block">
+        <span class="mb-1 block text-sm text-muted">{{ t('register.name') }}</span>
+        <input type="text" name="name" required aria-required="true" autocomplete="name" dir="auto"
+               class="min-h-[48px] w-full rounded-lg border border-border bg-bg px-4 text-fg focus:border-accent focus:outline-none">
+      </label>
+      <label class="block">
+        <span class="mb-1 block text-sm text-muted">{{ t('register.email') }}</span>
+        <input type="email" name="email" required aria-required="true" autocomplete="email" dir="auto"
+               class="min-h-[48px] w-full rounded-lg border border-border bg-bg px-4 text-fg focus:border-accent focus:outline-none">
+      </label>
+      <label class="block">
+        <span class="mb-1 block text-sm text-muted">{{ t('register.password') }}</span>
+        <input type="password" name="password" required aria-required="true" minlength="6" autocomplete="new-password" aria-describedby="register-hint"
+               class="min-h-[48px] w-full rounded-lg border border-border bg-bg px-4 text-fg focus:border-accent focus:outline-none">
+      </label>
+      <label class="block">
+        <span class="mb-1 block text-sm text-muted">{{ t('register.confirm') }}</span>
+        <input type="password" name="confirm_password" required aria-required="true" minlength="6" autocomplete="new-password"
+               class="min-h-[48px] w-full rounded-lg border border-border bg-bg px-4 text-fg focus:border-accent focus:outline-none">
+      </label>
+      <div id="register-error" aria-live="assertive" aria-atomic="true"></div>
+      <button type="submit" class="min-h-[48px] w-full rounded-full bg-accent px-6 font-semibold text-accent-fg transition hover:opacity-90">{{ t('register.submit') }}</button>
+    </form>
+    <p id="register-hint" class="mt-6 text-sm text-muted">{{ t('register.hint') }}</p>
+    <p class="mt-4 text-sm text-muted">{{ t('register.have_account') }}
+      <a href="{{ config.endpoints.routes.login }}" class="inline-flex min-h-[44px] items-center text-accent hover:underline">{{ t('register.login_link') }}</a></p>
+    <a href="{{ config.endpoints.routes.home }}" class="inline-flex min-h-[44px] items-center text-sm text-accent-2 hover:underline">{{ icon('arrow', 'h-4 w-4 me-2 ltr:-scale-x-100', false) }}{{ t('register.back') }}</a>
+  </div>
+</main>
+{% endblock %}

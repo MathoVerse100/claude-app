@@ -24,7 +24,9 @@
       <button type="submit" class="min-h-[48px] w-full rounded-full bg-accent px-6 font-semibold text-accent-fg transition hover:opacity-90">{{ t('login.submit') }}</button>
     </form>
     <p id="login-hint" class="mt-6 text-sm text-muted">{{ t('login.hint') }}</p>
-    <a href="{{ config.endpoints.routes.home }}" class="mt-4 inline-flex min-h-[44px] items-center text-sm text-accent-2 hover:underline">{{ icon('arrow', 'h-4 w-4 me-2 ltr:-scale-x-100', false) }}{{ t('login.back') }}</a>
+    <p class="mt-4 text-sm text-muted">{{ t('login.no_account') }}
+      <a href="{{ config.endpoints.routes.register }}" class="inline-flex min-h-[44px] items-center text-accent hover:underline">{{ t('login.register_link') }}</a></p>
+    <a href="{{ config.endpoints.routes.home }}" class="inline-flex min-h-[44px] items-center text-sm text-accent-2 hover:underline">{{ icon('arrow', 'h-4 w-4 me-2 ltr:-scale-x-100', false) }}{{ t('login.back') }}</a>
   </div>
 </main>
 {% endblock %}

@@ -6,7 +6,8 @@
     "about": "/about",
     "stories": "/stories",
     "news": "/news",
-    "contacts": "/contacts"
+    "contacts": "/contacts",
+    "register": "/register"
   },
   "session_check": "/partials/session-cta",
   "metrics": "/partials/metrics",
@@ -14,7 +15,8 @@
   "set_theme": "/preferences/theme",
   "auth": {
     "login": "/auth/login",
-    "logout": "/auth/logout"
+    "logout": "/auth/logout",
+    "register": "/auth/register"
   },
   "nav": [
     {

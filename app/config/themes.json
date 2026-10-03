@@ -11,11 +11,22 @@
       "sans-serif"
     ]
   },
+  "text_contrast": {
+    "_help": "mode \"auto\": for each token in apply_to, pick on_dark or on_light - whichever contrasts more with the background token it sits on (so dark screens always get white text, light screens black). mode \"manual\": use the literal value in each theme's tokens. A theme can override with its own \"text_contrast\": \"manual\"|\"auto\".",
+    "mode": "auto",
+    "on_dark": "255 255 255",
+    "on_light": "0 0 0",
+    "apply_to": {
+      "fg": "bg",
+      "accent-fg": "accent"
+    }
+  },
   "themes": {
     "dark": {
       "label_key": "theme.dark",
       "color_scheme": "dark",
       "meta_color": "#000000",
+      "swatch": "0 0 0",
       "tokens": {
         "bg": "0 0 0",
         "surface": "20 20 22",
@@ -35,11 +46,12 @@
       "label_key": "theme.light",
       "color_scheme": "light",
       "meta_color": "#fafafa",
+      "swatch": "255 255 255",
       "tokens": {
         "bg": "250 250 250",
         "surface": "255 255 255",
         "surface-2": "238 238 242",
-        "fg": "10 10 12",
+        "fg": "0 0 0",
         "muted": "82 82 91",
         "border": "212 212 216",
         "accent": "10 10 12",
@@ -54,15 +66,16 @@
       "label_key": "theme.neon",
       "color_scheme": "dark",
       "meta_color": "#020c06",
+      "swatch": "57 255 20",
       "tokens": {
         "bg": "2 12 6",
         "surface": "6 26 14",
         "surface-2": "10 42 22",
-        "fg": "226 255 232",
+        "fg": "255 255 255",
         "muted": "134 196 152",
         "border": "22 96 52",
         "accent": "57 255 20",
-        "accent-fg": "2 12 6",
+        "accent-fg": "0 0 0",
         "accent-2": "0 230 130",
         "bar": "16 190 70",
         "bar-tip": "57 255 20",

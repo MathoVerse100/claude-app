@@ -34,3 +34,13 @@ Each card in `app/config/cards.json` can have its own optional `link`:
 ```
 
 Label order: `label_key` -> `label` -> the card's own `link_label` in `i18n.json` -> `common.card_link`.
+
+## Theme colours
+
+In `app/config/themes.json`:
+
+- `swatch` - the circle shown for a theme in the dropdown (RGB triplet; defaults to the theme's `bg`).
+- `text_contrast` - with `"mode": "auto"` the text colours (`fg`, and `accent-fg` on accent buttons) are chosen
+  from `on_dark` / `on_light` by contrast against the background they sit on, so dark screens always get white
+  text and light screens black, even for new themes. Set `"mode": "manual"` (globally, or per theme with
+  `"text_contrast": "manual"`) to use the literal values in `tokens` instead.

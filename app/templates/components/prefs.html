@@ -7,7 +7,7 @@
 {% endfor %}
 {% set theme_options = [] %}
 {% for name, th in config.themes.themes.items() %}
-  {% set _ = theme_options.append({'value': name, 'label': t(th.label_key), 'swatch': th.tokens.accent}) %}
+  {% set _ = theme_options.append({'value': name, 'label': t(th.label_key), 'swatch': th.swatch}) %}
 {% endfor %}
 <div class="flex flex-wrap items-center gap-2" role="group" aria-label="{{ t('nav.language') }} / {{ t('theme.label') }}">
   {{ select_menu('language', t('nav.language'), lang_options, lang, config.endpoints.set_language, 'lang', '#app-shell', 'innerHTML', drop, 'globe') }}

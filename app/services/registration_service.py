@@ -61,7 +61,7 @@ class Pending:
 
 _flows: dict[str, Pending] = {}
 _by_email: dict[str, str] = {}
-_by_username: dict[str, str] = {}               # exact (case-sensitive) username -> flow key
+_by_username: dict[str, str] = {}               # username.casefold() -> flow key (uniqueness ignores capitals)
 _by_pair: dict[tuple[str, str], str] = {}       # normalised (first, last) -> flow key
 
 
@@ -94,7 +94,7 @@ def _drop(key: str) -> None:
     p = _flows.pop(key, None)
     if p is None:
         return
-    for index, k in ((_by_email, p.email), (_by_username, p.username), (_by_pair, name_pair(p.first_name, p.last_name))):
+    for index, k in ((_by_email, p.email), (_by_username, p.username.casefold()), (_by_pair, name_pair(p.first_name, p.last_name))):
         if index.get(k) == key:
             del index[k]
 
@@ -121,7 +121,7 @@ def start(first_name: str, last_name: str, username: str, email: str, password_h
     key = _key(flow_id)
     _flows[key] = p
     _by_email[email] = key
-    _by_username[username] = key
+    _by_username[username.casefold()] = key
     _by_pair[name_pair(first_name, last_name)] = key
     return flow_id, code, p
 
@@ -200,7 +200,7 @@ def cancel(flow_id: str | None) -> None:
 def username_reserved(username: str, except_email: str | None = None) -> bool:
     """A pending registration holds its username until it expires, so nobody else can take it meanwhile."""
     _purge(_now())
-    key = _by_username.get(username)
+    key = _by_username.get(username.casefold())
     return key is not None and _flows[key].email != except_email
 
 
@@ -210,9 +210,13 @@ def pair_reserved(pair: tuple[str, str], except_email: str | None = None) -> boo
     return key is not None and _flows[key].email != except_email
 
 
-def has_pending(email: str) -> bool:
+def has_pending(identifier: str) -> bool:
+    """Is there a pending registration for this email (contains "@") or username (case-insensitive)?"""
     _purge(_now())
-    return email in _by_email
+    identifier = identifier.strip()
+    if "@" in identifier:
+        return identifier.lower() in _by_email
+    return identifier.casefold() in _by_username
 
 
 def seconds_left(p: Pending) -> int:

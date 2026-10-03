@@ -10,11 +10,12 @@
     <p class="mt-2 text-muted">{{ t('login.subtitle') }}</p>
 
     <form class="mt-8 space-y-5" aria-labelledby="login-title" hx-post="{{ config.endpoints.auth.login }}" hx-target="#login-error" hx-swap="innerHTML">
-      <label class="block">
-        <span class="mb-1 block text-sm text-muted">{{ t('login.email') }}</span>
-        <input type="email" name="email" required aria-required="true" autocomplete="email" dir="auto" aria-describedby="login-hint"
+      <div>
+        <label for="f-identifier" class="mb-1 block text-sm text-muted">{{ t('login.identifier') }}</label>
+        <input id="f-identifier" type="text" name="identifier" required aria-required="true" autocomplete="username" dir="ltr"
+               autocapitalize="none" autocorrect="off" spellcheck="false" aria-describedby="login-hint"
                class="min-h-[48px] w-full rounded-lg border border-border bg-bg px-4 text-fg focus:border-accent focus:outline-none">
-      </label>
+      </div>
       <label class="block">
         <span class="mb-1 block text-sm text-muted">{{ t('login.password') }}</span>
         <input type="password" name="password" required aria-required="true" minlength="6" aria-describedby="login-hint" autocomplete="current-password"

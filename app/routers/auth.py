@@ -39,10 +39,10 @@ def signed_in(request: Request, token: TokenResponse, destination: str) -> Respo
 
 
 @router.post("/auth/login")
-async def login(request: Request, email: str = Form(...), password: str = Form(...)) -> Response:
+async def login(request: Request, identifier: str = Form(...), password: str = Form(...)) -> Response:
     context = await config_service.build_context(request)
     try:
-        token = await auth_service.login(email, password)
+        token = await auth_service.login(identifier, password)
     except auth_service.LoginError as exc:
         error_key = "login.error" if exc.code == "invalid" else f"login.error_{exc.code}"
         return render(request, "partials/auth_error.html", {**context, "error_key": error_key}, status_code=422)

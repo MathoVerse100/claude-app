@@ -21,9 +21,9 @@ TOKEN_PREFIX = "dvt_"
 _EMAIL = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 # Demo only: values that behave as "already used" so every uniqueness error can be tried.
 DEMO_TAKEN = {"taken@example.com"}
-DEMO_TAKEN_USERNAMES = {"taken_user", "admin"}
+DEMO_TAKEN_USERNAMES = {"taken_user", "admin"}  # lower-case; compared ignoring case
 DEMO_TAKEN_NAMES = {("taken", "user")}
-_USERNAME = re.compile(r"[A-Za-z0-9_-]+")  # English letters, digits 0-9, dash, underscore. No spaces. Case-sensitive.
+_USERNAME = re.compile(r"[A-Za-z0-9_-]+")  # English letters, digits 0-9, dash, underscore. No spaces. Unique ignoring case.
 
 
 class RegistrationError(Exception):
@@ -65,8 +65,14 @@ def create_user(first_name: str, last_name: str, username: str, email: str, pass
 
 
 def username_taken(username: str) -> bool:
-    """Case-sensitive: "Ana" and "ana" are different usernames."""
-    return username in DEMO_TAKEN_USERNAMES or any(u["username"] == username for u in _users.values())
+    """Case-insensitive: "Ana" and "ana" are the same username (the capitals you typed are kept for display)."""
+    wanted = username.casefold()
+    return wanted in DEMO_TAKEN_USERNAMES or any(u["username"].casefold() == wanted for u in _users.values())
+
+
+def _email_for_username(username: str) -> str | None:
+    wanted = username.casefold()
+    return next((email for email, u in _users.items() if u["username"].casefold() == wanted), None)
 
 
 def name_pair_taken(pair: tuple[str, str]) -> bool:
@@ -74,21 +80,30 @@ def name_pair_taken(pair: tuple[str, str]) -> bool:
     return pair in DEMO_TAKEN_NAMES or any(registration_service.name_pair(u["first_name"], u["last_name"]) == pair for u in _users.values())
 
 
-async def login(email: str, password: str) -> TokenResponse:
-    """Demo login. Verified registrants must use their real password; a registration that is still
-    waiting for its code cannot log in; anyone else may log in with any valid email (demo) unless
-    ``auth_demo.allow_unregistered_login`` is false.
+async def login(identifier: str, password: str) -> TokenResponse:
+    """Demo login with ONE field that takes a username or an email (usernames never contain "@", so the
+    two can't be confused; both are matched ignoring case).
+
+    A verified registrant must use their real password; a registration still waiting for its code cannot
+    log in; an unknown *email* may log in with any valid email + password (demo) unless
+    ``auth_demo.allow_unregistered_login`` is false; an unknown *username* never can (there is nothing to sign).
     """
-    email = email.strip().lower()
-    if not _EMAIL.match(email) or len(password) < 6:
+    identifier = identifier.strip()
+    if not identifier or len(password) < 6:
         raise LoginError("invalid")
+    if "@" in identifier:
+        email = identifier.lower()
+        if not _EMAIL.match(email):
+            raise LoginError("invalid")
+    else:
+        email = _email_for_username(identifier)
     if email in _users:
         if not verify_password(password, _users[email]["password_hash"]):
             raise LoginError("invalid")
         return _issue_token(email)
-    if registration_service.has_pending(email):
+    if registration_service.has_pending(identifier):
         raise LoginError("unverified")
-    if not load_json("app_config")["auth_demo"]["allow_unregistered_login"]:
+    if email is None or not load_json("app_config")["auth_demo"]["allow_unregistered_login"]:
         raise LoginError("unknown")
     return _issue_token(email)
 

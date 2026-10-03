@@ -64,8 +64,8 @@ In `app/config/themes.json`:
 
 `app/services/auth_service.py` stands in for the external auth API. Everything here is in memory and resets on restart.
 
-**Login** (`/login`): a verified registrant must use their real password; a registration still waiting for its code
-cannot log in; anyone else may log in with any valid email + 6+ character password
+**Login** (`/login`): one field takes a **username or an email** (matched ignoring case; usernames never contain `@`, so they can't be confused). A verified registrant must use their real password; a registration still waiting for its code
+cannot log in; an unknown *email* may log in with any 6+ character password (an unknown username cannot)
 (`auth_demo.allow_unregistered_login: false` in `app_config.json` makes that "registered users only").
 
 **Register** is two steps, and the person is **not a user until step 2**:
@@ -73,9 +73,9 @@ cannot log in; anyone else may log in with any valid email + 6+ character passwo
 1. `/register`: first name, last name, username, email, password, confirmation. This creates only a *pending* registration and
    "emails" a secret one-time code (8 characters, `XXXX-XXXX`). No account, no session. Rules, all checked at once with a
    message under each field:
-   - **Username** (case-sensitive, unique, never used before): at least 3 characters (`username_min_length`, max
+   - **Username** (unique ignoring case, never used before): at least 3 characters (`username_min_length`, max
      `username_max_length` = 32), English letters, digits 0-9, dashes and underscores only, no spaces. `Ana` and `ana` are
-     different usernames.
+     the same username; the capitals typed at registration are kept for display.
    - **Email**: valid and unique (compared case-insensitively).
    - **First + last name**: each may repeat on its own, but the *pair* must be unique (compared ignoring case and extra spaces).
    - **Password**: 6+ characters, confirmed.

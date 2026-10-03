@@ -4,33 +4,73 @@
 {% block shell %}
 {% include "components/prefs_corner.html" %}
 <main id="main" tabindex="-1" aria-labelledby="register-title" class="hero-glow flex min-h-screen items-center justify-center px-6 py-16">
-  <div class="w-full max-w-md rounded-2xl border border-border bg-surface p-8">
+  <div class="w-full max-w-lg rounded-2xl border border-border bg-surface p-8">
     <a href="{{ config.endpoints.routes.home }}" class="mb-8 inline-block text-fg" aria-label="{{ t('brand.name') }}">{% include "components/logo.html" %}</a>
     <h1 id="register-title" class="text-3xl font-semibold tracking-tight">{{ t('register.title') }}</h1>
     <p class="mt-2 text-muted">{{ t('register.subtitle') }}</p>
     {% if notice_key %}<p class="mt-6 rounded-lg border border-accent-2 bg-surface-2 px-4 py-3 text-sm" role="status">{{ t(notice_key) }}</p>{% endif %}
 
-    <form class="mt-8 space-y-5" aria-labelledby="register-title" hx-post="{{ config.endpoints.auth.register }}" hx-target="#register-error" hx-swap="innerHTML">
-      <label class="block">
-        <span class="mb-1 block text-sm text-muted">{{ t('register.name') }}</span>
-        <input type="text" name="name" required aria-required="true" autocomplete="name" dir="auto"
-               class="min-h-[48px] w-full rounded-lg border border-border bg-bg px-4 text-fg focus:border-accent focus:outline-none">
-      </label>
-      <label class="block">
-        <span class="mb-1 block text-sm text-muted">{{ t('register.email') }}</span>
-        <input type="email" name="email" required aria-required="true" autocomplete="email" dir="auto"
-               class="min-h-[48px] w-full rounded-lg border border-border bg-bg px-4 text-fg focus:border-accent focus:outline-none">
-      </label>
-      <label class="block">
-        <span class="mb-1 block text-sm text-muted">{{ t('register.password') }}</span>
-        <input type="password" name="password" required aria-required="true" minlength="6" autocomplete="new-password" aria-describedby="register-hint"
-               class="min-h-[48px] w-full rounded-lg border border-border bg-bg px-4 text-fg focus:border-accent focus:outline-none">
-      </label>
-      <label class="block">
-        <span class="mb-1 block text-sm text-muted">{{ t('register.confirm') }}</span>
-        <input type="password" name="confirm_password" required aria-required="true" minlength="6" autocomplete="new-password"
-               class="min-h-[48px] w-full rounded-lg border border-border bg-bg px-4 text-fg focus:border-accent focus:outline-none">
-      </label>
+    {% set ad = config.app.auth_demo %}
+    {% set input = "min-h-[48px] w-full rounded-lg border border-border bg-bg px-4 text-fg focus:border-accent focus:outline-none" %}
+    {# One field = <label for>, <input>, optional helper text, and an empty #err-<name> slot that the server fills (hx-swap-oob). #}
+    {% macro label(for_id, text) %}<label for="{{ for_id }}" class="mb-1 block text-sm text-muted">{{ text }}</label>{% endmacro %}
+
+    <form class="mt-8 space-y-6" aria-labelledby="register-title" novalidate
+          hx-post="{{ config.endpoints.auth.register }}" hx-target="#register-error" hx-swap="innerHTML">
+
+      <fieldset aria-describedby="help-names err-name">
+        <legend class="sr-only">{{ t('register.first_name') }} / {{ t('register.last_name') }}</legend>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div>
+            {{ label('f-first_name', t('register.first_name')) }}
+            <input id="f-first_name" type="text" name="first_name" required aria-required="true" autocomplete="given-name" dir="auto"
+                   maxlength="{{ ad.name_max_length }}" aria-describedby="err-first_name err-name help-names" class="{{ input }}">
+            <div id="err-first_name"></div>
+          </div>
+          <div>
+            {{ label('f-last_name', t('register.last_name')) }}
+            <input id="f-last_name" type="text" name="last_name" required aria-required="true" autocomplete="family-name" dir="auto"
+                   maxlength="{{ ad.name_max_length }}" aria-describedby="err-last_name err-name help-names" class="{{ input }}">
+            <div id="err-last_name"></div>
+          </div>
+        </div>
+        <p id="help-names" class="mt-2 text-xs text-muted">{{ t('register.help_names') }}</p>
+        <div id="err-name"></div>
+      </fieldset>
+
+      <div>
+        {{ label('f-username', t('register.username')) }}
+        <input id="f-username" type="text" name="username" required aria-required="true" autocomplete="username" dir="ltr"
+               autocapitalize="none" autocorrect="off" spellcheck="false"
+               minlength="{{ ad.username_min_length }}" maxlength="{{ ad.username_max_length }}" pattern="[A-Za-z0-9_\-]+"
+               aria-describedby="help-username err-username" class="{{ input }}">
+        <p id="help-username" class="mt-2 text-xs text-muted">{{ t('register.help_username', min=ad.username_min_length) }}</p>
+        <div id="err-username"></div>
+      </div>
+
+      <div>
+        {{ label('f-email', t('register.email')) }}
+        <input id="f-email" type="email" name="email" required aria-required="true" autocomplete="email" dir="auto"
+               aria-describedby="help-email err-email" class="{{ input }}">
+        <p id="help-email" class="mt-2 text-xs text-muted">{{ t('register.help_email') }}</p>
+        <div id="err-email"></div>
+      </div>
+
+      <div>
+        {{ label('f-password', t('register.password')) }}
+        <input id="f-password" type="password" name="password" required aria-required="true" minlength="6" autocomplete="new-password"
+               aria-describedby="help-password err-password" class="{{ input }}">
+        <p id="help-password" class="mt-2 text-xs text-muted">{{ t('register.help_password') }}</p>
+        <div id="err-password"></div>
+      </div>
+
+      <div>
+        {{ label('f-confirm_password', t('register.confirm')) }}
+        <input id="f-confirm_password" type="password" name="confirm_password" required aria-required="true" minlength="6" autocomplete="new-password"
+               aria-describedby="err-confirm_password" class="{{ input }}">
+        <div id="err-confirm_password"></div>
+      </div>
+
       <div id="register-error" aria-live="assertive" aria-atomic="true"></div>
       <button type="submit" class="min-h-[48px] w-full rounded-full bg-accent px-6 font-semibold text-accent-fg transition hover:opacity-90">{{ t('register.submit') }}</button>
     </form>

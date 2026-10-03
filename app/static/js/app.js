@@ -2,9 +2,9 @@
 (function () {
   "use strict";
 
-  // htmx 2 skips swapping 4xx responses by default; allow 422 so form errors render.
+  // htmx 2 skips swapping 4xx responses by default; allow our own validation/error partials (422, 409, 503) so form errors render.
   document.addEventListener("htmx:beforeSwap", function (e) {
-    if (e.detail.xhr.status === 422) {
+    if ([409, 422, 503].indexOf(e.detail.xhr.status) !== -1) {
       e.detail.shouldSwap = true;
       e.detail.isError = false;
     }
@@ -32,6 +32,19 @@
 
   // The server re-renders the page in the new language and announces its direction so the
   // whole document mirrors (dir comes from config/app_config.json -> locales[].dir / direction.force).
+  // Mark inputs aria-invalid while their #err-<field> slot has a message (slots are filled by the server via hx-swap-oob).
+  function syncInvalid() {
+    document.querySelectorAll('[id^="err-"]').forEach(function (slot) {
+      var bad = slot.textContent.trim().length > 0;
+      document.querySelectorAll('input[aria-describedby~="' + slot.id + '"]').forEach(function (input) {
+        if (bad) input.setAttribute("aria-invalid", "true");
+        else input.removeAttribute("aria-invalid");
+      });
+    });
+  }
+  document.addEventListener("htmx:oobAfterSwap", syncInvalid);
+  document.addEventListener("htmx:afterSwap", syncInvalid);
+
   document.addEventListener("languageChanged", function (e) {
     var d = e.detail || {};
     if (d.lang) document.documentElement.lang = d.lang;

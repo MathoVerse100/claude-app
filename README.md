@@ -70,8 +70,17 @@ cannot log in; anyone else may log in with any valid email + 6+ character passwo
 
 **Register** is two steps, and the person is **not a user until step 2**:
 
-1. `/register`: name, email, password, confirmation. This creates only a *pending* registration and "emails" a secret
-   one-time code (8 characters, `XXXX-XXXX`). No account, no session. `taken@example.com` simulates an existing account.
+1. `/register`: first name, last name, username, email, password, confirmation. This creates only a *pending* registration and
+   "emails" a secret one-time code (8 characters, `XXXX-XXXX`). No account, no session. Rules, all checked at once with a
+   message under each field:
+   - **Username** (case-sensitive, unique, never used before): at least 3 characters (`username_min_length`, max
+     `username_max_length` = 32), English letters, digits 0-9, dashes and underscores only, no spaces. `Ana` and `ana` are
+     different usernames.
+   - **Email**: valid and unique (compared case-insensitively).
+   - **First + last name**: each may repeat on its own, but the *pair* must be unique (compared ignoring case and extra spaces).
+   - **Password**: 6+ characters, confirmed.
+   A pending registration reserves its username and name pair until it expires or is cancelled.
+   Demo values that are "already used": email `taken@example.com`, usernames `taken_user` and `admin`, name `Taken User`.
 2. `/register/verify`: type the code. Correct -> the account is created and the user is signed in.
 
 The code expires after **15 minutes** (`code_ttl_minutes`), allows 5 wrong tries, can be resent (3 times, 30 s apart; a new

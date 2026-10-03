@@ -1,0 +1,9 @@
+{#- Validation result for the sign-up form. Each message is swapped in under its own field via hx-swap-oob (matching
+    #err-<slot>), and fields without an error are cleared, so stale messages disappear. The summary goes to #register-error. -#}
+{% set ad = config.app.auth_demo %}
+<p class="rounded-lg border border-accent-2 bg-surface-2 px-4 py-3 text-sm" role="alert">{{ t('register.errors_summary') }}</p>
+{% for slot in slots %}
+<div id="err-{{ slot }}" hx-swap-oob="true">
+  {% if errors[slot] %}<p class="mt-2 rounded-md border-s-2 border-accent-2 bg-surface-2 px-3 py-2 text-sm font-medium text-fg" role="alert">{{ t('register.errors.' ~ errors[slot], min=ad.username_min_length, max=(ad.username_max_length if 'username' in errors[slot] else ad.name_max_length)) }}</p>{% endif %}
+</div>
+{% endfor %}

@@ -19,16 +19,21 @@ from app.services import registration_service
 
 TOKEN_PREFIX = "dvt_"
 _EMAIL = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
-# Demo only: addresses that behave as "already registered" so the error path can be tried.
+# Demo only: values that behave as "already used" so every uniqueness error can be tried.
 DEMO_TAKEN = {"taken@example.com"}
+DEMO_TAKEN_USERNAMES = {"taken_user", "admin"}
+DEMO_TAKEN_NAMES = {("taken", "user")}
+_USERNAME = re.compile(r"[A-Za-z0-9_-]+")  # English letters, digits 0-9, dash, underscore. No spaces. Case-sensitive.
 
 
 class RegistrationError(Exception):
-    """Raised by register(); `code` maps to i18n key register.error_<code>."""
+    """Raised by check_registration(). `errors` maps a form slot to an error key, e.g.
+    {"username": "username_taken"} -> i18n register.errors.username_taken. Slots: first_name, last_name,
+    name (the first+last pair), username, email, password, confirm_password."""
 
-    def __init__(self, code: str) -> None:
-        super().__init__(code)
-        self.code = code
+    def __init__(self, errors: dict[str, str]) -> None:
+        super().__init__(errors)
+        self.errors = errors
 
 
 class LoginError(Exception):
@@ -40,7 +45,7 @@ class LoginError(Exception):
 
 
 # DEMO user store: verified registrants only, in memory (lost on restart).
-_users: dict[str, dict[str, str]] = {}
+_users: dict[str, dict[str, str]] = {}  # keyed by email
 
 
 def hash_password(password: str) -> str:
@@ -55,8 +60,18 @@ def verify_password(password: str, stored: str) -> bool:
     return hmac.compare_digest(digest.hex(), digest_hex)
 
 
-def create_user(name: str, email: str, password_hash: str) -> None:
-    _users[email] = {"name": name, "password_hash": password_hash}
+def create_user(first_name: str, last_name: str, username: str, email: str, password_hash: str) -> None:
+    _users[email] = {"first_name": first_name, "last_name": last_name, "username": username, "password_hash": password_hash}
+
+
+def username_taken(username: str) -> bool:
+    """Case-sensitive: "Ana" and "ana" are different usernames."""
+    return username in DEMO_TAKEN_USERNAMES or any(u["username"] == username for u in _users.values())
+
+
+def name_pair_taken(pair: tuple[str, str]) -> bool:
+    """Each name may repeat; the first+last COMBINATION may not."""
+    return pair in DEMO_TAKEN_NAMES or any(registration_service.name_pair(u["first_name"], u["last_name"]) == pair for u in _users.values())
 
 
 async def login(email: str, password: str) -> TokenResponse:
@@ -86,19 +101,47 @@ def _issue_token(email: str) -> TokenResponse:
 issue_session = _issue_token
 
 
-def check_registration(name: str, email: str, password: str, confirm: str) -> tuple[str, str]:
-    """Validate the sign-up form. Returns the cleaned (name, email) or raises RegistrationError.
+def check_registration(first_name: str, last_name: str, username: str, email: str, password: str, confirm: str) -> dict[str, str]:
+    """Validate the whole sign-up form at once. Returns the cleaned values or raises RegistrationError
+    listing every problem (slot -> error key).
 
-    Replace with your API's register call; keep the error codes: "invalid", "mismatch", "taken".
+    Rules: first and last name required (their COMBINATION must be unique); username >= 3 characters,
+    English letters / digits / dash / underscore only, no spaces, case-sensitive, unique; email unique;
+    password >= 6 and confirmed. Replace with your API's register call keeping the same error keys.
     """
-    name, email = name.strip(), email.strip().lower()
-    if not name or not _EMAIL.match(email) or len(password) < 6:
-        raise RegistrationError("invalid")
-    if password != confirm:
-        raise RegistrationError("mismatch")
-    if email in DEMO_TAKEN or email in _users:
-        raise RegistrationError("taken")
-    return name, email
+    cfg = load_json("app_config")["auth_demo"]
+    first, last, username, email = first_name.strip(), last_name.strip(), username.strip(), email.strip().lower()
+    errors: dict[str, str] = {}
+    for slot, value in (("first_name", first), ("last_name", last)):
+        if not value:
+            errors[slot] = f"{slot}_required"
+        elif len(value) > cfg["name_max_length"]:
+            errors[slot] = f"{slot}_long"
+    if not errors.get("first_name") and not errors.get("last_name"):
+        pair = registration_service.name_pair(first, last)
+        if name_pair_taken(pair) or registration_service.pair_reserved(pair, except_email=email):
+            errors["name"] = "name_taken"
+    if not username:
+        errors["username"] = "username_required"
+    elif len(username) < cfg["username_min_length"]:
+        errors["username"] = "username_short"
+    elif len(username) > cfg["username_max_length"]:
+        errors["username"] = "username_long"
+    elif not _USERNAME.fullmatch(username):
+        errors["username"] = "username_chars"
+    elif username_taken(username) or registration_service.username_reserved(username, except_email=email):
+        errors["username"] = "username_taken"
+    if not _EMAIL.match(email):
+        errors["email"] = "email_invalid"
+    elif email in DEMO_TAKEN or email in _users:
+        errors["email"] = "email_taken"
+    if len(password) < 6:
+        errors["password"] = "password_short"
+    elif password != confirm:
+        errors["confirm_password"] = "confirm_mismatch"
+    if errors:
+        raise RegistrationError(errors)
+    return {"first_name": first, "last_name": last, "username": username, "email": email}
 
 
 async def validate_token(token: str | None) -> SessionInfo:

@@ -3,7 +3,7 @@
 Registering does NOT create a user. It creates a *pending* registration plus a secret one-time
 code that is emailed. The account only exists once the code is entered.
 
-A pending registration dies when ANY of these happens:
+While pending it also reserves its username and name pair. It dies when ANY of these happens:
   * its code is older than ``code_ttl_minutes``;
   * too many wrong codes (``max_attempts``);
   * the verify page is closed - a pagehide beacon marks it "leaving", and loading the page again
@@ -44,7 +44,9 @@ class FlowError(Exception):
 
 @dataclass
 class Pending:
-    name: str
+    first_name: str
+    last_name: str
+    username: str
     email: str
     password_hash: str
     lang: str
@@ -59,6 +61,13 @@ class Pending:
 
 _flows: dict[str, Pending] = {}
 _by_email: dict[str, str] = {}
+_by_username: dict[str, str] = {}               # exact (case-sensitive) username -> flow key
+_by_pair: dict[tuple[str, str], str] = {}       # normalised (first, last) -> flow key
+
+
+def name_pair(first: str, last: str) -> tuple[str, str]:
+    """Normalised (first, last) used for the "combination must be unique" rule: trimmed, single-spaced, case-insensitive."""
+    return " ".join(first.split()).casefold(), " ".join(last.split()).casefold()
 
 
 def _key(flow_id: str) -> str:
@@ -83,8 +92,11 @@ def _new_code() -> str:
 
 def _drop(key: str) -> None:
     p = _flows.pop(key, None)
-    if p and _by_email.get(p.email) == key:
-        del _by_email[p.email]
+    if p is None:
+        return
+    for index, k in ((_by_email, p.email), (_by_username, p.username), (_by_pair, name_pair(p.first_name, p.last_name))):
+        if index.get(k) == key:
+            del index[k]
 
 
 def _purge(now: float) -> None:
@@ -95,7 +107,7 @@ def _purge(now: float) -> None:
             _drop(key)
 
 
-def start(name: str, email: str, password_hash: str, lang: str) -> tuple[str, str, Pending]:
+def start(first_name: str, last_name: str, username: str, email: str, password_hash: str, lang: str) -> tuple[str, str, Pending]:
     """Create (or replace) the pending registration for ``email``. Returns (flow_id, code, pending)."""
     now = _now()
     _purge(now)
@@ -104,10 +116,13 @@ def start(name: str, email: str, password_hash: str, lang: str) -> tuple[str, st
     if email in _by_email:
         _drop(_by_email[email])
     flow_id, code = secrets.token_urlsafe(32), _new_code()
-    p = Pending(name, email, password_hash, lang, _hash_code(code),
+    p = Pending(first_name, last_name, username, email, password_hash, lang, _hash_code(code),
                 expires_at=now + _cfg()["code_ttl_minutes"] * 60, last_seen=now, last_sent=now)
-    _flows[_key(flow_id)] = p
-    _by_email[email] = _key(flow_id)
+    key = _key(flow_id)
+    _flows[key] = p
+    _by_email[email] = key
+    _by_username[username] = key
+    _by_pair[name_pair(first_name, last_name)] = key
     return flow_id, code, p
 
 
@@ -180,6 +195,19 @@ def resend(flow_id: str | None) -> tuple[str, Pending]:
 def cancel(flow_id: str | None) -> None:
     if flow_id:
         _drop(_key(flow_id))
+
+
+def username_reserved(username: str, except_email: str | None = None) -> bool:
+    """A pending registration holds its username until it expires, so nobody else can take it meanwhile."""
+    _purge(_now())
+    key = _by_username.get(username)
+    return key is not None and _flows[key].email != except_email
+
+
+def pair_reserved(pair: tuple[str, str], except_email: str | None = None) -> bool:
+    _purge(_now())
+    key = _by_pair.get(pair)
+    return key is not None and _flows[key].email != except_email
 
 
 def has_pending(email: str) -> bool:

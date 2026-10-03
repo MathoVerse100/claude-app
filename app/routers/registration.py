@@ -56,7 +56,7 @@ def _card_context(p: Pending, status_key: str | None = None, status_kind: str = 
 
 def _send_code(p: Pending, code: str, t) -> None:
     minutes = load_json("app_config")["auth_demo"]["code_ttl_minutes"]
-    email_service.send_verification(p.email, p.name, registration_service.format_code(code), minutes, t)
+    email_service.send_verification(p.email, p.first_name, registration_service.format_code(code), minutes, t)
 
 
 @page_route(router, "/register")
@@ -68,10 +68,15 @@ async def register_page(request: Request) -> Response:
     return render(request, "pages/register.html", {**context, "notice_key": f"register.notice_{reason}" if reason in NOTICES else None})
 
 
+ERROR_SLOTS = ["first_name", "last_name", "name", "username", "email", "password", "confirm_password"]
+
+
 @router.post("/auth/register")
 async def register(
     request: Request,
-    name: str = Form(""),
+    first_name: str = Form(""),
+    last_name: str = Form(""),
+    username: str = Form(""),
     email: str = Form(""),
     password: str = Form(""),
     confirm_password: str = Form(""),
@@ -79,11 +84,14 @@ async def register(
     """Step 1: validate, create a PENDING registration, 'email' a code. No account, no session yet."""
     context = await config_service.build_context(request)
     try:
-        name, email = auth_service.check_registration(name, email, password, confirm_password)
-        flow_id, code, pending = registration_service.start(name, email, auth_service.hash_password(password), context["lang"])
+        clean = auth_service.check_registration(first_name, last_name, username, email, password, confirm_password)
+        flow_id, code, pending = registration_service.start(
+            clean["first_name"], clean["last_name"], clean["username"], clean["email"],
+            auth_service.hash_password(password), context["lang"],
+        )
     except auth_service.RegistrationError as exc:
-        status = 409 if exc.code == "taken" else 422
-        return render(request, "partials/auth_error.html", {**context, "error_key": f"register.error_{exc.code}"}, status_code=status)
+        # Each message is swapped in under its own field (hx-swap-oob); a summary goes to the form's alert area.
+        return render(request, "partials/register_errors.html", {**context, "slots": ERROR_SLOTS, "errors": exc.errors}, status_code=422)
     except FlowError:  # too many pending registrations
         return render(request, "partials/auth_error.html", {**context, "error_key": "register.error_busy"}, status_code=503)
     _send_code(pending, code, context["t"])
@@ -114,7 +122,7 @@ async def verify(request: Request, code: str = Form("")) -> Response:
             return _back_to_register(request, exc.code)
         context = await config_service.build_context(request, error_key="register.error_code", error_n=exc.data["left"])
         return render(request, "partials/auth_error.html", context, status_code=422)
-    auth_service.create_user(pending.name, pending.email, pending.password_hash)
+    auth_service.create_user(pending.first_name, pending.last_name, pending.username, pending.email, pending.password_hash)
     context = await config_service.build_context(request)
     return _clear_cookie(signed_in(request, auth_service.issue_session(pending.email), _routes()["dashboard"]))
 

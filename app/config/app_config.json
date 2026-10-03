@@ -62,6 +62,9 @@
     "heartbeat_timeout_seconds": 120,
     "rejoin_grace_seconds": 5,
     "show_code_on_page": true,
-    "allow_unregistered_login": true
+    "allow_unregistered_login": true,
+    "username_min_length": 3,
+    "username_max_length": 32,
+    "name_max_length": 50
   }
 }
